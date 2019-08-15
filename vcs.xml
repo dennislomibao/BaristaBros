@@ -14,8 +14,12 @@
           <option name="url" value="https://github.com/laomao1997/SESHealth.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/dennislomibao/BaristaBrosApp.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\Users\denni\Desktop\Sem 1 2019\Software Studio A" />
+    <option name="cloneParentDir" value="C:\Users\denni\Desktop" />
   </component>
 </application>
