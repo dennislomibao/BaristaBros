@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "914044913641",
+    "firebase_url": "https://barista-bros-app.firebaseio.com",
+    "project_id": "barista-bros-app",
+    "storage_bucket": "barista-bros-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914044913641:android:b31fe2d57f093166",
+        "android_client_info": {
+          "package_name": "student.uts.edu.au.baristabrosapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914044913641-o73am5souv0c5imqa77mueh4ngarqf3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA1mV5xfoEtCLO_T6yG7Lt-LebnVdeGjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914044913641-o73am5souv0c5imqa77mueh4ngarqf3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
