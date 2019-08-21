@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    style = "@style/CustomTheme"
+    tools:context=".LoginActivity" >
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+
+
+        android:orientation="vertical">
+
+        <TextView
+            style = "@style/TitleStyle"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textStyle="" />
+
+
+        <EditText
+            style="@style/defaultEditText"
+            android:id="@+id/etUsername"
+            android:textAlignment="center"
+            android:hint = "Username"
+            android:textColorHint="@color/defaultText"/>
+
+        <EditText
+            style="@style/defaultEditText"
+            android:id="@+id/etPassword"
+            android:textAlignment="center"
+
+            android:hint="Password"
+            android:textColorHint="@color/defaultText"
+            android:inputType="textPassword"/>
+
+
+        <Button
+            android:id="@+id/btnLogin"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:text="Login"
+             />
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
