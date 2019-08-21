@@ -36,7 +36,7 @@
             android:id="@+id/etUsername"
             android:textAlignment="center"
             android:hint = "Username"
-            android:textColorHint="@color/defaultText"/>
+            android:textColorHint="@color/hintText"/>
 
         <EditText
             style="@style/defaultEditText"
@@ -44,7 +44,7 @@
             android:textAlignment="center"
 
             android:hint="Password"
-            android:textColorHint="@color/defaultText"
+            android:textColorHint="@color/hintText"
             android:inputType="textPassword"/>
 
 
