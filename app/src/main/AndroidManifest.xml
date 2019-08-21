@@ -11,14 +11,15 @@
         android:theme="@style/CustomTheme">
         <activity android:name=".PasswordActivty"></activity>
         <activity android:name=".RegistrationActivty" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/MainPageTheme">
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 

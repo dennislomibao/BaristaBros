@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textStyle="" />
+            android:textStyle=""
+            android:onClick="test"/>
 
 
         <EditText
