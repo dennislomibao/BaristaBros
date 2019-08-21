@@ -8,4 +8,5 @@
     <color name = "defaultButton">#008577</color>
     <color name = "pressedButton">#008577</color>
     <color name = "editText">#1DFFFFFF</color>
+    <color name = "clear">#00FFFFFF</color>
 </resources>

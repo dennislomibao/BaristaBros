@@ -46,16 +46,31 @@
 
 
         <Button
-            android:id="@+id/btnLogin"
+        android:id="@+id/btnLogin"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Login"
+        />
+        <Button
+            android:id="@+id/btnSignUp"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/roundedbutton"
-            android:text="Login"
-             />
+            android:text="Signup"
+            />
+        <Button
+            android:id="@+id/btnResetPassword"
 
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:text="Reset Password?"
+            />
     </LinearLayout>
 
 
