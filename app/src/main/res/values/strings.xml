@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BaristaBros App</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="barista_bros">Barista Bros</string>
+    <string name="login">Login</string>
+    <string name="making_online_shopping_easier">Making Online Shopping Easier</string>
 </resources>
