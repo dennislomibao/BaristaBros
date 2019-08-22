@@ -29,5 +29,7 @@
         <item name="android:background">@drawable/roundededittext</item>
         <item name="android:ems">10</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorHint">@drawable/selector</item>
     </style>
 </resources>
