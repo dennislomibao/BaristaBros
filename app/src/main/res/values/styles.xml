@@ -20,6 +20,15 @@
         <item name = "android:textSize">30dp</item>
     </style>
 
+    <style name="textStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/defaultText</item>
+        <item name = "android:textSize">20dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name = "android:layout_marginTop">20dp</item>
+
+
+    </style>
+
     <style name="defaultEditText" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColor">@color/defaultText</item>
         <item name = "android:textSize">20dp</item>
