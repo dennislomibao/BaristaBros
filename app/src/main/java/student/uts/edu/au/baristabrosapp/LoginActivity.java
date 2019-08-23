@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
-    //
     private EditText Email;
     private EditText Password;
     private Button Login;
@@ -21,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Email = (EditText) findViewById(R.id.etEmail);
+        Email = (EditText) findViewById(R.id.etEmail);
         Password = (EditText) findViewById(R.id.etPassword);
         Login = (Button) findViewById(R.id.btnLogin);
         NewUser = (Button) findViewById(R.id.btnSignUp);
