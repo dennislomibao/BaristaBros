@@ -3,7 +3,6 @@ package student.uts.edu.au.baristabrosapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, PasswordActivty.class));
+                startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
             }
         });
-        Login = (Button) findViewById(R.id.btnLogin);
+        Login = (Button) findViewById(R.id.btnSubmit);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

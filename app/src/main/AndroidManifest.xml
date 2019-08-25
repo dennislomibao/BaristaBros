@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".PasswordActivty" />
+        <activity android:name=".PasswordActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
