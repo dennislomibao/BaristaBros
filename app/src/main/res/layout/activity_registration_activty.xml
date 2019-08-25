@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     style = "@style/CustomTheme"
     android:windowSoftInputMode="adjustResize"
-    tools:context=".RegistrationActivty" >
+    tools:context=".RegistrationActivity" >
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
