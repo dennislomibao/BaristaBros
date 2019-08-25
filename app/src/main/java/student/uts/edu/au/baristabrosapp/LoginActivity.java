@@ -10,6 +10,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    private Button singUp;
 
 
     @Override
@@ -17,6 +18,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        singUp = (Button) findViewById(R.id.btnSignUp);
+        singUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegistrationActivity();
+            }
+        });
+    }
+
+    public void openRegistrationActivity(){
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
 
     }
 
