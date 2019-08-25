@@ -1,6 +1,7 @@
 package student.uts.edu.au.baristabrosapp;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText userName, email, password, confirmPassword;
     private Button createAccount;
     private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -39,10 +41,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     String user_email = email.getText().toString().trim();
                     String user_password = password.getText().toString().trim();
 
+                    progressDialog.setMessage("Please wait patiently");
+                    progressDialog.show();
+
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, HomePageActivity.class));
                             }else{
