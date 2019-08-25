@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     private Button singUp;
     private FirebaseAuth firebaseAuth;
-    private int counter = 5;
+    //private int counter = 5;
     private EditText Email;
     private EditText Password;
     private Button resetPassword;
@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
             }
         });
+
         Login = (Button) findViewById(R.id.btnSubmit);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog.setMessage("Please wait Patiently");
         progressDialog.show();
-
         firebaseAuth.createUserWithEmailAndPassword(userName, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
