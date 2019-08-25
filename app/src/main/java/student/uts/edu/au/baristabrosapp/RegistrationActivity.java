@@ -21,6 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private EditText userName, email, password, confirmPassword;
     private Button createAccount;
+    private Button loginActivity;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -50,7 +51,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistrationActivity.this, HomePageActivity.class));
+                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                             }else{
                                 Toast.makeText(RegistrationActivity.this, "Registration Failed",Toast.LENGTH_SHORT).show();
 
@@ -72,6 +73,14 @@ public class RegistrationActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.etPassword);
         confirmPassword = (EditText) findViewById(R.id.etConfPassword);
         createAccount = (Button) findViewById(R.id.btnCreate);
+        loginActivity = (Button) findViewById(R.id.btnCreates);
+
+        loginActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     private Boolean validate () {
