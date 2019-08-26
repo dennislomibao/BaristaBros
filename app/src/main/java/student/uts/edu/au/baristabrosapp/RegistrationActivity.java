@@ -42,12 +42,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     String user_email = email.getText().toString().trim();
                     String user_password = password.getText().toString().trim();
 
-                    progressDialog.setMessage("Please wait patiently");
-                    progressDialog.show();
-
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.setMessage("Please wait patiently");
+                            progressDialog.show();
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
