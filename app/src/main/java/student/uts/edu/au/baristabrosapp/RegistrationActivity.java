@@ -1,13 +1,13 @@
 package student.uts.edu.au.baristabrosapp;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.app.ProgressDialog;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +26,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,8 @@ public class RegistrationActivity extends AppCompatActivity {
         setupUIViews();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog =  new ProgressDialog(this);
+
 
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,11 +45,12 @@ public class RegistrationActivity extends AppCompatActivity {
                     String user_email = email.getText().toString().trim();
                     String user_password = password.getText().toString().trim();
 
+                    progressDialog.setMessage("Please Wait Patiently");
+                    progressDialog.show();
+
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressDialog.setMessage("Please wait patiently");
-                            progressDialog.show();
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
