@@ -56,6 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                             }else{
+                                progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Failed",Toast.LENGTH_SHORT).show();
 
                             }
@@ -90,15 +91,16 @@ public class RegistrationActivity extends AppCompatActivity {
         Boolean result = false;
 
         String name = userName.getText().toString();
-        String Password = password.getText().toString();
         String Email = email.getText().toString();
+        String Password = password.getText().toString();
+        String cPassword = confirmPassword.getText().toString();
 
-        if(name.isEmpty() && Password.isEmpty() && Email.isEmpty()){
+
+        if(name.isEmpty() && Email.isEmpty() && Password.isEmpty() && cPassword.isEmpty()){
             Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
         }else{
             result = true;
         }
-
         return result;
     }
 }
