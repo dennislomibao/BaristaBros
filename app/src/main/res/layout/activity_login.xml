@@ -33,7 +33,7 @@
 
 
         <EditText
-            android:id="@+id/etFName"
+            android:id="@+id/etEmail"
             style="@style/defaultEditText"
             android:hint="Email"
             android:textAlignment="center" />

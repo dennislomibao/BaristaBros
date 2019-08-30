@@ -77,14 +77,14 @@ public class LoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Email.toString().trim()=="" && Password.toString().trim()=="" )
+                if(Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
                 {
-
-                    validate(Email.getText().toString(), Password.getText().toString());
+                    Toast.makeText(LoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(LoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+                    validate(Email.getText().toString(), Password.getText().toString());
+
                 }
 
             }
