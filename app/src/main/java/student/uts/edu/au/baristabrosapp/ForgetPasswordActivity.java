@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PasswordActivity extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity {
 
     private Button goBack;
     private EditText passwordEmail;
@@ -26,13 +26,13 @@ public class PasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_activty);
+        setContentView(R.layout.activity_forgotpassword_activty);
 
         goBack = (Button) findViewById(R.id.btnGoBackToLoginPage);
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
             }
         });
 
@@ -47,17 +47,17 @@ public class PasswordActivity extends AppCompatActivity {
                 String userEmail = passwordEmail.getText().toString().trim();
 
                 if(userEmail.equals("")){
-                    Toast.makeText(PasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
                 }else{
                     firebaseAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(PasswordActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ForgetPasswordActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
                                 finish();
-                                startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                                startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
                             }else{
-                                Toast.makeText(PasswordActivity.this, "Error Sending Email", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ForgetPasswordActivity.this, "Error Sending Email", Toast.LENGTH_SHORT).show();
                             }
 
                         }

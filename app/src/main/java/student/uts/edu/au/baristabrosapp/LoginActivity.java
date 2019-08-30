@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
             }
         });
 
