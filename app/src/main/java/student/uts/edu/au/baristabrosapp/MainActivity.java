@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_main);
 
-        firebaseAuth = firebaseAuth.getInstance();
+        /*firebaseAuth = firebaseAuth.getInstance();
 
         logout = (Button) findViewById(R.id.btnLogout);
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Logout();
             }
-        });
+        });*/
 
 
     }

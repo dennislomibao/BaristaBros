@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:id="@+id/nav_sign_out"
+            android:title="Sign Out"
+            android:icon="@drawable/ic_exit_white_24dp" />
+        <item android:id="@+id/nav_item_two"
+            android:title="Item 2"
+            android:icon="@drawable/ic_computer_white_24dp"/>
+        <item android:id="@+id/nav_item_three"
+            android:title="Item 3"
+            android:icon="@drawable/ic_computer_white_24dp"/>
+    </group>
+
+    <group android:id="@+id/group_menu">
+        <item android:id="@+id/nav_item_four"
+            android:title="Item 4"
+            android:icon="@drawable/ic_computer_white_24dp"/>
+        <item android:id="@+id/nav_item_five"
+            android:title="Item 5"
+            android:icon="@drawable/ic_computer_white_24dp"/>
+    </group>
+
+    <item android:title="Title 1">
+        <menu>
+            <item android:id="@+id/nav_item_six"
+                android:title="Item 6"
+                android:icon="@drawable/ic_computer_white_24dp"/>
+            <item android:id="@+id/nav_item_seven"
+                android:title="Item 7"
+                android:icon="@drawable/ic_computer_white_24dp"/>
+        </menu>
+    </item>
+</menu>

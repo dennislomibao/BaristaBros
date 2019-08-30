@@ -41,4 +41,9 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textColorHint">@drawable/selector</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay"></style>
+
+    <style name="AppTheme.PopupOverlay"></style>
+
 </resources>

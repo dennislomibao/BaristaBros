@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePageActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="#823321"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:paddingBottom="10dp">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="top">
+
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    style="@style/defaultEditText"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="80dp"
+                    android:hint=" What would you like to search for?"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_search_white_24dp" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:paddingBottom="120dp"
+
+
+            android:orientation="vertical">
+
+            <TextView
+                style = "@style/TitleStyle"
+                android:id="@+id/textViewCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categories"
+                android:textStyle="" />
+
+            <Button
+                android:id="@+id/btnCatComputers"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Computers"
+                />
+
+            <Button
+                android:id="@+id/btnCatLaptops"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Laptops"
+                />
+
+            <Button
+                android:id="@+id/btnCatCpu"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="CPU"
+                />
+
+            <Button
+                android:id="@+id/btnCatFans"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Fans and Coolers"
+                />
+
+            <Button
+                android:id="@+id/btnCatMb"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Motherboards"
+                />
+
+            <Button
+                android:id="@+id/btnCatMemory"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Memory"
+                />
+
+            <Button
+                android:id="@+id/btnCatStorage"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Storage"
+                />
+
+            <Button
+                android:id="@+id/btnCatVc"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Video Cards"
+                />
+
+            <Button
+                android:id="@+id/btnCatCase"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Case"
+                />
+
+            <Button
+                android:id="@+id/btnCatPs"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Power Supply"
+                />
+
+            <Button
+                android:id="@+id/btnCatMonitors"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Monitors"
+                />
+
+            <Button
+                android:id="@+id/btnCatPeri"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Peripherals"
+                />
+
+            <Button
+                android:id="@+id/btnCatOs"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Operating Systems"
+
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
