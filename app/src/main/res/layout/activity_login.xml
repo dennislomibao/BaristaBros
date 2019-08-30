@@ -33,10 +33,10 @@
 
 
         <EditText
+            android:id="@+id/etEmail"
             style="@style/defaultEditText"
-            android:id="@+id/etUsername"
-            android:textAlignment="center"
-            android:hint = "Username"/>
+            android:hint="Email"
+            android:textAlignment="center" />
 
         <EditText
             style="@style/defaultEditText"

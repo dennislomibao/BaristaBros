@@ -36,7 +36,7 @@ public class PasswordActivity extends AppCompatActivity {
             }
         });
 
-        passwordEmail = (EditText) findViewById(R.id.etUsername);
+        passwordEmail = (EditText) findViewById(R.id.etEmail);
         resetPassword= (Button) findViewById(R.id.btnSubmit);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -47,7 +47,7 @@ public class PasswordActivity extends AppCompatActivity {
                 String userEmail = passwordEmail.getText().toString().trim();
 
                 if(userEmail.equals("")){
-                    Toast.makeText(PasswordActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
                 }else{
                     firebaseAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

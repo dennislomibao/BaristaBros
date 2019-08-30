@@ -21,11 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     private Button singUp;
     private FirebaseAuth firebaseAuth;
-    //private int counter = 5;
     private EditText Email;
     private EditText Password;
     private Button resetPassword;
     private Button Login;
+    private EditText validate;
     private ProgressDialog progressDialog;
 
 
@@ -34,8 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setupUIViews();
 
-        Email = (EditText)findViewById(R.id.etUsername);
+        Email = (EditText)findViewById(R.id.etEmail);
         Password = (EditText)findViewById(R.id.etPassword);
         resetPassword = (Button)findViewById(R.id.btnResetPassword);
         resetPassword.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
             }
         });
 
@@ -75,7 +77,15 @@ public class LoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validate(Email.getText().toString(), Password.getText().toString());
+                if(Email.toString().trim()=="" && Password.toString().trim()=="" )
+                {
+
+                    validate(Email.getText().toString(), Password.getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -111,6 +121,29 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    private void setupUIViews(){
 
+        Email = (EditText)findViewById(R.id.etEmail);
+        Password = (EditText) findViewById(R.id.etPassword);
+    }
+
+        private Boolean validate(){
+        Boolean result = false;
+
+        String email = Email.getText().toString();
+        String password = Password.getText().toString();
+
+        if( email.isEmpty() && password.isEmpty()){
+            Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
+        }else{
+            result = true;
+        }
+        return result;
+    }
 }
+
+
+
+
+
 
