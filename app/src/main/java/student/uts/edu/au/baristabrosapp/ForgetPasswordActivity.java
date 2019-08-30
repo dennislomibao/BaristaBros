@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     private Button goBack;
-    private EditText passwordEmail;
+    private EditText forgetPasswordEmail;
     private Button resetPassword;
     private FirebaseAuth firebaseAuth;
 
@@ -36,7 +36,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             }
         });
 
-        passwordEmail = (EditText) findViewById(R.id.etEmail);
+        forgetPasswordEmail = (EditText) findViewById(R.id.etFEmail);
         resetPassword= (Button) findViewById(R.id.btnSubmit);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -44,11 +44,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String userEmail = passwordEmail.getText().toString().trim();
+                String userEmail = forgetPasswordEmail.getText().toString();
 
-                if(userEmail.equals("")){
+                if(userEmail.isEmpty())
+                {
                     Toast.makeText(ForgetPasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                }else{
+                }
+                else
+                {
                     firebaseAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
