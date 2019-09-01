@@ -32,9 +32,9 @@
 
 
             <EditText
-                android:id="@+id/etFName"
+                android:id="@+id/etName"
                 style="@style/defaultEditText"
-                android:hint="First Name"
+                android:hint="Name"
                 android:textAlignment="center" />
 
             <EditText

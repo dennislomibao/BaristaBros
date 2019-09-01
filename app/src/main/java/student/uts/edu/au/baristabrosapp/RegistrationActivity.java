@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -23,6 +26,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button createAccount;
     private Button loginActivity;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference firebaseDatabase;
+    private FirebaseUser user;
     private ProgressDialog progressDialog;
 
 
@@ -34,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setupUIViews();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         progressDialog =  new ProgressDialog(this);
 
 
@@ -54,10 +60,18 @@ public class RegistrationActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+
+                                //Store user's details in firebase database
+                                user = task.getResult().getUser();
+                                firebaseDatabase.child("users").child(user.getUid()).child("name").setValue(userName.getText().toString().trim());
+                                firebaseDatabase.child("users").child(user.getUid()).child("email").setValue(email.getText().toString().trim());
+                                firebaseDatabase.child("users").child(user.getUid()).child("password").setValue(password.getText().toString().trim());
+
+                                finish();
+                                startActivity(new Intent(RegistrationActivity.this, HomePageActivity.class));
                             }else{
                                 progressDialog.dismiss();
-                                Toast.makeText(RegistrationActivity.this, "Registration Failed",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, "Account Already Exists",Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -72,7 +86,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setupUIViews(){
-        userName = (EditText)findViewById(R.id.etFName);
+        userName = (EditText)findViewById(R.id.etName);
         email = (EditText)findViewById(R.id.etEmail);
         password = (EditText) findViewById(R.id.etPassword);
         confirmPassword = (EditText) findViewById(R.id.etConfPassword);
@@ -96,9 +110,16 @@ public class RegistrationActivity extends AppCompatActivity {
         String cPassword = confirmPassword.getText().toString();
 
 
-        if(name.isEmpty() && Email.isEmpty() && Password.isEmpty() && cPassword.isEmpty()){
+        //sign up criteria
+        if(name.isEmpty() || Email.isEmpty() || Password.isEmpty() || cPassword.isEmpty()){
             Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
-        }else{
+        }else if (!Email.contains("@")){
+            Toast.makeText(this,"Invalid email",Toast.LENGTH_SHORT).show();
+        } else if (!Password.equals(cPassword)){
+            Toast.makeText(this,"Passwords do not match",Toast.LENGTH_SHORT).show();
+        } else if (Password.length() < 8 || cPassword.length() < 8) {
+            Toast.makeText(this,"Password too short",Toast.LENGTH_SHORT).show();
+        } else {
             result = true;
         }
         return result;

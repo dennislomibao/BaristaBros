@@ -51,7 +51,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+                startActivity(new Intent(LoginActivity.this,HomePageActivity.class));
+
             }
         });
 
@@ -70,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(user != null){
             finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
 
         }
 
@@ -109,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
 
                 }else{
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -133,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = Email.getText().toString();
         String password = Password.getText().toString();
 
-        if( email.isEmpty() && password.isEmpty()){
+        if( email.isEmpty() || password.isEmpty()){
             Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
         }else{
             result = true;

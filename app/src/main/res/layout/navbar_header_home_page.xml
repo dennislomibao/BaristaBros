@@ -26,7 +26,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
-        android:text="Chris P. Bacon"
+        android:text="User_Name"
         android:textSize="20dp"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

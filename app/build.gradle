@@ -32,6 +32,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.0'
     //firebase auth
     implementation 'com.google.firebase:firebase-auth:19.0.0'
+    //firebase database
+    implementation 'com.google.firebase:firebase-database:19.0.0'
+    implementation 'com.firebaseui:firebase-ui-database:3.3.1'
 }
 //firebase
 apply plugin: 'com.google.gms.google-services'
