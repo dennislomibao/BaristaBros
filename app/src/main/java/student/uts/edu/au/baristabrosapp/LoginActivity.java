@@ -1,13 +1,152 @@
 package student.uts.edu.au.baristabrosapp;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    private Button singUp;
+    private FirebaseAuth firebaseAuth;
+    private EditText Email;
+    private EditText Password;
+    private Button resetPassword;
+    private Button Login;
+    private EditText validate;
+    private ProgressDialog progressDialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setupUIViews();
+
+        Email = (EditText)findViewById(R.id.etEmail);
+        Password = (EditText)findViewById(R.id.etPassword);
+        resetPassword = (Button)findViewById(R.id.btnResetPassword);
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+            }
+        });
+
+        Login = (Button) findViewById(R.id.btnSubmit);
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+                startActivity(new Intent(LoginActivity.this,HomePageActivity.class));
+
+            }
+        });
+
+        singUp = (Button) findViewById(R.id.btnSignUp);
+        singUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegistrationActivity();
+            }
+        });
+
+        firebaseAuth = firebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if(user != null){
+            finish();
+            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+
+        }
+
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
+                {
+                    Toast.makeText(LoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    validate(Email.getText().toString(), Password.getText().toString());
+
+                }
+
+            }
+        });
+
+
+    }
+
+    public void openRegistrationActivity(){
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
+
+    }
+
+    private void validate (String userName, String userPassword){
+
+        progressDialog.setMessage("Please wait Patiently");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(userName, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
+                if(task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+
+    private void setupUIViews(){
+
+        Email = (EditText)findViewById(R.id.etEmail);
+        Password = (EditText) findViewById(R.id.etPassword);
+    }
+
+        private Boolean validate(){
+        Boolean result = false;
+
+        String email = Email.getText().toString();
+        String password = Password.getText().toString();
+
+        if( email.isEmpty() || password.isEmpty()){
+            Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
+        }else{
+            result = true;
+        }
+        return result;
     }
 }
+
+
+
+
+
+

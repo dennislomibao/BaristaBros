@@ -1,9 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    style = "@style/CustomTheme"
+    android:windowSoftInputMode="adjustResize"
+    tools:context=".LoginActivity" >
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+
+
+        android:orientation="vertical">
+
+        <TextView
+            style = "@style/TitleStyle"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textStyle=""
+            android:onClick="test"/>
+
+
+        <EditText
+            android:id="@+id/etEmail"
+            style="@style/defaultEditText"
+            android:hint="Email"
+            android:textAlignment="center" />
+
+        <EditText
+            style="@style/defaultEditText"
+            android:id="@+id/etPassword"
+            android:textAlignment="center"
+            android:hint="Password"
+            android:inputType="textPassword"/>
+
+
+        <Button
+        android:id="@+id/btnSubmit"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Login"
+        />
+        <Button
+            android:id="@+id/btnSignUp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Signup"
+            />
+        <Button
+            android:id="@+id/btnResetPassword"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:text="Reset Password?"
+            />
+    </LinearLayout>
+
+</ScrollView>
+
+
+
+</RelativeLayout>

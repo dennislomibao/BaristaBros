@@ -8,4 +8,42 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@color/background</item>
+        <item name="android:textColor">@color/defaultText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TitleStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/defaultText</item>
+        <item name = "android:textSize">30dp</item>
+    </style>
+
+    <style name="textStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/defaultText</item>
+        <item name = "android:textSize">20dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name = "android:layout_marginTop">20dp</item>
+
+
+    </style>
+
+    <style name="defaultEditText" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/defaultText</item>
+        <item name = "android:textSize">20dp</item>
+        <item name = "android:layout_marginTop">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/roundededittext</item>
+        <item name="android:ems">10</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorHint">@drawable/selector</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay"></style>
+
+    <style name="AppTheme.PopupOverlay"></style>
+
 </resources>
