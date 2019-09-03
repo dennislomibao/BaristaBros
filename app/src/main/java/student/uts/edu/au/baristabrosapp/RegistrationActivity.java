@@ -118,7 +118,7 @@ public class RegistrationActivity extends AppCompatActivity {
         } else if (!Password.equals(cPassword)){
             Toast.makeText(this,"Passwords do not match",Toast.LENGTH_SHORT).show();
         } else if (Password.length() < 8 || cPassword.length() < 8) {
-            Toast.makeText(this,"Password too short",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Password must contain a minimum of 8 characters",Toast.LENGTH_SHORT).show();
         } else {
             result = true;
         }
