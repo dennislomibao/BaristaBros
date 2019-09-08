@@ -49,4 +49,23 @@
             </RelativeLayout>
         </ScrollView>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- insert objects below here -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lvCat"
+            android:background="#823321">
+        </ListView>
+
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
