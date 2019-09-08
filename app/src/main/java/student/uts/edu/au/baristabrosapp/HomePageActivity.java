@@ -53,7 +53,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
-
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -218,6 +217,36 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
         if (id == R.id.nav_search) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_wishlist) {
+            intent = new Intent(this, WishlistActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_cart) {
+            intent = new Intent(this, CartActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_selling) {
+            intent = new Intent(this, SellActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_buy_history) {
+            intent = new Intent(this, BuyHistoryActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_sell_history) {
+            intent = new Intent(this, SellHistoryActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_settings) {
+            intent = new Intent(this, SettingsActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_sign_out) {
             firebaseAuth.signOut();
             intent = new Intent(this, LoginActivity.class);

@@ -2,7 +2,6 @@ package student.uts.edu.au.baristabrosapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -92,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void openRegistrationActivity(){
@@ -142,6 +140,12 @@ public class LoginActivity extends AppCompatActivity {
             result = true;
         }
         return result;
+    }
+
+    //Phone back button closes app
+    @Override
+    public void onBackPressed() {
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
 

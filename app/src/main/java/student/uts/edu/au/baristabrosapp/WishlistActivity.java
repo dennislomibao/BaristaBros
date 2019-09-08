@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,26 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class WishlistActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
-    private List<ItemData> catList;
-    private ListView listView;
-    private ItemsList itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
-
+        setContentView(R.layout.activity_wishlist);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -51,36 +41,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-
-        //Display category list
-        catList = new ArrayList<>();
-        catList.add(new ItemData("Item title 1", "Item description 1", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-
-        listView = (ListView) findViewById(R.id.lvCat);
-        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
-
-        listView.setAdapter(itemsList);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent();
-                intent.putExtra("Picture", catList.get(position).imgId);
-                intent.putExtra("Title", catList.get(position).title);
-                intent.putExtra("Description", catList.get(position).desc);
-
-                intent.setClass(CategoryActivity.this, ItemActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         //read user's name from database
         //change side menu name depending on user
@@ -111,8 +71,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             });
         }
 
-
     }
+
 
     //Slide out menu options
     @Override
@@ -126,10 +86,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
             return true;
         } else if (id == R.id.nav_wishlist) {
-            intent = new Intent(this, WishlistActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
-            startActivity(intent);
-            return true;
         } else if (id == R.id.nav_cart) {
             intent = new Intent(this, CartActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -168,7 +125,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     }
 
-
     //Phone back button closes menu rather than app
     @Override
     public void onBackPressed() {
@@ -178,5 +134,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             super.onBackPressed();
         }
     }
+
 
 }
