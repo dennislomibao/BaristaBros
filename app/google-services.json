@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "914044913641-630tlshsb99r4ed7umqv1j4b7j2c5eqp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "student.uts.edu.au.baristabrosapp",
+            "certificate_hash": "abe94f9527811cac769d8cbdcd2cf831375d99a4"
+          }
+        },
+        {
           "client_id": "914044913641-o73am5souv0c5imqa77mueh4ngarqf3d.apps.googleusercontent.com",
           "client_type": 3
         }
