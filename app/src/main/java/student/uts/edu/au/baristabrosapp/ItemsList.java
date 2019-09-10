@@ -11,15 +11,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
-public class ItemsList extends ArrayAdapter<ItemData> {
+public class ItemsList extends ArrayAdapter<ImageUpload> {
 
     Context context;
     int resource;
-    List<ItemData> data = null;
+    List<ImageUpload> data = null;
 
-    public ItemsList(Context context, int resource, List<ItemData> objects) {
+    public ItemsList(Context context, int resource, List<ImageUpload> objects) {
         super(context, resource, objects);
         this.resource = resource;
         this.context = context;
@@ -61,12 +62,18 @@ public class ItemsList extends ArrayAdapter<ItemData> {
 
         }
 
-        ItemData itemData = data.get(position);
-        dataHolder.pic.setImageResource(itemData.imgId);
-        dataHolder.tvTitle.setText(itemData.title);
-        dataHolder.tvPrice.setText(itemData.price);
-        dataHolder.tvDesc.setText(itemData.desc);
-        dataHolder.tvCategory.setText(itemData.category);
+
+        ImageUpload imageUpload = data.get(position);
+
+        DecimalFormat df2 = new DecimalFormat("0.00");
+        String dollarSign = "$";
+
+
+        dataHolder.pic.setImageResource(/*imageUpload.imageUrl*/R.drawable.barista);
+        dataHolder.tvTitle.setText(imageUpload.title);
+        dataHolder.tvPrice.setText(dollarSign + df2.format(imageUpload.price));
+        dataHolder.tvDesc.setText(imageUpload.desc);
+        dataHolder.tvCategory.setText(imageUpload.category);
 
         return convertView;
 

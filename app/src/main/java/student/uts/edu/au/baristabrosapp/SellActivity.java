@@ -258,7 +258,11 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                                     taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),
                                     category.trim(), price);
                     String uploadId = firebaseDatabase.push().getKey();
-                    firebaseDatabase.child("category").child(uploadId).setValue(upload);
+                    firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
+
+                    //store user's listing history
+                    firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).setValue(upload);
+                    firebaseDatabase.child("users").child(user.getUid()).child("Sell Current").child(uploadId).setValue(upload);
 
                     endTask();
 

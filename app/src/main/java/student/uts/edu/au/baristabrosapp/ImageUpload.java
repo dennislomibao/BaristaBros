@@ -2,11 +2,11 @@ package student.uts.edu.au.baristabrosapp;
 
 public class ImageUpload {
 
-    private String title;
-    private String desc;
-    private String imageUrl;
-    private String category;
-    private Double price;
+    String title;
+    String desc;
+    String imageUrl;
+    String category;
+    Double price;
 
     public ImageUpload() {
 

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,25 +23,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private static DecimalFormat df2 = new DecimalFormat("0.00");
+
     //declare variables
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
-    private List<ItemData> catList;
+    private List<ImageUpload> catList;
     private ListView listView;
     private ItemsList itemsList;
+
+    private String categorySelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+
+
+        Intent intent = getIntent();
+        categorySelected = intent.getStringExtra("category");
 
 
         //firebase initialise
@@ -52,9 +62,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
+        listView = (ListView) findViewById(R.id.lvCat);
+
         //Display category list
         catList = new ArrayList<>();
-        catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
+        /*catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 2", "$20", "Item description 2", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 3", "$20", "Item description 3", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 4", "$20", "Item description 4", R.drawable.barista, "Category"));
@@ -63,16 +75,15 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         catList.add(new ItemData("Item title 7", "$20", "Item description 7", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 8", "$20", "Item description 8", R.drawable.barista, "Category"));
 
-        listView = (ListView) findViewById(R.id.lvCat);
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
 
-        listView.setAdapter(itemsList);
+        listView.setAdapter(itemsList);*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("picture", catList.get(position).imgId);
+                intent.putExtra("picture", catList.get(position).imageUrl);
                 intent.putExtra("title", catList.get(position).title);
                 intent.putExtra("price", catList.get(position).price);
                 intent.putExtra("description", catList.get(position).desc);
@@ -83,6 +94,33 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+
+        DatabaseReference DrCategoryData = firebaseDatabase.child("category").child(categorySelected);
+
+        //get category listing
+        DrCategoryData.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot listing : dataSnapshot.getChildren()) {
+
+                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
+                    catList.add(imageUpload);
+
+                }
+
+                itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList);
+
+                listView.setAdapter(itemsList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //read user's name from database
         //change side menu name depending on user

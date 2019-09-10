@@ -2,7 +2,7 @@
 
 <!-- main content -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -70,9 +70,7 @@
             android:background="@color/itemBackground"
             android:dividerHeight="10dp"
             android:divider="@color/background">
-
-
         </ListView>
 
     </RelativeLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

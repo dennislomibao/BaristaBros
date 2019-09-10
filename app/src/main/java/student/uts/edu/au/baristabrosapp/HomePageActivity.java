@@ -71,12 +71,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         catOsBtn = findViewById(R.id.btnCatOs);
 
 
+        Intent intent = new Intent();
+
+
         //category button functions
         catComputersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Computers");
 
             }
         });
@@ -84,7 +87,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Laptops");
 
             }
         });
@@ -92,7 +95,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("CPU");
 
             }
         });
@@ -100,7 +103,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Fans and Coolers");
 
             }
         });
@@ -108,7 +111,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Motherboards");
 
             }
         });
@@ -116,7 +119,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Memory");
 
             }
         });
@@ -124,7 +127,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Storage");
 
             }
         });
@@ -132,7 +135,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Video Cards");
 
             }
         });
@@ -140,7 +143,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Case");
 
             }
         });
@@ -148,7 +151,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Power Supply");
 
             }
         });
@@ -156,7 +159,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Monitors");
 
             }
         });
@@ -164,7 +167,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Peripherals");
 
             }
         });
@@ -172,7 +175,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(HomePageActivity.this,CategoryActivity.class));
+                startCategoryActivity("Operating Systems");
 
             }
         });
@@ -206,6 +209,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 }
             });
         }
+
+    }
+
+    private void startCategoryActivity(String category) {
+
+        Intent intent = new Intent();
+        intent.putExtra("category", category);
+        intent.setClass(HomePageActivity.this, CategoryActivity.class);
+        startActivity(intent);
 
     }
 
