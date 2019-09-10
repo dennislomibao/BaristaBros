@@ -1,5 +1,6 @@
 package student.uts.edu.au.baristabrosapp;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+
 public class SellActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
@@ -49,14 +54,21 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
 
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static DecimalFormat df2 = new DecimalFormat("0.00");
 
     private Button btnChoose;
     private Button btnSubmit;
     private EditText editTextTitle;
     private EditText editTextDesc;
+    private EditText editTextPrice;
     private ImageView image;
     private ProgressBar progressBar;
+    private Spinner spinner;
     private StorageTask uploadTask;
+    private ProgressDialog progressDialog;
+
+    String category;
+    Double price;
 
     private Uri imageUri;
 
@@ -82,6 +94,21 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDesc = findViewById(R.id.editTextDesc);
         progressBar = findViewById(R.id.progressBar);
+        spinner = findViewById(R.id.spinnerCategory);
+        editTextPrice = findViewById(R.id.editTextPrice);
+
+        //category spinner selection
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                category = adapterView.getSelectedItem().toString().trim();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         //choose image to upload
@@ -99,15 +126,43 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                 if (uploadTask != null && uploadTask.isInProgress()) {
                     //buffer
                     Toast.makeText(SellActivity.this, "In Progress...", Toast.LENGTH_SHORT).show();
-                } else if (!editTextTitle.getText().toString().trim().equals("") && !editTextDesc.getText().toString().trim().equals("")) {
+
+                } else if (!editTextTitle.getText().toString().trim().equals("") &&
+                        !editTextDesc.getText().toString().trim().equals("") &&
+                        !editTextPrice.getText().toString().trim().equals("") && !category.trim().equals("")) {
+
                     if (imageUri != null) {
-                        uploadData();
-                        Toast.makeText(SellActivity.this, "Please Wait...", Toast.LENGTH_SHORT).show();
+                        try {
+
+                            //get price and format to 2dp
+                            price = Double.parseDouble(editTextPrice.getText().toString().trim());
+
+                            if (price > 0) {
+
+                                uploadData();
+                                Toast.makeText(SellActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
+
+                            } else {
+
+                                Toast.makeText(SellActivity.this, "Price Invalid", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        } catch (NumberFormatException e) {
+
+                            Toast.makeText(SellActivity.this, "Price Invalid", Toast.LENGTH_SHORT).show();
+
+                        }
+
                     } else {
+
                         Toast.makeText(SellActivity.this, "Image Required", Toast.LENGTH_SHORT).show();
+
                     }
                 } else {
+
                     Toast.makeText(SellActivity.this, "Input Required", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -182,7 +237,7 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    //upload success
+
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -194,13 +249,18 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                         //delay upload
                     }, 500);
 
+                    //upload success
+                    //progressDialog.dismiss();
                     Toast.makeText(SellActivity.this, "Posting Successful", Toast.LENGTH_LONG).show();
                     ImageUpload upload =
                             new ImageUpload(editTextTitle.getText().toString().trim(),
                                     editTextDesc.getText().toString().trim(),
-                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),
+                                    category.trim(), price);
                     String uploadId = firebaseDatabase.push().getKey();
-                    firebaseDatabase.child(uploadId).setValue(upload);
+                    firebaseDatabase.child("category").child(uploadId).setValue(upload);
+
+                    endTask();
 
                 }
 
@@ -209,6 +269,7 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                 public void onFailure(@NonNull Exception e) {
 
                     //upload fail
+                    //progressDialog.dismiss();
                     Toast.makeText(SellActivity.this, "Posting Unsuccessful", Toast.LENGTH_SHORT).show();
 
                 }
@@ -219,6 +280,9 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
 
                     //show progress while image is uploaded
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    if (progress < 20) {
+                        progress = 20;
+                    }
                     progressBar.setProgress((int) progress);
 
                 }
@@ -227,6 +291,15 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         } else {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void endTask() {
+
+        Intent intent = new Intent(this, HomePageActivity.class);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        finish();
+        startActivity(intent);
+
     }
 
     //Slide out menu options

@@ -31,7 +31,9 @@ public class ItemsList extends ArrayAdapter<ItemData> {
 
         ImageView pic;
         TextView tvTitle;
+        TextView tvPrice;
         TextView tvDesc;
+        TextView tvCategory;
 
     }
 
@@ -47,7 +49,9 @@ public class ItemsList extends ArrayAdapter<ItemData> {
             dataHolder = new DataHolder();
             dataHolder.pic = (ImageView) convertView.findViewById(R.id.imageView_pic);
             dataHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+            dataHolder.tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
             dataHolder.tvDesc = (TextView) convertView.findViewById(R.id.tvDesc);
+            dataHolder.tvCategory = (TextView) convertView.findViewById(R.id.tvCategory);
 
             convertView.setTag(dataHolder);
 
@@ -60,7 +64,9 @@ public class ItemsList extends ArrayAdapter<ItemData> {
         ItemData itemData = data.get(position);
         dataHolder.pic.setImageResource(itemData.imgId);
         dataHolder.tvTitle.setText(itemData.title);
+        dataHolder.tvPrice.setText(itemData.price);
         dataHolder.tvDesc.setText(itemData.desc);
+        dataHolder.tvCategory.setText(itemData.category);
 
         return convertView;
 

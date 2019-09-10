@@ -6,4 +6,23 @@
     <string name="login">Login</string>
     <string name="making_online_shopping_easier">Making Online Shopping Easier</string>
     <string name="logout">Logout</string>
+
+    <string-array name="categoryNames">
+
+        <item> </item>
+        <item>Computers</item>
+        <item>Laptops</item>
+        <item>CPU</item>
+        <item>Fans and Coolers</item>
+        <item>Motherboards</item>
+        <item>Memory</item>
+        <item>Storage</item>
+        <item>Video Cards</item>
+        <item>Case</item>
+        <item>Power Supply</item>
+        <item>Monitors</item>
+        <item>Peripherals</item>
+        <item>Operating Systems</item>
+
+    </string-array>
 </resources>

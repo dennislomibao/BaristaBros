@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/imageView_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_weight="0.11"
             android:paddingLeft="10dp"/>
 
@@ -22,23 +22,47 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/imageView_pic"
-            android:layout_toRightOf="@+id/imageView_pic"
             android:textColor="#333"
             android:textSize="22dp"
             android:textStyle="bold"
-            android:paddingLeft = "10dp"
+            android:paddingStart = "10dp"
+            android:paddingTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_toEndOf="@+id/imageView_pic"
+            android:textColor="#333"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPrice"
+            android:layout_toEndOf="@+id/imageView_pic"
+            android:textColor="#333"
+            android:textSize="17dp"
+            android:paddingStart="10dp"
             android:paddingTop="2dp"/>
 
         <TextView
             android:id="@+id/tvDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitle"
-            android:layout_toRightOf="@+id/imageView_pic"
-            android:layout_weight="1"
+            android:layout_below="@+id/tvCategory"
+            android:layout_toEndOf="@+id/imageView_pic"
             android:textColor="#333"
-            android:paddingLeft="10dp"
-            android:paddingTop="4dp"/>
+            android:textSize="14dp"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"/>
+
+
 
     </RelativeLayout>
 

@@ -5,20 +5,21 @@ public class ImageUpload {
     private String title;
     private String desc;
     private String imageUrl;
+    private String category;
+    private Double price;
 
     public ImageUpload() {
 
     }
 
-    public ImageUpload(String title, String desc, String imageUrl) {
-
-        if (title.trim().equals("")) {
-            title = "No title";
-        }
+    public ImageUpload(String title, String desc, String imageUrl, String category, Double price) {
 
         this.title = title;
         this.desc = desc;
         this.imageUrl = imageUrl;
+        this.category = category;
+        this.price = price;
+
     }
 
     public String getTitle() {
@@ -43,6 +44,22 @@ public class ImageUpload {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
 }

@@ -54,14 +54,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         //Display category list
         catList = new ArrayList<>();
-        catList.add(new ItemData("Item title 1", "Item description 1", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
-        catList.add(new ItemData("Item title 2", "Item description 2", R.drawable.barista));
+        catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 2", "$20", "Item description 2", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 3", "$20", "Item description 3", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 4", "$20", "Item description 4", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 5", "$20", "Item description 5", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 6", "$20", "Item description 6", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 7", "$20", "Item description 7", R.drawable.barista, "Category"));
+        catList.add(new ItemData("Item title 8", "$20", "Item description 8", R.drawable.barista, "Category"));
 
         listView = (ListView) findViewById(R.id.lvCat);
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
@@ -72,9 +72,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("Picture", catList.get(position).imgId);
-                intent.putExtra("Title", catList.get(position).title);
-                intent.putExtra("Description", catList.get(position).desc);
+                intent.putExtra("picture", catList.get(position).imgId);
+                intent.putExtra("title", catList.get(position).title);
+                intent.putExtra("price", catList.get(position).price);
+                intent.putExtra("description", catList.get(position).desc);
+                intent.putExtra("category", catList.get(position).category);
 
                 intent.setClass(CategoryActivity.this, ItemActivity.class);
                 startActivity(intent);
