@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
+    private StorageReference firebaseStorage;
     private FirebaseUser user;
     private List<ImageUpload> catList;
     private ListView listView;
@@ -56,6 +59,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);

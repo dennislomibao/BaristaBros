@@ -26,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,6 +69,7 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
 
     String category;
+    String imageReference;
     Double price;
 
     private Uri imageUri;
@@ -230,7 +232,7 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
     //upload picture to firebase storage
     private void uploadData() {
         if (imageUri != null) {
-            StorageReference fileReference = firebaseStorage.child("imageUploads")
+            final StorageReference fileReference = firebaseStorage.child("imageUploads")
                     .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
             uploadTask = fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -251,20 +253,31 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
 
                     //upload success
                     //progressDialog.dismiss();
-                    Toast.makeText(SellActivity.this, "Posting Successful", Toast.LENGTH_LONG).show();
-                    ImageUpload upload =
-                            new ImageUpload(editTextTitle.getText().toString().trim(),
-                                    editTextDesc.getText().toString().trim(),
-                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),
-                                    category.trim(), price);
-                    String uploadId = firebaseDatabase.push().getKey();
-                    firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
+                    Task<Uri> downloadUrl = fileReference.getDownloadUrl();
+                    downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-                    //store user's listing history
-                    firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).setValue(upload);
-                    firebaseDatabase.child("users").child(user.getUid()).child("Sell Current").child(uploadId).setValue(upload);
+                            imageReference = uri.toString();
 
-                    endTask();
+                            Toast.makeText(SellActivity.this, "Posting Successful", Toast.LENGTH_LONG).show();
+                            ImageUpload upload =
+                                    new ImageUpload(editTextTitle.getText().toString().trim(),
+                                            editTextDesc.getText().toString().trim(),
+                                            imageReference,
+                                            category.trim(), price);
+                            String uploadId = firebaseDatabase.push().getKey();
+                            firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
+
+                            //store user's listing history
+                            firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).setValue(upload);
+                            firebaseDatabase.child("users").child(user.getUid()).child("Sell Current").child(uploadId).setValue(upload);
+
+                            endTask();
+
+                        }
+                    });
+
 
                 }
 

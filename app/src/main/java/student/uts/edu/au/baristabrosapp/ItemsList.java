@@ -2,6 +2,7 @@ package student.uts.edu.au.baristabrosapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -69,7 +72,9 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
         String dollarSign = "$";
 
 
-        dataHolder.pic.setImageResource(/*imageUpload.imageUrl*/R.drawable.barista);
+        //set objects with their corresponding data
+        //dataHolder.pic.setImageURI(Uri.parse(imageUpload.imageUrl)/*R.drawable.barista*/);
+        Picasso.with(context).load(Uri.parse(imageUpload.imageUrl)).into(dataHolder.pic);
         dataHolder.tvTitle.setText(imageUpload.title);
         dataHolder.tvPrice.setText(dollarSign + df2.format(imageUpload.price));
         dataHolder.tvDesc.setText(imageUpload.desc);
