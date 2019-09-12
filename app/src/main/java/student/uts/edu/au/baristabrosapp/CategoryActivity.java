@@ -86,12 +86,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 Intent intent = new Intent();
                 intent.putExtra("picture", catList.get(position).imageUrl);
                 intent.putExtra("title", catList.get(position).title);
                 intent.putExtra("price", catList.get(position).price);
                 intent.putExtra("description", catList.get(position).desc);
                 intent.putExtra("category", catList.get(position).category);
+                intent.putExtra("uploadId", catList.get(position).uploadId);
 
                 intent.setClass(CategoryActivity.this, ItemActivity.class);
                 startActivity(intent);

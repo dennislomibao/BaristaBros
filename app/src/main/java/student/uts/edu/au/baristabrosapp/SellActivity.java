@@ -259,14 +259,17 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                         public void onSuccess(Uri uri) {
 
                             imageReference = uri.toString();
+                            String uploadId = firebaseDatabase.push().getKey();
 
                             Toast.makeText(SellActivity.this, "Posting Successful", Toast.LENGTH_LONG).show();
                             ImageUpload upload =
                                     new ImageUpload(editTextTitle.getText().toString().trim(),
                                             editTextDesc.getText().toString().trim(),
                                             imageReference,
-                                            category.trim(), price);
-                            String uploadId = firebaseDatabase.push().getKey();
+                                            category.trim(),
+                                            price,
+                                            uploadId);
+
                             firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
 
                             //store user's listing history
