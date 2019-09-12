@@ -8,12 +8,13 @@ public class ImageUpload {
     String category;
     Double price;
     String uploadId;
+    String sellerId;
 
     public ImageUpload() {
 
     }
 
-    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId) {
+    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId, String sellerId) {
 
         this.title = title;
         this.desc = desc;
@@ -21,6 +22,7 @@ public class ImageUpload {
         this.category = category;
         this.price = price;
         this.uploadId = uploadId;
+        this.sellerId = sellerId;
 
     }
 
@@ -70,6 +72,14 @@ public class ImageUpload {
 
     public void setUploadId(String uploadId) {
         this.uploadId = uploadId;
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
 }

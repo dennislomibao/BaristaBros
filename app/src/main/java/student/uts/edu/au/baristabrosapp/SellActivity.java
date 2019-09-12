@@ -268,7 +268,8 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                                             imageReference,
                                             category.trim(),
                                             price,
-                                            uploadId);
+                                            uploadId,
+                                            user.getUid());
 
                             firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
 

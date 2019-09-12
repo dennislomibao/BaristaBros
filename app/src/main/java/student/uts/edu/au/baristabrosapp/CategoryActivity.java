@@ -94,6 +94,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 intent.putExtra("description", catList.get(position).desc);
                 intent.putExtra("category", catList.get(position).category);
                 intent.putExtra("uploadId", catList.get(position).uploadId);
+                intent.putExtra("sellerId", catList.get(position).sellerId);
 
                 intent.setClass(CategoryActivity.this, ItemActivity.class);
                 startActivity(intent);
