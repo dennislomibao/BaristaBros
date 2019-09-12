@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="student.uts.edu.au.baristabrosapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +18,13 @@
         </activity>
         <activity android:name=".CategoryActivity">
         </activity>
+        <activity android:name=".ItemActivity"></activity>
+        <activity android:name=".SellActivity"></activity>
+        <activity android:name=".WishlistActivity"></activity>
+        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".BuyHistoryActivity"></activity>
+        <activity android:name=".SellHistoryActivity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".RegistrationActivity" />

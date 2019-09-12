@@ -16,6 +16,12 @@
         <item android:id="@+id/nav_selling"
             android:title="Selling"
             android:icon="@drawable/ic_money_white_24dp"/>
+        <item android:id="@+id/nav_buy_history"
+            android:title="Buy History"
+            android:icon="@drawable/ic_buy_history_white_24dp"/>
+        <item android:id="@+id/nav_sell_history"
+            android:title="Sell History"
+            android:icon="@drawable/ic_sell_history_white_24dp"/>
     </group>
 
     <group>

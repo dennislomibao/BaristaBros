@@ -124,4 +124,5 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         return result;
     }
+
 }

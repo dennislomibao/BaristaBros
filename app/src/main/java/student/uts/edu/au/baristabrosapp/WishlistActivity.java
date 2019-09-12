@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,23 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class WishlistActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
     private DrawerLayout drawerLayout;
-    private Button catComputersBtn;
-    private Button catLaptopsBtn;
-    private Button catCpuBtn;
-    private Button catFansBtn;
-    private Button catMbBtn;
-    private Button catMemoryBtn;
-    private Button catStorageBtn;
-    private Button catVcBtn;
-    private Button catCaseBtn;
-    private Button catPsBtn;
-    private Button catMonitorsBtn;
-    private Button catPeriBtn;
-    private Button catOsBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
@@ -45,8 +31,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-
+        setContentView(R.layout.activity_wishlist);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -56,130 +41,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        catComputersBtn = findViewById(R.id.btnCatComputers);
-        catLaptopsBtn = findViewById(R.id.btnCatLaptops);
-        catCpuBtn = findViewById(R.id.btnCatCpu);
-        catFansBtn = findViewById(R.id.btnCatFans);
-        catMbBtn = findViewById(R.id.btnCatMb);
-        catMemoryBtn = findViewById(R.id.btnCatMemory);
-        catStorageBtn = findViewById(R.id.btnCatStorage);
-        catVcBtn = findViewById(R.id.btnCatVc);
-        catCaseBtn = findViewById(R.id.btnCatCase);
-        catPsBtn = findViewById(R.id.btnCatPs);
-        catMonitorsBtn = findViewById(R.id.btnCatMonitors);
-        catPeriBtn = findViewById(R.id.btnCatPeri);
-        catOsBtn = findViewById(R.id.btnCatOs);
-
-
-        Intent intent = new Intent();
-
-
-        //category button functions
-        catComputersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Computers");
-
-            }
-        });
-        catLaptopsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Laptops");
-
-            }
-        });
-        catCpuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("CPU");
-
-            }
-        });
-        catFansBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Fans and Coolers");
-
-            }
-        });
-        catMbBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Motherboards");
-
-            }
-        });
-        catMemoryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Memory");
-
-            }
-        });
-        catStorageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Storage");
-
-            }
-        });
-        catVcBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Video Cards");
-
-            }
-        });
-        catCaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Case");
-
-            }
-        });
-        catPsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Power Supply");
-
-            }
-        });
-        catMonitorsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Monitors");
-
-            }
-        });
-        catPeriBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Peripherals");
-
-            }
-        });
-        catOsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Operating Systems");
-
-            }
-        });
-
 
         //read user's name from database
         //change side menu name depending on user
@@ -212,14 +73,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     }
 
-    private void startCategoryActivity(String category) {
-
-        Intent intent = new Intent();
-        intent.putExtra("category", category);
-        intent.setClass(HomePageActivity.this, CategoryActivity.class);
-        startActivity(intent);
-
-    }
 
     //Slide out menu options
     @Override
@@ -228,12 +81,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         Intent intent;
 
         if (id == R.id.nav_search) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_wishlist) {
-            intent = new Intent(this, WishlistActivity.class);
+            intent = new Intent(this, HomePageActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
+        } else if (id == R.id.nav_wishlist) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_cart) {
             intent = new Intent(this, CartActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -281,5 +134,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             super.onBackPressed();
         }
     }
+
 
 }

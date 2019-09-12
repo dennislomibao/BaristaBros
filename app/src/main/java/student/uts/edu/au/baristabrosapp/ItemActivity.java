@@ -1,13 +1,17 @@
 package student.uts.edu.au.baristabrosapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,33 +24,56 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.text.DecimalFormat;
+
+public class ItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
     private DrawerLayout drawerLayout;
-    private Button catComputersBtn;
-    private Button catLaptopsBtn;
-    private Button catCpuBtn;
-    private Button catFansBtn;
-    private Button catMbBtn;
-    private Button catMemoryBtn;
-    private Button catStorageBtn;
-    private Button catVcBtn;
-    private Button catCaseBtn;
-    private Button catPsBtn;
-    private Button catMonitorsBtn;
-    private Button catPeriBtn;
-    private Button catOsBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
 
+    private final DecimalFormat df2 = new DecimalFormat("0.00");
+
+    private ImageView imageView;
+    private TextView textViewTitle;
+    private TextView textViewPrice;
+    private TextView textViewCategory;
+    private TextView textViewDescription;
+    private Button btnWishlist;
+    private Button btnCart;
+
+    private String imageUrl;
+    private String title;
+    private Double price;
+    private String description;
+    private String category;
+    private String uploadId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_item);
 
+        Intent intent = getIntent();
+        imageUrl = intent.getStringExtra("picture");
+        title = intent.getStringExtra("title");
+        price = intent.getDoubleExtra("price", 0.00);
+        category = intent.getStringExtra("category");
+        description = intent.getStringExtra("description");
+        uploadId = intent.getStringExtra("uploadId");
+
+        imageView = (ImageView) findViewById(R.id.imageView);
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
+        textViewCategory = (TextView) findViewById(R.id.textViewCategory);
+        textViewDescription = (TextView) findViewById(R.id.textViewDescription);
+        btnWishlist = (Button) findViewById(R.id.btnWishlist);
+        btnCart = (Button) findViewById(R.id.btnCart);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -56,127 +83,61 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        catComputersBtn = findViewById(R.id.btnCatComputers);
-        catLaptopsBtn = findViewById(R.id.btnCatLaptops);
-        catCpuBtn = findViewById(R.id.btnCatCpu);
-        catFansBtn = findViewById(R.id.btnCatFans);
-        catMbBtn = findViewById(R.id.btnCatMb);
-        catMemoryBtn = findViewById(R.id.btnCatMemory);
-        catStorageBtn = findViewById(R.id.btnCatStorage);
-        catVcBtn = findViewById(R.id.btnCatVc);
-        catCaseBtn = findViewById(R.id.btnCatCase);
-        catPsBtn = findViewById(R.id.btnCatPs);
-        catMonitorsBtn = findViewById(R.id.btnCatMonitors);
-        catPeriBtn = findViewById(R.id.btnCatPeri);
-        catOsBtn = findViewById(R.id.btnCatOs);
+
+        //set objects
+        Picasso.with(this).load(Uri.parse(imageUrl)).into(imageView);
+        textViewTitle.setText(title);
+        textViewPrice.setText("$" + df2.format(price));
+        textViewCategory.setText(category);
+        textViewDescription.setText(description);
 
 
-        Intent intent = new Intent();
-
-
-        //category button functions
-        catComputersBtn.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference DrWishlist = firebaseDatabase.child("users").child(user.getUid()).child("Wishlist");
+        DrWishlist.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                startCategoryActivity("Computers");
+                //check if item is already in wishlist
+                if (dataSnapshot.hasChild(uploadId)) {
+
+                    btnWishlist.setText("Remove from Wishlist");
+
+                } else {
+
+                    btnWishlist.setText("Add to Wishlist");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        catLaptopsBtn.setOnClickListener(new View.OnClickListener() {
+
+        //add item to wishlist
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Laptops");
+                if (btnWishlist.getText() == "Add to Wishlist") {
 
-            }
-        });
-        catCpuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    ImageUpload upload = new ImageUpload(
+                            title, description, imageUrl, category, price, uploadId
+                    );
 
-                startCategoryActivity("CPU");
+                    firebaseDatabase.child("users").child(user.getUid()).child("Wishlist").child(uploadId).setValue(upload);
 
-            }
-        });
-        catFansBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    Toast.makeText(ItemActivity.this, "Item Added to Wishlist", Toast.LENGTH_SHORT).show();
+                    btnWishlist.setText("Remove from Wishlist");
 
-                startCategoryActivity("Fans and Coolers");
+                } else {
 
-            }
-        });
-        catMbBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    firebaseDatabase.child("users").child(user.getUid()).child("Wishlist").child(uploadId).removeValue();
+                    Toast.makeText(ItemActivity.this, "Item Removed from Wishlist", Toast.LENGTH_SHORT).show();
+                    btnWishlist.setText("Add to Wishlist");
 
-                startCategoryActivity("Motherboards");
-
-            }
-        });
-        catMemoryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Memory");
-
-            }
-        });
-        catStorageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Storage");
-
-            }
-        });
-        catVcBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Video Cards");
-
-            }
-        });
-        catCaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Case");
-
-            }
-        });
-        catPsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Power Supply");
-
-            }
-        });
-        catMonitorsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Monitors");
-
-            }
-        });
-        catPeriBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Peripherals");
-
-            }
-        });
-        catOsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startCategoryActivity("Operating Systems");
-
+                }
             }
         });
 
@@ -212,15 +173,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     }
 
-    private void startCategoryActivity(String category) {
-
-        Intent intent = new Intent();
-        intent.putExtra("category", category);
-        intent.setClass(HomePageActivity.this, CategoryActivity.class);
-        startActivity(intent);
-
-    }
-
     //Slide out menu options
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -228,7 +180,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         Intent intent;
 
         if (id == R.id.nav_search) {
+            intent = new Intent(this, HomePageActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_wishlist) {
             intent = new Intent(this, WishlistActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -271,6 +226,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         return false;
 
     }
+
 
     //Phone back button closes menu rather than app
     @Override

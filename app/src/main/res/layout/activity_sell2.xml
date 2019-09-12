@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- main content -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:padding="15dp"
+    tools:context=".SellActivity">
+
+
+        <Button
+            android:id="@+id/btnChoose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:padding="5dp"
+            android:text="Choose Image"/>
+
+
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnChoose"
+            android:layout_marginStart="15dp"
+            android:hint="Enter Title" />
+
+        <EditText
+            android:id="@+id/editTextDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextTitle"
+            android:layout_marginTop="15dp"
+            android:hint="Enter Description" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextDesc"
+            android:layout_marginTop="15dp"
+            android:textSize="22dp"
+            android:text="Category:"
+                />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:entries="@array/categoryNames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tvCategory"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/editTextDesc"/>
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinnerCategory"
+            android:layout_marginTop="15dp"
+            android:textSize="22dp"
+            android:text="Price ($):"
+            />
+
+        <EditText
+            android:id="@+id/editTextPrice"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinnerCategory"
+            android:layout_toRightOf="@+id/tvPrice"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:hint="Enter Price" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvPrice"
+            android:layout_margin="15dp"
+            android:layout_above="@+id/progressBar"
+            />
+
+        <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSubmit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Submit"/>
+
+
+
+</RelativeLayout>

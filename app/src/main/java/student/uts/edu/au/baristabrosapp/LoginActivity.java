@@ -2,7 +2,6 @@ package student.uts.edu.au.baristabrosapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -92,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void openRegistrationActivity(){
@@ -142,6 +140,18 @@ public class LoginActivity extends AppCompatActivity {
             result = true;
         }
         return result;
+    }
+
+    //Phone back button closes app
+    @Override
+    public void onBackPressed() {
+
+        //Back button goes to home screen instead of previous activity
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 }
 
