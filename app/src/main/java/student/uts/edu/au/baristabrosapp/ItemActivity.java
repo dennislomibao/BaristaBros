@@ -43,6 +43,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
     private TextView textViewPrice;
     private TextView textViewCategory;
     private TextView textViewDescription;
+    private TextView textViewSeller;
     private Button btnWishlist;
     private Button btnCart;
 
@@ -74,6 +75,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
         textViewCategory = (TextView) findViewById(R.id.textViewCategory);
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
+        textViewSeller = (TextView) findViewById(R.id.textViewSeller);
         btnWishlist = (Button) findViewById(R.id.btnWishlist);
         btnCart = (Button) findViewById(R.id.btnCart);
 
@@ -92,6 +94,21 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         textViewPrice.setText("$" + df2.format(price));
         textViewCategory.setText(category);
         textViewDescription.setText(description);
+
+        DatabaseReference DrSellerName = firebaseDatabase.child("users").child(sellerId).child("name");
+        DrSellerName.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                textViewSeller.setText("Seller: " + dataSnapshot.getValue(String.class));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         DatabaseReference DrWishlist = firebaseDatabase.child("users").child(user.getUid()).child("Wishlist");
