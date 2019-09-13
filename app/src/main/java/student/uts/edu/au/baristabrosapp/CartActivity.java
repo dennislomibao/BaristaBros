@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
@@ -27,6 +33,9 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+    private List<ImageUpload> listCart;
+    private ListView listView;
+    private ItemsList itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,56 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        listView = (ListView) findViewById(R.id.lvCart);
+
+        //Display category list
+        listCart = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent();
+                intent.putExtra("picture", listCart.get(position).imageUrl);
+                intent.putExtra("title", listCart.get(position).title);
+                intent.putExtra("price", listCart.get(position).price);
+                intent.putExtra("description", listCart.get(position).desc);
+                intent.putExtra("category", listCart.get(position).category);
+                intent.putExtra("uploadId", listCart.get(position).uploadId);
+                intent.putExtra("sellerId", listCart.get(position).sellerId);
+
+                intent.setClass(CartActivity.this, ItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        DatabaseReference DrCartData = firebaseDatabase.child("users").child(user.getUid()).child("Cart");
+
+        //get category listing
+        DrCartData.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot listing : dataSnapshot.getChildren()) {
+
+                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
+                    listCart.add(imageUpload);
+
+                }
+
+                itemsList = new ItemsList(CartActivity.this, R.layout.listview_layout, listCart);
+
+                listView.setAdapter(itemsList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //read user's name from database
         //change side menu name depending on user

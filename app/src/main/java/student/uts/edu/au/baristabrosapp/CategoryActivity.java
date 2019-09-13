@@ -42,6 +42,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private FirebaseUser user;
     private List<ImageUpload> catList;
     private ListView listView;
+    private TextView tvTitle;
     private ItemsList itemsList;
 
     private String categorySelected;
@@ -67,6 +68,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         listView = (ListView) findViewById(R.id.lvCat);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        tvTitle.setText(categorySelected);
 
         //Display category list
         catList = new ArrayList<>();
