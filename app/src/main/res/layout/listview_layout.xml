@@ -11,6 +11,7 @@
 
         <ImageView
             android:id="@+id/imageView_pic"
+            android:layout_centerVertical="true"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="0.11"
