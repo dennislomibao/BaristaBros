@@ -1,39 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!-- main content -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:padding="15dp"
     tools:context=".SellHistoryActivity">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TitleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Sales History"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+
+
+    <Button
+        android:id="@+id/btnSellCurrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="20dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                style="@style/TitleStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sales History"
-                android:textAlignment="center"/>
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:dividerHeight="10dp"
-                android:divider="@color/background"/>
-        </LinearLayout>
+        android:background="@drawable/roundedbutton"
+        android:padding="5dp"
+        android:layout_weight="1"
+        android:text="Current Posts" />
 
+    <Button
+        android:id="@+id/btnSellAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:text="All Posts"/>
 
+    </LinearLayout>
 
-    </RelativeLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <ListView
+        android:id="@+id/lvSellHistory"
+        android:background="@color/itemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="20dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/background"/>
+
+</RelativeLayout>
