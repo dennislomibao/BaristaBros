@@ -46,45 +46,4 @@ public class ItemData {
     public Integer getImgId() {
         return imgId;
     }
-
-
-    public static ArrayList<ItemData> search(String category, String title)
-    {
-        DatabaseReference ref;
-        Query query = null;
-        final ArrayList<ItemData> matches = null;
-        if(category == null)
-        {
-            ref = FirebaseDatabase.getInstance().getReference();
-        }
-        else
-        {
-            ref = FirebaseDatabase.getInstance().getReference(category);
-            query = ref.orderByChild("title").equalTo(title);
-        }
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren())
-                {
-                    ItemData i = new ItemData(ds.getValue(ItemData.class).getTitle(),
-                            ds.getValue(ItemData.class).getPrice(),
-                            ds.getValue(ItemData.class).getDesc(),
-                            ds.getValue(ItemData.class).getImgId(),
-                            ds.getValue(ItemData.class).getCategory());
-                    matches.add(i);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-        return matches;
-    }
 }
