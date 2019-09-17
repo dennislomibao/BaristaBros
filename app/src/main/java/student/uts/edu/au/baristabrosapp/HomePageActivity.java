@@ -38,6 +38,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private Button catMonitorsBtn;
     private Button catPeriBtn;
     private Button catOsBtn;
+    private Button payment;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
@@ -46,6 +47,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
 
 
         //firebase initialise
