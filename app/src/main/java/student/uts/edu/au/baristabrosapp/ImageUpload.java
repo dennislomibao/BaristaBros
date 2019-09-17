@@ -114,6 +114,7 @@ public class ImageUpload {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.v("Test","Does this ever get hit?");
+                System.out.println("Working");
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         ImageUpload i = new ImageUpload(ds.getValue(ItemData.class).getTitle(),
                                 ds.getValue(ImageUpload.class).getDesc(),

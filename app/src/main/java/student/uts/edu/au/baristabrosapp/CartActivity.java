@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
     private List<ImageUpload> listCart;
     private ListView listView;
     private ItemsList itemsList;
+    private Button purchase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        purchase = findViewById(R.id.btnPurchase);
         listView = (ListView) findViewById(R.id.lvCart);
 
         //Display category list
@@ -73,7 +75,14 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+        purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Change when needed
+                startActivity(new Intent(CartActivity.this, SellActivity.class));
 
+            }
+        });
         DatabaseReference DrCartData = firebaseDatabase.child("users").child(user.getUid()).child("Cart");
 
         //get category listing

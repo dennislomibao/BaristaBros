@@ -81,6 +81,17 @@
             android:divider="@color/background">
         </ListView>
 
+        <Button
+            android:layout_centerHorizontal="true"
+            android:id = "@+id/btnPurchase"
+            android:text="Payment"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/roundedbutton"
+            android:layout_below="@+id/lvCart">
+
+        </Button>
+
     </RelativeLayout>
 
 </RelativeLayout>
