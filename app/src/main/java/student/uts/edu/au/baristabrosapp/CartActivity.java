@@ -79,7 +79,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 //Change when needed
-                startActivity(new Intent(CartActivity.this, SellActivity.class));
+                startActivity(new Intent(CartActivity.this, PaymentMethod.class));
 
             }
         });
