@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +37,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser user;
     private List<ImageUpload> listCart;
     private ListView listView;
+    private TextView totalPrice;
     private ItemsList itemsList;
     private Button purchase;
 
@@ -45,15 +47,16 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_cart);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
+        totalPrice = findViewById(R.id.tvTotal);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         purchase = findViewById(R.id.btnPurchase);
-        listView = (ListView) findViewById(R.id.lvCart);
+        listView = findViewById(R.id.lvCart);
 
         //Display category list
         listCart = new ArrayList<>();
@@ -79,8 +82,10 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 //Change when needed
-                startActivity(new Intent(CartActivity.this, PaymentMethod.class));
-
+                Intent intent = new Intent();
+                intent.putExtra("price", calculateTotalPrice(listCart));
+                intent.setClass(CartActivity.this, PaymentMethod.class);
+                startActivity(intent);
             }
         });
         DatabaseReference DrCartData = firebaseDatabase.child("users").child(user.getUid()).child("Cart");
@@ -100,6 +105,8 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
 
                 itemsList = new ItemsList(CartActivity.this, R.layout.listview_layout, listCart);
 
+                totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", calculateTotalPrice(listCart)));
+
                 listView.setAdapter(itemsList);
 
             }
@@ -117,7 +124,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -200,6 +207,14 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    private double calculateTotalPrice(List<ImageUpload> listCart) {
+        double total = 0.0;
+        for (ImageUpload item: listCart) {
+            total += item.price;
+        }
+        return total;
     }
 
 }

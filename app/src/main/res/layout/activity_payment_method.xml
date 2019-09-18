@@ -16,13 +16,21 @@
             android:id="@+id/pay_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"
-            android:text="@string/pay_now" />
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="#00BCD4"
+            android:text="@string/pay_now"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textAlignment="center"/>
     </com.braintreepayments.cardform.view.CardForm>
 
 </RelativeLayout>

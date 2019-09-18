@@ -81,6 +81,16 @@
             android:divider="@color/background">
         </ListView>
 
+
+        <TextView
+            android:id="@+id/tvTotal"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textAlignment="center"/>
+
+
         <Button
             android:layout_centerHorizontal="true"
             android:id = "@+id/btnPurchase"
