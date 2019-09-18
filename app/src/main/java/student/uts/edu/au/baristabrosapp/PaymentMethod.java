@@ -13,11 +13,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.braintreepayments.cardform.view.CardForm;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 
 public class PaymentMethod extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference firebaseDatabase;
+    private FirebaseUser user;
     CardForm cardForm;
     private double price;
     private TextView totalPrice;
@@ -29,6 +36,11 @@ public class PaymentMethod extends AppCompatActivity {
         Intent intent = getIntent();
         price = intent.getDoubleExtra("price", 0.00);
         setContentView(R.layout.activity_payment_method);
+
+        //firebase initialise
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        user = firebaseAuth.getCurrentUser();
 
         cardForm = findViewById(R.id.credit_card);
         totalPrice = findViewById(R.id.tvTotal);
@@ -49,7 +61,9 @@ public class PaymentMethod extends AppCompatActivity {
                             .setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //TODO empty cart
+                                    // Remove cart
+                                    firebaseDatabase.child("users").child(user.getUid()).child("Cart").removeValue();
+
                                     Toast.makeText(PaymentMethod.this, "thank you for your purchase", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(PaymentMethod.this, HomePageActivity.class));
                                 }
@@ -58,6 +72,7 @@ public class PaymentMethod extends AppCompatActivity {
                             .show();
                 } else {
                     //TODO add error message
+
                 }
             }
         });
