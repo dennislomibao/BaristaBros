@@ -42,6 +42,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private FirebaseUser user;
     private List<ImageUpload> catList;
     private ListView listView;
+    private TextView tvTitle;
     private ItemsList itemsList;
 
     private String categorySelected;
@@ -67,6 +68,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         listView = (ListView) findViewById(R.id.lvCat);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        tvTitle.setText(categorySelected);
 
         //Display category list
         catList = new ArrayList<>();
@@ -117,8 +121,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
                 }
 
-                itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList);
+                //itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList);
 
+                itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList );
                 listView.setAdapter(itemsList);
 
             }
@@ -128,7 +133,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
             }
         });
-
+        //Just test for search
+        //ArrayList<ImageUpload> test = ImageUpload.search("Computers","Acer");
         //read user's name from database
         //change side menu name depending on user
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
