@@ -109,20 +109,28 @@ public class ImageUpload {
             ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
 
         }
-        Query query = ref.orderByChild("title").equalTo(title);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        ref.orderByChild("title").startAt(title).endAt(title +"\uf8ff").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.v("Test","Does this ever get hit?");
                 System.out.println("Working");
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ImageUpload i = new ImageUpload(ds.getValue(ItemData.class).getTitle(),
+                        /*ImageUpload i = new ImageUpload(ds.getValue(ItemData.class).getTitle(),
                                 ds.getValue(ImageUpload.class).getDesc(),
                                 ds.getValue(ImageUpload.class).getImageUrl(),
                                 ds.getValue(ImageUpload.class).getCategory(),
                                 ds.getValue(ImageUpload.class).getPrice(),
                                 ds.getValue(ImageUpload.class).getUploadId(),
-                                ds.getValue(ImageUpload.class).getSellerId());
+                                ds.getValue(ImageUpload.class).getSellerId());*/
+                        ImageUpload i = new ImageUpload();
+                        i.setTitle(ds.getValue(ImageUpload.class).getTitle());
+                        i.setDesc(ds.getValue(ImageUpload.class).getDesc());
+                        i.setImageUrl(ds.getValue(ImageUpload.class).getImageUrl());
+                        i.setCategory(ds.getValue(ImageUpload.class).getCategory());
+                        i.setPrice(ds.getValue(ImageUpload.class).getPrice());
+                        i.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
+                        i.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
                         matches.add(i);
                     }
 
