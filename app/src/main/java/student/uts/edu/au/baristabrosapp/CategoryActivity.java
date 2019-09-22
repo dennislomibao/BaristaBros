@@ -2,7 +2,6 @@ package student.uts.edu.au.baristabrosapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -111,7 +109,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         DatabaseReference DrCategoryData = firebaseDatabase.child("category").child(categorySelected);
 
         //get category listing
-        /*
+
         DrCategoryData.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -134,10 +132,10 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }});*/
-        catList = ImageUpload.search(categorySelected,"");
+            }});
+        /*catList = ImageUpload.search(categorySelected,"");
         itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList );
-        listView.setAdapter(itemsList);
+        listView.setAdapter(itemsList);*/
 
         //Just test for search
         //ArrayList<ImageUpload> test = ImageUpload.search("Computers","Acer");

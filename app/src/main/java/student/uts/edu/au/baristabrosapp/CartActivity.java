@@ -96,6 +96,8 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                listCart = new ArrayList<>();
+
                 for (DataSnapshot listing : dataSnapshot.getChildren()) {
 
                     ImageUpload imageUpload = listing.getValue(ImageUpload.class);
