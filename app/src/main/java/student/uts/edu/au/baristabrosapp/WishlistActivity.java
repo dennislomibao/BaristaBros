@@ -68,6 +68,7 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
                 intent.putExtra("category", listWishlist.get(position).category);
                 intent.putExtra("uploadId", listWishlist.get(position).uploadId);
                 intent.putExtra("sellerId", listWishlist.get(position).sellerId);
+                intent.putExtra("sellTime", listWishlist.get(position).sellTime);
 
                 intent.setClass(WishlistActivity.this, ItemActivity.class);
                 startActivity(intent);

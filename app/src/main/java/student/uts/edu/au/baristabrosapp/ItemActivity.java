@@ -44,6 +44,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
     private TextView textViewCategory;
     private TextView textViewDescription;
     private TextView textViewSeller;
+    private TextView textViewSellTime;
     private Button btnWishlist;
     private Button btnCart;
 
@@ -54,6 +55,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
     private String category;
     private String uploadId;
     private String sellerId;
+    private String sellTime;
 
 
     @Override
@@ -69,6 +71,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         description = intent.getStringExtra("description");
         uploadId = intent.getStringExtra("uploadId");
         sellerId = intent.getStringExtra("sellerId");
+        sellTime = intent.getStringExtra("sellTime");
 
         imageView = (ImageView) findViewById(R.id.imageView);
         textViewTitle = (TextView) findViewById(R.id.textViewTitle);
@@ -76,6 +79,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         textViewCategory = (TextView) findViewById(R.id.textViewCategory);
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
         textViewSeller = (TextView) findViewById(R.id.textViewSeller);
+        textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
         btnWishlist = (Button) findViewById(R.id.btnWishlist);
         btnCart = (Button) findViewById(R.id.btnCart);
 
@@ -94,6 +98,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         textViewPrice.setText("$" + df2.format(price));
         textViewCategory.setText(category);
         textViewDescription.setText(description);
+        textViewSellTime.setText("Date Posted: " + sellTime);
 
         DatabaseReference DrSellerName = firebaseDatabase.child("users").child(sellerId).child("name");
         DrSellerName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,6 +114,8 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+        //time of post
 
 
         DatabaseReference DrWishlist = firebaseDatabase.child("users").child(user.getUid()).child("Wishlist");
@@ -165,7 +172,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
                 if (btnWishlist.getText() == "Add to Wishlist") {
 
                     ImageUpload upload = new ImageUpload(
-                            title, description, imageUrl, category, price, uploadId, sellerId
+                            title, description, imageUrl, category, price, uploadId, sellerId, sellTime
                     );
 
                     firebaseDatabase.child("users").child(user.getUid()).child("Wishlist").child(uploadId).setValue(upload);
@@ -227,7 +234,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
                 if (btnCart.getText() == "Add to Cart") {
 
                     ImageUpload upload = new ImageUpload(
-                            title, description, imageUrl, category, price, uploadId, sellerId
+                            title, description, imageUrl, category, price, uploadId, sellerId, sellTime
                     );
 
                     firebaseDatabase.child("users").child(user.getUid()).child("Cart").child(uploadId).setValue(upload);

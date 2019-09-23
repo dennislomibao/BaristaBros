@@ -75,6 +75,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
                 intent.putExtra("category", listSellHistory.get(position).category);
                 intent.putExtra("uploadId", listSellHistory.get(position).uploadId);
                 intent.putExtra("sellerId", listSellHistory.get(position).sellerId);
+                intent.putExtra("sellTime", listSellHistory.get(position).sellTime);
 
                 intent.setClass(SellHistoryActivity.this, ItemActivity.class);
                 startActivity(intent);
@@ -148,6 +149,8 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                listSellHistory = new ArrayList<>();
 
                 for (DataSnapshot listing : dataSnapshot.getChildren()) {
 

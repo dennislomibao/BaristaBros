@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,21 +74,33 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("category", listCart.get(position).category);
                 intent.putExtra("uploadId", listCart.get(position).uploadId);
                 intent.putExtra("sellerId", listCart.get(position).sellerId);
+                intent.putExtra("sellTime", listCart.get(position).sellTime);
 
                 intent.setClass(CartActivity.this, ItemActivity.class);
                 startActivity(intent);
             }
         });
+
+
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Change when needed
-                Intent intent = new Intent();
-                intent.putExtra("price", calculateTotalPrice(listCart));
-                intent.setClass(CartActivity.this, PaymentMethod.class);
-                startActivity(intent);
+                if (calculateTotalPrice(listCart) > 0) {
+                    Intent intent = new Intent();
+                    intent.putExtra("price", calculateTotalPrice(listCart));
+                    intent.setClass(CartActivity.this, PaymentMethod.class);
+                    startActivity(intent);
+                } else {
+
+                    Toast.makeText(CartActivity.this, "No items added", Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
+
         DatabaseReference DrCartData = firebaseDatabase.child("users").child(user.getUid()).child("Cart");
 
         //get category listing

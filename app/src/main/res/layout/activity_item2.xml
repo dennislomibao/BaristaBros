@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="Category"
                 android:layout_below="@+id/textViewPrice"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textStyle="bold"
@@ -73,7 +73,7 @@
                 android:layout_below="@+id/textViewCategory"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:textSize="18sp">
             </TextView>
 
@@ -85,7 +85,20 @@
                 android:layout_below="@+id/textViewDescription"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="40dp"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/textViewSellTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Posted: "
+                android:layout_below="@+id/textViewSeller"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:textSize="18sp">
             </TextView>
@@ -95,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundedbutton"
-                android:layout_below="@+id/textViewSeller"
+                android:layout_below="@+id/textViewSellTime"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="30dp"
