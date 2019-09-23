@@ -120,7 +120,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
 
         //Just test for search
-        //ArrayList<ImageUpload> test = ImageUpload.search("Computers","Acer");
+
 
         //read user's name from database
         //change side menu name depending on user
