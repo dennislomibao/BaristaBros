@@ -1,20 +1,16 @@
 package student.uts.edu.au.baristabrosapp;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.app.ProgressDialog;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText userName, email, password, confirmPassword;
     private Button createAccount;
     private Button loginActivity;
+    private Button nextPage;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
@@ -42,42 +39,18 @@ public class RegistrationActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         progressDialog =  new ProgressDialog(this);
 
-
-        createAccount.setOnClickListener(new View.OnClickListener() {
+        nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validate()){
-                    //upload to database
-                    String user_email = email.getText().toString().trim();
-                    String user_password = password.getText().toString().trim();
 
-                    progressDialog.setMessage("Please Wait Patiently");
-                    progressDialog.show();
+                    Intent intent = new Intent();
+                    intent.putExtra("name", userName.getText().toString().trim());
+                    intent.putExtra("email", email.getText().toString().trim());
+                    intent.putExtra("password", password.getText().toString().trim());
+                    intent.setClass(RegistrationActivity.this, Registration2Activity.class);
+                    startActivity(intent);
 
-                    firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                progressDialog.dismiss();
-                                Toast.makeText(RegistrationActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
-
-                                //Store user's details in firebase database
-                                user = task.getResult().getUser();
-                                firebaseDatabase.child("users").child(user.getUid()).child("name").setValue(userName.getText().toString().trim());
-                                firebaseDatabase.child("users").child(user.getUid()).child("email").setValue(email.getText().toString().trim());
-                                firebaseDatabase.child("users").child(user.getUid()).child("password").setValue(password.getText().toString().trim());
-
-                                finish();
-                                startActivity(new Intent(RegistrationActivity.this, HomePageActivity.class));
-                            }else{
-                                progressDialog.dismiss();
-                                Toast.makeText(RegistrationActivity.this, "Account Already Exists",Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                        }
-                    });
                 }
             }
         });
@@ -92,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPassword = (EditText) findViewById(R.id.etConfPassword);
         createAccount = (Button) findViewById(R.id.btnCreate);
         loginActivity = (Button) findViewById(R.id.btnCreates);
+        nextPage = (Button) findViewById(R.id.btnNext);
 
         loginActivity.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -82,6 +82,8 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                listWishlist = new ArrayList<>();
+
                 for (DataSnapshot listing : dataSnapshot.getChildren()) {
 
                     ImageUpload imageUpload = listing.getValue(ImageUpload.class);

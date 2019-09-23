@@ -1,6 +1,9 @@
 package student.uts.edu.au.baristabrosapp;
 
+import android.app.Activity;
 import android.util.Log;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
@@ -95,10 +98,10 @@ public class ImageUpload {
         this.sellerId = sellerId;
     }
 
-    public static ArrayList<ImageUpload> search(String category, String title)
+    public static void search(final searchable act, String category, String title)
     {
         DatabaseReference ref;
-       // Query query = null;
+        Query query;
         final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
         if(category == null)
         {
@@ -109,32 +112,38 @@ public class ImageUpload {
             ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
 
         }
-        Query query = ref.orderByChild("title").equalTo(title);
+        if(title.equals(""))
+        {
+            query = ref.orderByChild("title");
+        }
+        else
+        {
+           query = ref.orderByChild("title").startAt(title).endAt(title +"\uf8ff");
+        }
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.v("Test","Does this ever get hit?");
-                System.out.println("Working");
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ImageUpload i = new ImageUpload(ds.getValue(ItemData.class).getTitle(),
-                                ds.getValue(ImageUpload.class).getDesc(),
-                                ds.getValue(ImageUpload.class).getImageUrl(),
-                                ds.getValue(ImageUpload.class).getCategory(),
-                                ds.getValue(ImageUpload.class).getPrice(),
-                                ds.getValue(ImageUpload.class).getUploadId(),
-                                ds.getValue(ImageUpload.class).getSellerId());
+                        ImageUpload i = new ImageUpload();
+                        i.setTitle(ds.getValue(ImageUpload.class).getTitle());
+                        i.setDesc(ds.getValue(ImageUpload.class).getDesc());
+                        i.setImageUrl(ds.getValue(ImageUpload.class).getImageUrl());
+                        i.setCategory(ds.getValue(ImageUpload.class).getCategory());
+                        i.setPrice(ds.getValue(ImageUpload.class).getPrice());
+                        i.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
+                        i.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
                         matches.add(i);
                     }
-
+                    act.updateList(matches);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
 
-
-        return matches;
     }
 }

@@ -2,10 +2,14 @@ package student.uts.edu.au.baristabrosapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,7 +34,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, searchable {
 
 
     private static DecimalFormat df2 = new DecimalFormat("0.00");
@@ -44,8 +49,12 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private ListView listView;
     private TextView tvTitle;
     private ItemsList itemsList;
-
     private String categorySelected;
+    private Button searchBtn;
+    private EditText etSearch;
+    private TextView tvNoContent;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +78,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         listView = (ListView) findViewById(R.id.lvCat);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-
+        searchBtn =(Button) findViewById(R.id.btnSearch);
+        etSearch = (EditText) findViewById((R.id.etSearch));
+        tvNoContent = (TextView) findViewById(R.id.tvNotFound);
         tvTitle.setText(categorySelected);
 
         //Display category list
@@ -86,7 +97,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
 
         listView.setAdapter(itemsList);*/
-
+        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -105,36 +116,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        ImageUpload.search(this, categorySelected,"");
 
-        DatabaseReference DrCategoryData = firebaseDatabase.child("category").child(categorySelected);
 
-        //get category listing
-        DrCategoryData.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot listing : dataSnapshot.getChildren()) {
-
-                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
-                    catList.add(imageUpload);
-
-                }
-
-                //itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList);
-
-                itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList );
-                listView.setAdapter(itemsList);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         //Just test for search
-        //ArrayList<ImageUpload> test = ImageUpload.search("Computers","Acer");
+
+
         //read user's name from database
         //change side menu name depending on user
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
@@ -163,6 +151,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 }
             });
         }
+        listView.setAdapter(itemsList);
+
 
 
     }
@@ -232,4 +222,27 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
+    @Override
+    public void updateList(ArrayList<ImageUpload> imageUploads) {
+        if(imageUploads.size()<1)
+        {
+            tvNoContent.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tvNoContent.setVisibility(View.GONE);
+        }
+        itemsList.clear();
+/*
+        for(ImageUpload o: imageUploads)
+        {
+            itemsList.insert(o,itemsList.getCount());
+        }*/
+        itemsList.setData(imageUploads);
+
+    }
+    public void searchOnClick(View v)
+    {
+        ImageUpload.search(this, categorySelected, etSearch.getText().toString());
+    }
 }

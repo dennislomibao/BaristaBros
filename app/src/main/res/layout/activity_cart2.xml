@@ -77,6 +77,7 @@
             android:background="@color/itemBackground"
             android:dividerHeight="10dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="120dp"
             android:layout_below="@+id/tvTitle"
             android:divider="@color/background">
         </ListView>
@@ -99,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/roundedbutton"
-            android:layout_below="@+id/lvCart">
+            android:layout_above="@+id/tvTotal"
+            android:layout_marginBottom="10dp">
 
         </Button>
 
