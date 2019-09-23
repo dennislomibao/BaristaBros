@@ -29,6 +29,7 @@ public class PaymentMethod extends AppCompatActivity {
     private double price;
     private TextView totalPrice;
     Button buy;
+    Button changeAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,13 @@ public class PaymentMethod extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
 
         cardForm = findViewById(R.id.credit_card);
+        changeAddress = findViewById(R.id.changeAddress);
+        changeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PaymentMethod.this, ChangeAddress.class));
+            }
+        });
         totalPrice = findViewById(R.id.tvTotal);
         totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", price));
         buy = findViewById(R.id.pay_now);
