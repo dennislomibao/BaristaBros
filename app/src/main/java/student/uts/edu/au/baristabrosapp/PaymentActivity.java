@@ -27,9 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class PaymentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm z");
 
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
@@ -92,6 +96,21 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                                                 imageUpload.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
                                                 imageUpload.setTitle(ds.getValue(ImageUpload.class).getTitle());
                                                 imageUpload.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
+                                                imageUpload.setSellTime(ds.getValue(ImageUpload.class).getSellTime());
+
+                                                String time = sdf.format(new Date());
+
+                                                ViewItem viewItem =
+                                                        new ViewItem(imageUpload.getTitle(),
+                                                                imageUpload.getDesc(),
+                                                                imageUpload.getImageUrl(),
+                                                                imageUpload.getCategory(),
+                                                                imageUpload.getPrice(),
+                                                                imageUpload.getUploadId(),
+                                                                imageUpload.getSellerId(),
+                                                                imageUpload.getSellTime(),
+                                                                user.getUid(),
+                                                                time);
 
                                                 firebaseDatabase.child("category").child(imageUpload.getCategory()).child(imageUpload.getUploadId()).removeValue();
                                                 firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell Current")
@@ -99,9 +118,11 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
                                                 firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell History")
                                                         .child(imageUpload.getUploadId()).child("buyerId").setValue(user.getUid());
+                                                firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell History")
+                                                        .child(imageUpload.getUploadId()).child("buyTime").setValue(time);
 
                                                 firebaseDatabase.child("users").child(user.getUid()).child("Buy History")
-                                                        .child(imageUpload.getUploadId()).setValue(imageUpload);
+                                                        .child(imageUpload.getUploadId()).setValue(viewItem);
 
                                             }
                                         }

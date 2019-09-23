@@ -40,6 +40,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
 
     private Button btnSellCurrent;
     private Button btnSellAll;
+    private Boolean viewCurrent = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Intent intent = new Intent();
+                final Intent intent = new Intent();
                 intent.putExtra("picture", listSellHistory.get(position).imageUrl);
                 intent.putExtra("title", listSellHistory.get(position).title);
                 intent.putExtra("price", listSellHistory.get(position).price);
@@ -77,8 +78,42 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
                 intent.putExtra("sellerId", listSellHistory.get(position).sellerId);
                 intent.putExtra("sellTime", listSellHistory.get(position).sellTime);
 
-                intent.setClass(SellHistoryActivity.this, ItemActivity.class);
-                startActivity(intent);
+                final String uploadId = listSellHistory.get(position).uploadId;
+
+                //if item is already sold, display item as view only
+                if (!viewCurrent) {
+
+                    DatabaseReference DrCheckItemExists = firebaseDatabase.child("users").child(user.getUid()).child("Sell Current");
+
+                    DrCheckItemExists.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.hasChild(uploadId)) {
+
+                                intent.setClass(SellHistoryActivity.this, ItemActivity.class);
+                                startActivity(intent);
+
+                            } else {
+
+                                intent.putExtra("audience", "seller");
+                                intent.setClass(SellHistoryActivity.this, ViewItemActivity.class);
+                                startActivity(intent);
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                } else {
+
+                    intent.setClass(SellHistoryActivity.this, ItemActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
 
@@ -93,6 +128,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
                 getListData("Sell Current");
                 btnSellCurrent.setEnabled(false);
                 btnSellAll.setEnabled(true);
+                viewCurrent = true;
 
             }
         });
@@ -105,6 +141,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
                 getListData("Sell History");
                 btnSellCurrent.setEnabled(true);
                 btnSellAll.setEnabled(false);
+                viewCurrent = false;
 
             }
         });
