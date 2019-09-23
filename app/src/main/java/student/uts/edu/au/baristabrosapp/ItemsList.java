@@ -25,28 +25,24 @@ import java.util.List;
 
 public class ItemsList extends ArrayAdapter<ImageUpload> {
 
-    Context context;
-    int resource;
-    List<ImageUpload> data = null;
+    final Context context;
+    final int resource;
+    List<ImageUpload> data;
 
 
-    public ItemsList(Context context, int resource, List<ImageUpload> objects) {
+    public ItemsList(Context context, int resource, final List<ImageUpload> objects) {
         super(context, resource, objects);
         this.resource = resource;
         this.context = context;
         this.data = objects;
 
-    }
-    public ItemsList(Context context, int resource)
-    {
-        super(context, resource);
-        this.resource = resource;
-        this.context = context;
-        this.data = new ArrayList<ImageUpload>();
+
     }
 
     public void setData(List<ImageUpload> data) {
-        this.data = data;
+        this.data.clear();
+        this.data.addAll(data);
+        notifyDataSetChanged();
     }
     public void addData(ImageUpload upload)
     {
@@ -83,6 +79,7 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
         } else {
 
             dataHolder = (DataHolder) convertView.getTag();
+
 
         }
 

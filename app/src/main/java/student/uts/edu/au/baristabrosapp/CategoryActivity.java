@@ -55,6 +55,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private TextView tvNoContent;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +84,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         tvTitle.setText(categorySelected);
 
         //Display category list
-        final ArrayList<ImageUpload> catList = new ArrayList<>();
+        catList = new ArrayList<>();
         /*catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 2", "$20", "Item description 2", R.drawable.barista, "Category"));
         catList.add(new ItemData("Item title 3", "$20", "Item description 3", R.drawable.barista, "Category"));
@@ -96,7 +97,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
 
         listView.setAdapter(itemsList);*/
-
+        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -150,6 +151,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 }
             });
         }
+        listView.setAdapter(itemsList);
 
 
 
@@ -230,8 +232,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         {
             tvNoContent.setVisibility(View.GONE);
         }
-        itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, imageUploads);
-        listView.setAdapter(itemsList);
+        itemsList.clear();
+/*
+        for(ImageUpload o: imageUploads)
+        {
+            itemsList.insert(o,itemsList.getCount());
+        }*/
+        itemsList.setData(imageUploads);
+
     }
     public void searchOnClick(View v)
     {
