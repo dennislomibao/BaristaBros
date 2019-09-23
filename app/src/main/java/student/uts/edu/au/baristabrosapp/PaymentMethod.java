@@ -71,8 +71,10 @@ public class PaymentMethod extends AppCompatActivity {
                             .setNegativeButton("Cancel", null)
                             .show();
                 } else {
-                    //TODO add error message
 
+                    if (cardForm.getCardNumber().isEmpty() || cardForm.getExpirationDateEditText().toString().isEmpty() || cardForm.getCvv().isEmpty()){
+                        Toast.makeText(PaymentMethod.this,"Input required", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
