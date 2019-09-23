@@ -71,9 +71,7 @@ public class Registration2Activity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                progressDialog.dismiss();
-                                Toast.makeText(Registration2Activity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
-
+                                sendEmailVerification();
                                 //Store user's details in firebase database
                                 user = task.getResult().getUser();
                                 firebaseDatabase.child("users").child(user.getUid()).child("name").setValue(name);
@@ -86,8 +84,7 @@ public class Registration2Activity extends AppCompatActivity {
                                 firebaseDatabase.child("users").child(user.getUid()).child("postcode").setValue(postcode.getText().toString().trim());
                                 firebaseDatabase.child("users").child(user.getUid()).child("accountType").setValue("standard");
 
-                                finish();
-                                startActivity(new Intent(Registration2Activity.this, HomePageActivity.class));
+
                             }else{
                                 progressDialog.dismiss();
                                 Toast.makeText(Registration2Activity.this, "Account Already Exists",Toast.LENGTH_SHORT).show();
@@ -124,6 +121,27 @@ public class Registration2Activity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void sendEmailVerification(){
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser !=null){
+            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(Registration2Activity.this, "Successfully registered, please verify your email", Toast.LENGTH_LONG).show();
+                        firebaseAuth.signOut();
+                        finish();
+                        startActivity(new Intent(Registration2Activity.this, LoginActivity.class));
+                    }else{
+                        Toast.makeText(Registration2Activity.this, "Error sending email", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
+        }
     }
 
 }

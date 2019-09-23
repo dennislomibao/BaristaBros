@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style = "@style/CustomTheme"
+    android:windowSoftInputMode="adjustResize"
+    tools:context=".Registration2Activity"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        style = "@style/TitleStyle"
+        android:id="@+id/textViewCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="10dp"
+        android:text="2/2"
+        android:textSize="18sp"
+        android:textStyle=""
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/etAddress"
+        style="@style/defaultEditText"
+        android:hint="Address Line 1"
+        android:layout_below="@+id/textViewCount"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <EditText
+        android:id="@+id/etSuburb"
+        style="@style/defaultEditText"
+        android:hint="Suburb"
+        android:layout_below="@+id/etAddress"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <EditText
+        android:id="@+id/etCountry"
+        style="@style/defaultEditText"
+        android:hint="Country"
+        android:layout_below="@+id/etSuburb"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="240dp">
+
+        <EditText
+            android:id="@+id/etState"
+            style="@style/defaultEditText"
+            android:hint="State"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:id="@+id/etPostcode"
+            style="@style/defaultEditText"
+            android:hint="Postcode"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnUpdate"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Update Address"/>
+
+
+</RelativeLayout>

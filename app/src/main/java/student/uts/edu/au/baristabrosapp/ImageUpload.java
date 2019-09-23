@@ -1,10 +1,5 @@
 package student.uts.edu.au.baristabrosapp;
 
-import android.app.Activity;
-import android.util.Log;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,12 +20,13 @@ public class ImageUpload {
     Double price;
     String uploadId;
     String sellerId;
+    String sellTime;
 
     public ImageUpload() {
 
     }
 
-    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId, String sellerId) {
+    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId, String sellerId, String sellTime) {
 
         this.title = title;
         this.desc = desc;
@@ -39,6 +35,7 @@ public class ImageUpload {
         this.price = price;
         this.uploadId = uploadId;
         this.sellerId = sellerId;
+        this.sellTime = sellTime;
 
     }
 
@@ -98,6 +95,14 @@ public class ImageUpload {
         this.sellerId = sellerId;
     }
 
+    public String getSellTime() {
+        return sellTime;
+    }
+
+    public void setSellTime(String sellTime) {
+        this.sellTime = sellTime;
+    }
+
     public static void search(final searchable act, String category, String title)
     {
         DatabaseReference ref;
@@ -133,6 +138,7 @@ public class ImageUpload {
                         i.setPrice(ds.getValue(ImageUpload.class).getPrice());
                         i.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
                         i.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
+                        i.setSellTime(ds.getValue(ImageUpload.class).getSellTime());
                         matches.add(i);
                     }
                     act.updateList(matches);
