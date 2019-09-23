@@ -90,7 +90,7 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                 if (calculateTotalPrice(listCart) > 0) {
                     Intent intent = new Intent();
                     intent.putExtra("price", calculateTotalPrice(listCart));
-                    intent.setClass(CartActivity.this, PaymentMethod.class);
+                    intent.setClass(CartActivity.this, PaymentActivity.class);
                     startActivity(intent);
                 } else {
 
