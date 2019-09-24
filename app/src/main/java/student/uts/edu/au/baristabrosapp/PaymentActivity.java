@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,15 +35,25 @@ import java.util.Locale;
 public class PaymentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm z");
+    private final DecimalFormat df2 = new DecimalFormat("0.00");
 
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+
+    TextView tvBuyerName;
+    TextView tvEmail;
+    TextView tvAddressLine1;
+    TextView tvAddressLine2;
+    TextView tvItemsList;
     CardForm cardForm;
     private double price;
     private TextView totalPrice;
     Button buy;
+
+    String addressLine1;
+    String addressLine2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +71,12 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
+
+        tvBuyerName = (TextView) findViewById(R.id.tvBuyerName);
+        tvEmail = (TextView) findViewById(R.id.tvBuyerEmail);
+        tvAddressLine1 = (TextView) findViewById(R.id.tvAddressLine1);
+        tvAddressLine2 = (TextView) findViewById(R.id.tvAddressLine2);
+        tvItemsList = (TextView) findViewById(R.id.tvItemsList);
         cardForm = findViewById(R.id.credit_card);
         totalPrice = findViewById(R.id.tvTotal);
         totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", price));
@@ -110,7 +127,9 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                                                                 imageUpload.getSellerId(),
                                                                 imageUpload.getSellTime(),
                                                                 user.getUid(),
-                                                                time);
+                                                                time,
+                                                                getAddressLine1(),
+                                                                getAddressLine2());
 
                                                 firebaseDatabase.child("category").child(imageUpload.getCategory()).child(imageUpload.getUploadId()).removeValue();
                                                 firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell Current")
@@ -120,6 +139,10 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                                                         .child(imageUpload.getUploadId()).child("buyerId").setValue(user.getUid());
                                                 firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell History")
                                                         .child(imageUpload.getUploadId()).child("buyTime").setValue(time);
+                                                firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell History")
+                                                        .child(imageUpload.getUploadId()).child("buyerAddress1").setValue(getAddressLine1());
+                                                firebaseDatabase.child("users").child(imageUpload.getSellerId()).child("Sell History")
+                                                        .child(imageUpload.getUploadId()).child("buyerAddress2").setValue(getAddressLine2());
 
                                                 firebaseDatabase.child("users").child(user.getUid()).child("Buy History")
                                                         .child(imageUpload.getUploadId()).setValue(viewItem);
@@ -158,7 +181,7 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
         //change side menu name depending on user
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
-            DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
+            DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid());
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
             navView.addHeaderView(v);
             final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
@@ -170,11 +193,40 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                    if (dataSnapshot.getValue(String.class) == null) {
+                    if (dataSnapshot.child("name").getValue(String.class) == null) {
                         tvName.setText("Chris P. Bacon");
                     } else {
-                        tvName.setText(dataSnapshot.getValue(String.class));
+                        tvName.setText(dataSnapshot.child("name").getValue(String.class));
+                        tvBuyerName.setText("Name: " + dataSnapshot.child("name").getValue(String.class));
                     }
+
+                    //Show user's details on payment page
+                    tvEmail.setText("Email: " + dataSnapshot.child("email").getValue(String.class));
+
+                    setAddressLine1(dataSnapshot.child("address").getValue(String.class) + ",");
+                    setAddressLine2(dataSnapshot.child("suburb").getValue(String.class) + " " +
+                                    dataSnapshot.child("state").getValue(String.class) + " " +
+                            dataSnapshot.child("postcode").getValue(String.class) + ", " +
+                            dataSnapshot.child("country").getValue(String.class));
+
+                    tvAddressLine1.setText(getAddressLine1());
+                    tvAddressLine2.setText(getAddressLine2());
+
+                    int count = 0;
+                    String items = "";
+
+                    for (DataSnapshot ds : dataSnapshot.child("Cart").getChildren()) {
+
+                        //new line for each item
+                        if (count > 0) {
+                            items += "\n\n";
+                        }
+                        items += ds.child("title").getValue(String.class) +
+                                "\n$" + df2.format(ds.child("price").getValue(Double.class));
+                        count++;
+                    }
+
+                    tvItemsList.setText(items);
 
                 }
                 @Override
@@ -237,6 +289,22 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
         return false;
 
+    }
+
+    private void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    private String getAddressLine1() {
+        return addressLine1;
+    }
+
+    private void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    private String getAddressLine2() {
+        return addressLine2;
     }
 
 

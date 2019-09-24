@@ -45,6 +45,8 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
     private TextView textViewSellTime;
     private TextView textViewBuyer;
     private TextView textViewBuyTime;
+    private TextView textViewAddress1;
+    private TextView textViewAddress2;
 
     private String imageUrl;
     private String title;
@@ -81,6 +83,8 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
         textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
         textViewBuyer = (TextView) findViewById(R.id.textViewBuyer);
         textViewBuyTime = (TextView) findViewById(R.id.textViewBuyTime);
+        textViewAddress1 = (TextView) findViewById(R.id.tvAddressLine1);
+        textViewAddress2 = (TextView) findViewById(R.id.tvAddressLine2);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -131,12 +135,15 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
 
         if (audience.equals("buyer")) {
 
-            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Buy History").child(uploadId).child("buyTime");
+            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Buy History").child(uploadId);
             DrBuyTime.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.getValue(String.class));
+                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.child("buyTime").getValue(String.class));
+                    textViewAddress1.setText(dataSnapshot.child("buyerAddress1").getValue(String.class));
+                    textViewAddress2.setText(dataSnapshot.child("buyerAddress2").getValue(String.class));
+
 
                 }
 
@@ -147,12 +154,14 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
             });
         } else {
 
-            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).child("buyTime");
+            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId);
             DrBuyTime.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.getValue(String.class));
+                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.child("buyTime").getValue(String.class));
+                    textViewAddress1.setText(dataSnapshot.child("buyerAddress1").getValue(String.class));
+                    textViewAddress2.setText(dataSnapshot.child("buyerAddress2").getValue(String.class));
 
                 }
 

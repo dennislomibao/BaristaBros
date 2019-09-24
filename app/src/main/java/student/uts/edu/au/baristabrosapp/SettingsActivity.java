@@ -90,7 +90,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
             return true;
         } else if (id == R.id.nav_cart) {
+            intent = new Intent(this, CartActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_selling) {
             intent = new Intent(this, SellActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);

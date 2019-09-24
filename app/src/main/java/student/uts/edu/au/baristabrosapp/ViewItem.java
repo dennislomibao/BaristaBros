@@ -12,13 +12,15 @@ public class ViewItem {
     String sellTime;
     String buyerId;
     String buyTime;
+    String buyerAddress1;
+    String buyerAddress2;
 
     public ViewItem() {
 
     }
 
     public ViewItem(String title, String desc, String imageUrl, String category, Double price, String uploadId,
-                    String sellerId, String sellTime, String buyerId, String buyTime) {
+                    String sellerId, String sellTime, String buyerId, String buyTime, String buyerAddress1, String buyerAddress2) {
 
         this.title = title;
         this.desc = desc;
@@ -30,6 +32,8 @@ public class ViewItem {
         this.sellTime = sellTime;
         this.buyerId = buyerId;
         this.buyTime = buyTime;
+        this.buyerAddress1 = buyerAddress1;
+        this.buyerAddress2 = buyerAddress2;
 
     }
 
@@ -111,6 +115,22 @@ public class ViewItem {
 
     public void setBuyTime(String buyTime) {
         this.buyTime = buyTime;
+    }
+
+    public String getBuyerAddress1() {
+        return buyerAddress1;
+    }
+
+    public void setBuyerAddress1(String buyerAddress1) {
+        this.buyerAddress1 = buyerAddress1;
+    }
+
+    public String getBuyerAddress2() {
+        return buyerAddress2;
+    }
+
+    public void setBuyerAddress2(String buyerAddress2) {
+        this.buyerAddress2 = buyerAddress2;
     }
 
 }

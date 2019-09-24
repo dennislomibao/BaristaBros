@@ -130,6 +130,53 @@
                 android:textSize="18sp">
             </TextView>
 
+            <TextView
+                android:id="@+id/textViewTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Address"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="22sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Status: In Progress"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
