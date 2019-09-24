@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validate (String userName, String userPassword){
 
-        progressDialog.setMessage("Please wait Patiently");
+        progressDialog.setMessage("Please Wait Patiently");
         progressDialog.show();
         firebaseAuth.signInWithEmailAndPassword(userName, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

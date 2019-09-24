@@ -6,33 +6,162 @@
     android:layout_height="match_parent"
     tools:context=".PaymentActivity">
 
-    <com.braintreepayments.cardform.view.CardForm
-        android:id="@+id/credit_card"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         >
 
-        <Button
-            android:id="@+id/pay_now"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="#00BCD4"
-            android:text="@string/pay_now"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/tvTotal"
-            style="@style/TitleStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total: $0.00"
-            android:textAlignment="center"/>
-    </com.braintreepayments.cardform.view.CardForm>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="70dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/TitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:text="Checkout"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/tvTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Details"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textSize="22sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvBuyerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:layout_marginRight="15dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvBuyerEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Address"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textSize="22sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line1"
+                android:layout_marginRight="15dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line2"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="40dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvTitle5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Items"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textSize="22sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvItemsList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Display Items"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="40dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expected Delivery Time: 5 Working Days"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="40dp"
+                android:textStyle="bold"
+                android:textSize="14sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvTitle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Details"
+                android:layout_marginRight="15dp"
+                android:textStyle="bold"
+                android:textSize="26sp">
+            </TextView>
+
+            <com.braintreepayments.cardform.view.CardForm
+                android:id="@+id/credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/pay_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00BCD4"
+                    android:text="@string/pay_now"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    style="@style/TitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total: $0.00"
+                    android:textAlignment="center"/>
+
+            </com.braintreepayments.cardform.view.CardForm>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

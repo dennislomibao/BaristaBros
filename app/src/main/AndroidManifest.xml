@@ -15,6 +15,7 @@
         <activity android:name=".HomePageActivity" />
         <activity android:name=".CategoryActivity" />
         <activity android:name=".ItemActivity" />
+        <activity android:name=".ViewItemActivity" />
         <activity android:name=".SellActivity" />
         <activity android:name=".WishlistActivity" />
         <activity android:name=".CartActivity" />
