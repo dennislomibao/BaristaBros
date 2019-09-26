@@ -7,6 +7,8 @@
     <string name="making_online_shopping_easier">Making Online Shopping Easier</string>
     <string name="logout">Logout</string>
     <string name="pay_now">Pay Now</string>
+    <string name="suburb">Suburb</string>
+    <string name="address_line_1">Address Line 1</string>
 
     <string-array name="categoryNames">
 

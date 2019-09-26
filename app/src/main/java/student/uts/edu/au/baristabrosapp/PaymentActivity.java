@@ -43,6 +43,7 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
     private FirebaseUser user;
 
     TextView tvBuyerName;
+    private Button updateAddress;
     TextView tvEmail;
     TextView tvAddressLine1;
     TextView tvAddressLine2;
@@ -73,6 +74,16 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
 
         tvBuyerName = (TextView) findViewById(R.id.tvBuyerName);
+        updateAddress = (Button) findViewById(R.id.btnUpdate);
+        updateAddress = (Button)findViewById(R.id.btnUpdate);
+        updateAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(PaymentActivity.this, UpdateAddress.class));
+
+            }
+        });
         tvEmail = (TextView) findViewById(R.id.tvBuyerEmail);
         tvAddressLine1 = (TextView) findViewById(R.id.tvAddressLine1);
         tvAddressLine2 = (TextView) findViewById(R.id.tvAddressLine2);
