@@ -29,7 +29,7 @@
                 android:textAlignment="center" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/ivAccDp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -42,7 +42,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvTitle2"
+                    android:id="@+id/tvDeets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -71,7 +71,7 @@
                     android:textStyle=""></TextView>
 
                 <TextView
-                    android:id="@+id/tvTitle3"
+                    android:id="@+id/tvTitle33"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -102,13 +102,56 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnEditInfo"
+                android:id="@+id/btnChName"
 
-                android:layout_width="match_parent"
+                android:layout_width="224dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/roundedbutton"
-                android:text="Edit Information" />
+                android:text="Change Name"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btnChEmail"
+
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Change Email"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btnChAddress"
+
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Change Address"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btnChPassword"
+
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Change Password"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btnSignOut2"
+
+                android:layout_width="119dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Signout" />
+
+
 
         </LinearLayout>
     </ScrollView>
