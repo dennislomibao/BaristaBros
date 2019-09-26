@@ -190,7 +190,10 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            //back button goes to homepage
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
         }
     }
 

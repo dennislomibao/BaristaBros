@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText Password;
     private Button resetPassword;
     private Button Login;
+    private Button admin;
     private EditText validate;
     private ProgressDialog progressDialog;
 
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         Email = (EditText)findViewById(R.id.etEmail);
         Password = (EditText)findViewById(R.id.etPassword);
         resetPassword = (Button)findViewById(R.id.btnResetPassword);
+        admin = (Button) findViewById(R.id.btnAdmin);
+
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openRegistrationActivity();
+            }
+        });
+
+        admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
+                startActivity(intent);
             }
         });
 

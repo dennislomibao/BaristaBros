@@ -38,6 +38,8 @@
         style="@style/defaultEditText"
         android:hint="Address Line 1"
         android:layout_below="@+id/textViewCount"
+        android:maxLines="1"
+        android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
@@ -46,6 +48,8 @@
         style="@style/defaultEditText"
         android:hint="Suburb"
         android:layout_below="@+id/etAddress"
+        android:maxLines="1"
+        android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
@@ -54,6 +58,8 @@
         style="@style/defaultEditText"
         android:hint="Country"
         android:layout_below="@+id/etSuburb"
+        android:maxLines="1"
+        android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
@@ -68,6 +74,8 @@
             android:id="@+id/etState"
             style="@style/defaultEditText"
             android:hint="State"
+            android:maxLines="1"
+            android:inputType="text"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:paddingLeft="10dp"
@@ -78,6 +86,8 @@
             style="@style/defaultEditText"
             android:hint="Postcode"
             android:layout_weight="1"
+            android:maxLines="1"
+            android:inputType="number"
             android:layout_marginLeft="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />

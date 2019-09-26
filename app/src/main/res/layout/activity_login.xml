@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style = "@style/CustomTheme"
     android:windowSoftInputMode="adjustResize"
     tools:context=".LoginActivity" >
 <ScrollView
@@ -28,20 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textStyle=""
-            android:onClick="test"/>
+            android:textStyle="" />
 
 
         <EditText
             android:id="@+id/etEmail"
             style="@style/defaultEditText"
             android:hint="Email"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
             android:textAlignment="center" />
 
         <EditText
             style="@style/defaultEditText"
             android:id="@+id/etPassword"
             android:textAlignment="center"
+            android:maxLines="1"
             android:hint="Password"
             android:inputType="textPassword"/>
 
@@ -71,6 +72,15 @@
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:text="Reset Password"
+            />
+
+        <Button
+            android:id="@+id/btnAdmin"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:text="Admin Mode"
             />
     </LinearLayout>
 
