@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -29,7 +30,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, searchable {
 
 
     private static DecimalFormat df2 = new DecimalFormat("0.00");
@@ -42,9 +43,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private FirebaseUser user;
     private List<ImageUpload> catList;
     private ListView listView;
+    private TextView tvTitle;
     private ItemsList itemsList;
-
     private String categorySelected;
+    private Button searchBtn;
+    private EditText etSearch;
+    private TextView tvNoContent;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         listView = (ListView) findViewById(R.id.lvCat);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        searchBtn =(Button) findViewById(R.id.btnSearch);
+        etSearch = (EditText) findViewById((R.id.etSearch));
+        tvNoContent = (TextView) findViewById(R.id.tvNotFound);
+        tvTitle.setText(categorySelected);
 
         //Display category list
         catList = new ArrayList<>();
@@ -82,7 +93,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
 
         listView.setAdapter(itemsList);*/
-
+        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -95,39 +106,19 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 intent.putExtra("category", catList.get(position).category);
                 intent.putExtra("uploadId", catList.get(position).uploadId);
                 intent.putExtra("sellerId", catList.get(position).sellerId);
+                intent.putExtra("sellTime", catList.get(position).sellTime);
 
                 intent.setClass(CategoryActivity.this, ItemActivity.class);
                 startActivity(intent);
             }
         });
 
+        ImageUpload.search(this, categorySelected,"");
 
-        DatabaseReference DrCategoryData = firebaseDatabase.child("category").child(categorySelected);
 
-        //get category listing
-        DrCategoryData.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        //Just test for search
 
-                for (DataSnapshot listing : dataSnapshot.getChildren()) {
-
-                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
-                    catList.add(imageUpload);
-
-                }
-
-                itemsList = new ItemsList(CategoryActivity.this, R.layout.listview_layout, catList);
-
-                listView.setAdapter(itemsList);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         //read user's name from database
         //change side menu name depending on user
@@ -157,6 +148,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 }
             });
         }
+        listView.setAdapter(itemsList);
+
 
 
     }
@@ -226,4 +219,27 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
+    @Override
+    public void updateList(ArrayList<ImageUpload> imageUploads) {
+        if(imageUploads.size()<1)
+        {
+            tvNoContent.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tvNoContent.setVisibility(View.GONE);
+        }
+        itemsList.clear();
+/*
+        for(ImageUpload o: imageUploads)
+        {
+            itemsList.insert(o,itemsList.getCount());
+        }*/
+        itemsList.setData(imageUploads);
+
+    }
+    public void searchOnClick(View v)
+    {
+        ImageUpload.search(this, categorySelected, etSearch.getText().toString());
+    }
 }

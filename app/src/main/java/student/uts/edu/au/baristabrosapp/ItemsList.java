@@ -3,6 +3,7 @@ package student.uts.edu.au.baristabrosapp;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,23 +20,34 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsList extends ArrayAdapter<ImageUpload> {
 
-    Context context;
-    int resource;
-    List<ImageUpload> data = null;
+    final Context context;
+    final int resource;
+    List<ImageUpload> data;
 
 
-    public ItemsList(Context context, int resource, List<ImageUpload> objects) {
+    public ItemsList(Context context, int resource, final List<ImageUpload> objects) {
         super(context, resource, objects);
         this.resource = resource;
         this.context = context;
         this.data = objects;
 
+
     }
 
+    public void setData(List<ImageUpload> data) {
+        this.data.clear();
+        this.data.addAll(data);
+        notifyDataSetChanged();
+    }
+    public void addData(ImageUpload upload)
+    {
+        data.add(upload);
+    }
     static class DataHolder {
 
         ImageView pic;
@@ -67,6 +79,7 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
         } else {
 
             dataHolder = (DataHolder) convertView.getTag();
+
 
         }
 

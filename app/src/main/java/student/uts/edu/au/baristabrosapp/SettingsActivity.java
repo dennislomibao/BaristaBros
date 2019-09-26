@@ -28,10 +28,22 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
 
+    private TextView tvBuyerName;
+    private TextView tvEmail;
+    private TextView tvAddressLine1;
+    private TextView tvAddressLine2;
+    private String addressLine1;
+    private String addressLine2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        tvBuyerName = (TextView) findViewById(R.id.tvAccName);
+        tvEmail = (TextView) findViewById(R.id.tvAccEmail);
+        tvAddressLine1 = (TextView) findViewById(R.id.tvAccAddressLine1);
+        tvAddressLine2 = (TextView) findViewById(R.id.tvAccAddressLine2);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -46,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         //change side menu name depending on user
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
-            DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
+            DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid());
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
             final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
@@ -58,11 +70,24 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                    if (dataSnapshot.getValue(String.class) == null) {
+                    if (dataSnapshot.child("name").getValue(String.class) == null) {
                         tvName.setText("Chris P. Bacon");
                     } else {
-                        tvName.setText(dataSnapshot.getValue(String.class));
+                        tvName.setText(dataSnapshot.child("name").getValue(String.class));
+                        tvBuyerName.setText("Name: " + dataSnapshot.child("name").getValue(String.class));
                     }
+
+                    //Show user's details on payment page
+                    tvEmail.setText("Email: " + dataSnapshot.child("email").getValue(String.class));
+
+                    setAddressLine1(dataSnapshot.child("address").getValue(String.class) + ",");
+                    setAddressLine2(dataSnapshot.child("suburb").getValue(String.class) + " " +
+                            dataSnapshot.child("state").getValue(String.class) + " " +
+                            dataSnapshot.child("postcode").getValue(String.class) + ", " +
+                            dataSnapshot.child("country").getValue(String.class));
+
+                    tvAddressLine1.setText(getAddressLine1());
+                    tvAddressLine2.setText(getAddressLine2());
 
                 }
 
@@ -90,7 +115,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
             return true;
         } else if (id == R.id.nav_cart) {
+            intent = new Intent(this, CartActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_selling) {
             intent = new Intent(this, SellActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -119,6 +147,22 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         return false;
 
+    }
+
+    private void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    private String getAddressLine1() {
+        return addressLine1;
+    }
+
+    private void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    private String getAddressLine2() {
+        return addressLine2;
     }
 
     //Phone back button closes menu rather than app

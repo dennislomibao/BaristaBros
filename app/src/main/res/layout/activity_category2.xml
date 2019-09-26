@@ -47,6 +47,7 @@
                     android:layout_height="36dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
+                    android:onClick="searchOnClick"
                     android:background="@drawable/ic_search_white_24dp" />
 
             </RelativeLayout>
@@ -63,14 +64,34 @@
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textAlignment="center"/>
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lvCat"
             android:background="@color/itemBackground"
             android:dividerHeight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tvTitle"
             android:divider="@color/background">
         </ListView>
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lvCat"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:text="Seems we couldn't find anything">
+
+        </TextView>
 
     </RelativeLayout>
 </RelativeLayout>

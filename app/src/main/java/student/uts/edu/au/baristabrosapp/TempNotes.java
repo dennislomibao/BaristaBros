@@ -12,7 +12,7 @@ View view = toast.getView();
 
 //Gets the actual oval background of the Toast then sets the colour filter
 view.getBackground().setColorFilter(YOUR_BACKGROUND_COLOUR, PorterDuff.Mode.SRC_IN);
-
+f
 //Gets the TextView from the Toast so it can be editted
 TextView text = view.findViewById(android.R.id.message);
 text.setTextColor(YOUR_TEXT_COLOUR);

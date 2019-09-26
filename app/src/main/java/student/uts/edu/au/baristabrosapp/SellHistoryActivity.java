@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,6 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SellHistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
@@ -27,6 +34,13 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+    private List<ImageUpload> listSellHistory;
+    private ListView listView;
+    private ItemsList itemsList;
+
+    private Button btnSellCurrent;
+    private Button btnSellAll;
+    private Boolean viewCurrent = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,96 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        listView = (ListView) findViewById(R.id.lvSellHistory);
+
+        btnSellCurrent = (Button) findViewById(R.id.btnSellCurrent);
+        btnSellAll = (Button) findViewById(R.id.btnSellAll);
+
+        //Display category list
+        listSellHistory = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                final Intent intent = new Intent();
+                intent.putExtra("picture", listSellHistory.get(position).imageUrl);
+                intent.putExtra("title", listSellHistory.get(position).title);
+                intent.putExtra("price", listSellHistory.get(position).price);
+                intent.putExtra("description", listSellHistory.get(position).desc);
+                intent.putExtra("category", listSellHistory.get(position).category);
+                intent.putExtra("uploadId", listSellHistory.get(position).uploadId);
+                intent.putExtra("sellerId", listSellHistory.get(position).sellerId);
+                intent.putExtra("sellTime", listSellHistory.get(position).sellTime);
+
+                final String uploadId = listSellHistory.get(position).uploadId;
+
+                //if item is already sold, display item as view only
+                if (!viewCurrent) {
+
+                    DatabaseReference DrCheckItemExists = firebaseDatabase.child("users").child(user.getUid()).child("Sell Current");
+
+                    DrCheckItemExists.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.hasChild(uploadId)) {
+
+                                intent.setClass(SellHistoryActivity.this, ItemActivity.class);
+                                startActivity(intent);
+
+                            } else {
+
+                                intent.putExtra("audience", "seller");
+                                intent.setClass(SellHistoryActivity.this, ViewItemActivity.class);
+                                startActivity(intent);
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                } else {
+
+                    intent.setClass(SellHistoryActivity.this, ItemActivity.class);
+                    startActivity(intent);
+
+                }
+            }
+        });
+
+        getListData("Sell Current");
+        btnSellCurrent.setEnabled(false);
+
+        btnSellCurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listSellHistory = new ArrayList<>();
+                getListData("Sell Current");
+                btnSellCurrent.setEnabled(false);
+                btnSellAll.setEnabled(true);
+                viewCurrent = true;
+
+            }
+        });
+
+        btnSellAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listSellHistory = new ArrayList<>();
+                getListData("Sell History");
+                btnSellCurrent.setEnabled(true);
+                btnSellAll.setEnabled(false);
+                viewCurrent = false;
+
+            }
+        });
 
         //read user's name from database
         //change side menu name depending on user
@@ -71,6 +175,39 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
                 }
             });
         }
+    }
+
+    private void getListData(String data) {
+
+        DatabaseReference DrSellHistoryData = firebaseDatabase.child("users").child(user.getUid()).child(data);
+
+        //get category listing
+        DrSellHistoryData.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                listSellHistory = new ArrayList<>();
+
+                for (DataSnapshot listing : dataSnapshot.getChildren()) {
+
+                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
+                    listSellHistory.add(imageUpload);
+
+                }
+
+                itemsList = new ItemsList(SellHistoryActivity.this, R.layout.listview_layout, listSellHistory);
+
+                listView.setAdapter(itemsList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     //Slide out menu options

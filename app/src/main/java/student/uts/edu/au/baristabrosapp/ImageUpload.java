@@ -1,5 +1,16 @@
 package student.uts.edu.au.baristabrosapp;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class ImageUpload {
 
     String title;
@@ -9,12 +20,13 @@ public class ImageUpload {
     Double price;
     String uploadId;
     String sellerId;
+    String sellTime;
 
     public ImageUpload() {
 
     }
 
-    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId, String sellerId) {
+    public ImageUpload(String title, String desc, String imageUrl, String category, Double price, String uploadId, String sellerId, String sellTime) {
 
         this.title = title;
         this.desc = desc;
@@ -23,6 +35,7 @@ public class ImageUpload {
         this.price = price;
         this.uploadId = uploadId;
         this.sellerId = sellerId;
+        this.sellTime = sellTime;
 
     }
 
@@ -82,4 +95,61 @@ public class ImageUpload {
         this.sellerId = sellerId;
     }
 
+    public String getSellTime() {
+        return sellTime;
+    }
+
+    public void setSellTime(String sellTime) {
+        this.sellTime = sellTime;
+    }
+
+    public static void search(final searchable act, String category, String title)
+    {
+        DatabaseReference ref;
+        Query query;
+        final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
+        if(category == null)
+        {
+            ref = FirebaseDatabase.getInstance().getReference();
+        }
+        else
+        {
+            ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
+
+        }
+        if(title.equals(""))
+        {
+            query = ref.orderByChild("title");
+        }
+        else
+        {
+           query = ref.orderByChild("title").startAt(title).endAt(title +"\uf8ff");
+        }
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        ImageUpload i = new ImageUpload();
+                        i.setTitle(ds.getValue(ImageUpload.class).getTitle());
+                        i.setDesc(ds.getValue(ImageUpload.class).getDesc());
+                        i.setImageUrl(ds.getValue(ImageUpload.class).getImageUrl());
+                        i.setCategory(ds.getValue(ImageUpload.class).getCategory());
+                        i.setPrice(ds.getValue(ImageUpload.class).getPrice());
+                        i.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
+                        i.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
+                        i.setSellTime(ds.getValue(ImageUpload.class).getSellTime());
+                        matches.add(i);
+                    }
+                    act.updateList(matches);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
 }

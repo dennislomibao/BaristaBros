@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
-public class ItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ViewItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
     private DrawerLayout drawerLayout;
@@ -45,8 +43,10 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
     private TextView textViewDescription;
     private TextView textViewSeller;
     private TextView textViewSellTime;
-    private Button btnWishlist;
-    private Button btnCart;
+    private TextView textViewBuyer;
+    private TextView textViewBuyTime;
+    private TextView textViewAddress1;
+    private TextView textViewAddress2;
 
     private String imageUrl;
     private String title;
@@ -56,12 +56,12 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
     private String uploadId;
     private String sellerId;
     private String sellTime;
-
+    private String audience;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
+        setContentView(R.layout.activity_view_item);
 
         Intent intent = getIntent();
         imageUrl = intent.getStringExtra("picture");
@@ -72,6 +72,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         uploadId = intent.getStringExtra("uploadId");
         sellerId = intent.getStringExtra("sellerId");
         sellTime = intent.getStringExtra("sellTime");
+        audience = intent.getStringExtra("audience");
 
         imageView = (ImageView) findViewById(R.id.imageView);
         textViewTitle = (TextView) findViewById(R.id.textViewTitle);
@@ -80,8 +81,10 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
         textViewSeller = (TextView) findViewById(R.id.textViewSeller);
         textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
-        btnWishlist = (Button) findViewById(R.id.btnWishlist);
-        btnCart = (Button) findViewById(R.id.btnCart);
+        textViewBuyer = (TextView) findViewById(R.id.textViewBuyer);
+        textViewBuyTime = (TextView) findViewById(R.id.textViewBuyTime);
+        textViewAddress1 = (TextView) findViewById(R.id.tvAddressLine1);
+        textViewAddress2 = (TextView) findViewById(R.id.tvAddressLine2);
 
         //firebase initialise
         firebaseAuth = firebaseAuth.getInstance();
@@ -90,7 +93,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //set objects
         Picasso.with(this).load(Uri.parse(imageUrl)).into(imageView);
@@ -115,44 +118,13 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
-        DatabaseReference DrWishlist = firebaseDatabase.child("users").child(user.getUid()).child("Wishlist");
-        DrWishlist.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference DrBuyerName = firebaseDatabase.child("users").child(user.getUid()).child("name");
+        DrBuyerName.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //check if item is already in wishlist
-                if (dataSnapshot.hasChild(uploadId)) {
+                textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
 
-                    btnWishlist.setText("Remove from Wishlist");
-
-                } else {
-
-                    DatabaseReference DrCheckUserPosts = firebaseDatabase.child("category").child(category).child(uploadId).child("sellerId");
-                    DrCheckUserPosts.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            //user can't buy their own items
-                            if (dataSnapshot.getValue(String.class).equals(user.getUid())) {
-
-                                btnWishlist.setText("Remove Item");
-                                btnCart.setVisibility(View.GONE);
-
-                            } else {
-
-                                btnWishlist.setText("Add to Wishlist");
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
             }
 
             @Override
@@ -161,96 +133,45 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        if (audience.equals("buyer")) {
 
-        //add item to wishlist
-        btnWishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Buy History").child(uploadId);
+            DrBuyTime.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (btnWishlist.getText() == "Add to Wishlist") {
+                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.child("buyTime").getValue(String.class));
+                    textViewAddress1.setText(dataSnapshot.child("buyerAddress1").getValue(String.class));
+                    textViewAddress2.setText(dataSnapshot.child("buyerAddress2").getValue(String.class));
 
-                    ImageUpload upload = new ImageUpload(
-                            title, description, imageUrl, category, price, uploadId, sellerId, sellTime
-                    );
-
-                    firebaseDatabase.child("users").child(user.getUid()).child("Wishlist").child(uploadId).setValue(upload);
-
-                    Toast.makeText(ItemActivity.this, "Item Added to Wishlist", Toast.LENGTH_SHORT).show();
-                    btnWishlist.setText("Remove from Wishlist");
-
-                } else if (btnWishlist.getText() == "Remove from Wishlist") {
-
-                    firebaseDatabase.child("users").child(user.getUid()).child("Wishlist").child(uploadId).removeValue();
-                    Toast.makeText(ItemActivity.this, "Item Removed from Wishlist", Toast.LENGTH_SHORT).show();
-                    btnWishlist.setText("Add to Wishlist");
-
-                } else {
-
-                    //user remove their own item from store
-                    Toast.makeText(ItemActivity.this, "Item Removed from Store", Toast.LENGTH_SHORT).show();
-                    firebaseDatabase.child("category").child(category).child(uploadId).removeValue();
-                    firebaseDatabase.child("users").child(user.getUid()).child("Sell Current").child(uploadId).removeValue();
-                    firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).removeValue();
-
-                    Intent intent = new Intent(ItemActivity.this, HomePageActivity.class);
-                    finish();
-                    startActivity(intent);
-
-                }
-            }
-        });
-
-        DatabaseReference DrCart = firebaseDatabase.child("users").child(user.getUid()).child("Cart");
-        DrCart.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //check if item is already in cart
-                if (dataSnapshot.hasChild(uploadId)) {
-
-                    btnCart.setText("Remove from Cart");
-
-                    //if item is not in cart already
-                } else {
-
-                    btnCart.setText("Add to Cart");
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        //add item to cart
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (btnCart.getText() == "Add to Cart") {
-
-                    ImageUpload upload = new ImageUpload(
-                            title, description, imageUrl, category, price, uploadId, sellerId, sellTime
-                    );
-
-                    firebaseDatabase.child("users").child(user.getUid()).child("Cart").child(uploadId).setValue(upload);
-
-                    Toast.makeText(ItemActivity.this, "Item Added to Cart", Toast.LENGTH_SHORT).show();
-                    btnCart.setText("Remove from Cart");
-
-                } else {
-
-                    firebaseDatabase.child("users").child(user.getUid()).child("Cart").child(uploadId).removeValue();
-                    Toast.makeText(ItemActivity.this, "Item Removed from Cart", Toast.LENGTH_SHORT).show();
-                    btnCart.setText("Add to Cart");
 
                 }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+        } else {
+
+            DatabaseReference DrBuyTime = firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId);
+            DrBuyTime.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    textViewBuyTime.setText("Date Purchased: " + dataSnapshot.child("buyTime").getValue(String.class));
+                    textViewAddress1.setText(dataSnapshot.child("buyerAddress1").getValue(String.class));
+                    textViewAddress2.setText(dataSnapshot.child("buyerAddress2").getValue(String.class));
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
 
         //read user's name from database
         //change side menu name depending on user
@@ -336,7 +257,6 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         return false;
 
     }
-
 
     //Phone back button closes menu rather than app
     @Override

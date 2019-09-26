@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- drawer menu -->
 
 <androidx.drawerlayout.widget.DrawerLayout
@@ -11,15 +10,13 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-
     <include
-        layout="@layout/app_bar_home_page"
+        layout="@layout/activity_payment2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

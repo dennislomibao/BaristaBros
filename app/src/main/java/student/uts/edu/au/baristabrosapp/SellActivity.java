@@ -43,6 +43,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SellActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -261,6 +263,8 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                             imageReference = uri.toString();
                             String uploadId = firebaseDatabase.push().getKey();
 
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm z");
+
                             Toast.makeText(SellActivity.this, "Posting Successful", Toast.LENGTH_LONG).show();
                             ImageUpload upload =
                                     new ImageUpload(editTextTitle.getText().toString().trim(),
@@ -269,9 +273,11 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                                             category.trim(),
                                             price,
                                             uploadId,
-                                            user.getUid());
+                                            user.getUid(),
+                                            sdf.format(new Date()));
 
                             firebaseDatabase.child("category").child(category).child(uploadId).setValue(upload);
+
 
                             //store user's listing history
                             firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).setValue(upload);

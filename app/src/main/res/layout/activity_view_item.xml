@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- drawer menu -->
 
 <androidx.drawerlayout.widget.DrawerLayout
@@ -11,9 +10,8 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-
     <include
-        layout="@layout/app_bar_home_page"
+        layout="@layout/activity_view_item2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

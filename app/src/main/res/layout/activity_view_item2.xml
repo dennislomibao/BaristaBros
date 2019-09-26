@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ItemActivity">
+    tools:context=".ViewItemActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -103,32 +103,80 @@
                 android:textSize="18sp">
             </TextView>
 
-            <Button
-                android:id="@+id/btnWishlist"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textViewBuyer"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundedbutton"
+                android:text="Buyer"
                 android:layout_below="@+id/textViewSellTime"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
-                android:text="Add to Wishlist"
-                />
+                android:layout_marginTop="40dp"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
 
-            <Button
-                android:id="@+id/btnCart"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textViewBuyTime"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundedbutton"
-                android:layout_below="@+id/btnWishlist"
+                android:text="Time Bought: "
+                android:layout_below="@+id/textViewBuyer"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="Add to Cart"
-                />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/textViewTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Address"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="22sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvAddressLine2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address Line2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle=""
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Status: In Progress"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
 
         </LinearLayout>
-
     </ScrollView>
 </RelativeLayout>

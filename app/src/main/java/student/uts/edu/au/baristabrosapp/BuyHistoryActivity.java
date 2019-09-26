@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BuyHistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
@@ -27,6 +33,9 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+    private List<ImageUpload> listBuyHistory;
+    private ListView listView;
+    private ItemsList itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,60 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        listView = (ListView) findViewById(R.id.lvBuyHistory);
+
+        //Display category list
+        listBuyHistory = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent();
+                intent.putExtra("picture", listBuyHistory.get(position).imageUrl);
+                intent.putExtra("title", listBuyHistory.get(position).title);
+                intent.putExtra("price", listBuyHistory.get(position).price);
+                intent.putExtra("description", listBuyHistory.get(position).desc);
+                intent.putExtra("category", listBuyHistory.get(position).category);
+                intent.putExtra("uploadId", listBuyHistory.get(position).uploadId);
+                intent.putExtra("sellerId", listBuyHistory.get(position).sellerId);
+                intent.putExtra("sellTime", listBuyHistory.get(position).sellTime);
+                intent.putExtra("audience", "buyer");
+
+                intent.setClass(BuyHistoryActivity.this, ViewItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        DatabaseReference DrBuyHistoryData = firebaseDatabase.child("users").child(user.getUid()).child("Buy History");
+
+        //get category listing
+        DrBuyHistoryData.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                listBuyHistory = new ArrayList<>();
+
+                for (DataSnapshot listing : dataSnapshot.getChildren()) {
+
+                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
+                    listBuyHistory.add(imageUpload);
+
+                }
+
+                itemsList = new ItemsList(BuyHistoryActivity.this, R.layout.listview_layout, listBuyHistory);
+
+                listView.setAdapter(itemsList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //read user's name from database
         //change side menu name depending on user

@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WishlistActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //declare variables
@@ -27,6 +33,9 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+    private List<ImageUpload> listWishlist;
+    private ListView listView;
+    private ItemsList itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,59 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        listView = (ListView) findViewById(R.id.lvWishlist);
+
+        //Display category list
+        listWishlist = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent();
+                intent.putExtra("picture", listWishlist.get(position).imageUrl);
+                intent.putExtra("title", listWishlist.get(position).title);
+                intent.putExtra("price", listWishlist.get(position).price);
+                intent.putExtra("description", listWishlist.get(position).desc);
+                intent.putExtra("category", listWishlist.get(position).category);
+                intent.putExtra("uploadId", listWishlist.get(position).uploadId);
+                intent.putExtra("sellerId", listWishlist.get(position).sellerId);
+                intent.putExtra("sellTime", listWishlist.get(position).sellTime);
+
+                intent.setClass(WishlistActivity.this, ItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        DatabaseReference DrWishlistData = firebaseDatabase.child("users").child(user.getUid()).child("Wishlist");
+
+        //get category listing
+        DrWishlistData.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                listWishlist = new ArrayList<>();
+
+                for (DataSnapshot listing : dataSnapshot.getChildren()) {
+
+                    ImageUpload imageUpload = listing.getValue(ImageUpload.class);
+                    listWishlist.add(imageUpload);
+
+                }
+
+                itemsList = new ItemsList(WishlistActivity.this, R.layout.listview_layout, listWishlist);
+
+                listView.setAdapter(itemsList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //read user's name from database
         //change side menu name depending on user
