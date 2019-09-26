@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- main content -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminViewActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/searchBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:paddingBottom="10dp">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="top">
+
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    style="@style/defaultEditText"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="80dp"
+                    android:hint=" What would you like to search for?"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:onClick="searchOnClick"
+                    android:background="@drawable/ic_search_white_24dp" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- insert objects below here -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textAlignment="center"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lvCat"
+            android:background="@color/itemBackground"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tvTitle"
+            android:divider="@color/background">
+        </ListView>
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lvCat"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:text="Seems we couldn't find anything">
+
+        </TextView>
+
+    </RelativeLayout>
+</RelativeLayout>

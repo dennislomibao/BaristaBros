@@ -44,7 +44,10 @@ public class AdminLoginActivity extends AppCompatActivity {
         Back = (Button) findViewById(R.id.btnBack);
 
         //firebase initialise
+        firebaseAuth = firebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        progressDialog = new ProgressDialog(this);
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +95,8 @@ public class AdminLoginActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
+                                //change accountType to "admin" in firebase database to gain access
                                 if (dataSnapshot.getValue(String.class).equals("admin")) {
 
                                     Toast.makeText(AdminLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -100,7 +105,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 
                                 } else {
 
-                                    Toast.makeText(AdminLoginActivity.this, "Account Invalid", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AdminLoginActivity.this, "Access Denied", Toast.LENGTH_SHORT).show();
                                     firebaseAuth.signOut();
 
                                 }

@@ -33,6 +33,8 @@
             <EditText
                 android:id="@+id/etEmail"
                 style="@style/defaultEditText"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
                 android:hint="Email"
                 android:textAlignment="center" />
 
@@ -40,6 +42,7 @@
                 style="@style/defaultEditText"
                 android:id="@+id/etPassword"
                 android:textAlignment="center"
+                android:maxLines="1"
                 android:hint="Password"
                 android:inputType="textPassword"/>
 

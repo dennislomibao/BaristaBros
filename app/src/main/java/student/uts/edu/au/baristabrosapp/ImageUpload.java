@@ -108,27 +108,63 @@ public class ImageUpload {
         DatabaseReference ref;
         Query query;
         final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
+        boolean viewAll = false;
         if(category == null)
         {
             ref = FirebaseDatabase.getInstance().getReference();
+        } else if (category.equals("View All Listings")) {
+
+            viewAll = true;
+            ref = FirebaseDatabase.getInstance().getReference().child("category");
+
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot category : dataSnapshot.getChildren()) {
+                        for (DataSnapshot listing : category.getChildren()) {
+
+                            ImageUpload i = new ImageUpload();
+                            i.setTitle(listing.getValue(ImageUpload.class).getTitle());
+                            i.setDesc(listing.getValue(ImageUpload.class).getDesc());
+                            i.setImageUrl(listing.getValue(ImageUpload.class).getImageUrl());
+                            i.setCategory(listing.getValue(ImageUpload.class).getCategory());
+                            i.setPrice(listing.getValue(ImageUpload.class).getPrice());
+                            i.setUploadId(listing.getValue(ImageUpload.class).getUploadId());
+                            i.setSellerId(listing.getValue(ImageUpload.class).getSellerId());
+                            i.setSellTime(listing.getValue(ImageUpload.class).getSellTime());
+                            matches.add(i);
+
+                        }
+                    }
+
+                    act.updateList(matches);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
         else
         {
             ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
 
         }
-        if(title.equals(""))
-        {
-            query = ref.orderByChild("title");
-        }
-        else
-        {
-           query = ref.orderByChild("title").startAt(title).endAt(title +"\uf8ff");
-        }
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (!viewAll) {
+            if (title.equals("")) {
+                query = ref.orderByChild("title");
+            } else {
+                query = ref.orderByChild("title").startAt(title).endAt(title + "\uf8ff");
+            }
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         ImageUpload i = new ImageUpload();
                         i.setTitle(ds.getValue(ImageUpload.class).getTitle());
@@ -142,14 +178,16 @@ public class ImageUpload {
                         matches.add(i);
                     }
                     act.updateList(matches);
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
+                }
 
-        });
+            });
+
+        }
 
     }
 }

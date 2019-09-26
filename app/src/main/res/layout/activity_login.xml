@@ -34,12 +34,15 @@
             android:id="@+id/etEmail"
             style="@style/defaultEditText"
             android:hint="Email"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
             android:textAlignment="center" />
 
         <EditText
             style="@style/defaultEditText"
             android:id="@+id/etPassword"
             android:textAlignment="center"
+            android:maxLines="1"
             android:hint="Password"
             android:inputType="textPassword"/>
 

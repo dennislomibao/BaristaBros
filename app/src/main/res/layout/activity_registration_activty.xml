@@ -45,23 +45,29 @@
                 android:id="@+id/etName"
                 style="@style/defaultEditText"
                 android:hint="Name"
+                android:maxLines="1"
+                android:inputType="text"
                 android:textAlignment="center" />
 
             <EditText
                 style="@style/defaultEditText"
                 android:id="@+id/etEmail"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
                 android:textAlignment="center"
                 android:hint="Email"/>
             <EditText
                 style="@style/defaultEditText"
                 android:id="@+id/etPassword"
                 android:textAlignment="center"
+                android:maxLines="1"
                 android:hint="Password"
                 android:inputType="textPassword"/>
             <EditText
                 style="@style/defaultEditText"
                 android:id="@+id/etConfPassword"
                 android:textAlignment="center"
+                android:maxLines="1"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"/>
 

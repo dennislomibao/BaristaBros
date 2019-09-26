@@ -7,4 +7,59 @@
     android:windowSoftInputMode="adjustResize"
     tools:context=".AdminHomePageActivity" >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:paddingBottom="120dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                style = "@style/TitleStyle"
+                android:id="@+id/textViewCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin Mode"
+                android:textStyle="" />
+
+            <Button
+                android:id="@+id/btnAllListings"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="View All Listings"
+                />
+
+            <Button
+                android:id="@+id/btnByCategory"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="View By Category"
+                />
+
+            <Button
+                android:id="@+id/btnSignOut"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Sign Out"
+                />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
