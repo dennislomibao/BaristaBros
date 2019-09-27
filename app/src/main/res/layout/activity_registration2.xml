@@ -115,7 +115,5 @@
         android:layout_below="@+id/btnCreate"
         android:background="@drawable/roundedbutton"
         android:text="Already A Member? Click Here"
-
         />
-
 </RelativeLayout>
