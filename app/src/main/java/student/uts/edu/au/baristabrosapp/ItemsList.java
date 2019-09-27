@@ -44,10 +44,11 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
         this.data.addAll(data);
         notifyDataSetChanged();
     }
-    public void addData(ImageUpload upload)
-    {
+
+    public void addData(ImageUpload upload) {
         data.add(upload);
     }
+
     static class DataHolder {
 
         ImageView pic;
@@ -68,11 +69,11 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
             LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
             convertView = layoutInflater.inflate(resource, parent, false);
             dataHolder = new DataHolder();
-            dataHolder.pic = (ImageView) convertView.findViewById(R.id.imageView_pic);
-            dataHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            dataHolder.tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
-            dataHolder.tvDesc = (TextView) convertView.findViewById(R.id.tvDesc);
-            dataHolder.tvCategory = (TextView) convertView.findViewById(R.id.tvCategory);
+            dataHolder.pic = convertView.findViewById(R.id.imageView_pic);
+            dataHolder.tvTitle = convertView.findViewById(R.id.tvTitle);
+            dataHolder.tvPrice = convertView.findViewById(R.id.tvPrice);
+            dataHolder.tvDesc = convertView.findViewById(R.id.tvDesc);
+            dataHolder.tvCategory = convertView.findViewById(R.id.tvCategory);
 
             convertView.setTag(dataHolder);
 
@@ -92,11 +93,11 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
 
         //set objects with their corresponding data
         //dataHolder.pic.setImageURI(Uri.parse(imageUpload.imageUrl)/*R.drawable.barista*/);
-        final ImageView a = (ImageView) convertView.findViewById(R.id.imageView_pic);
+        final ImageView a = convertView.findViewById(R.id.imageView_pic);
         Picasso.with(context).load(Uri.parse(imageUpload.imageUrl)).networkPolicy(NetworkPolicy.OFFLINE).into(a, new Callback() {
             @Override
             public void onSuccess() {
-                Log.v("ImageGen","Recieved from cashe");
+                Log.v("ImageGen", "Recieved from cashe");
             }
 
             @Override
@@ -105,7 +106,7 @@ public class ItemsList extends ArrayAdapter<ImageUpload> {
                 Picasso.with(context).load(data.get(position).getImageUrl()).into(a, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Log.v("ImageGen","Recieved from internet");
+                        Log.v("ImageGen", "Recieved from internet");
                     }
 
                     @Override

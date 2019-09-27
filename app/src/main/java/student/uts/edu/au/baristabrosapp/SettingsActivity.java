@@ -40,19 +40,19 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        tvBuyerName = (TextView) findViewById(R.id.tvAccName);
-        tvEmail = (TextView) findViewById(R.id.tvAccEmail);
-        tvAddressLine1 = (TextView) findViewById(R.id.tvAccAddressLine1);
-        tvAddressLine2 = (TextView) findViewById(R.id.tvAccAddressLine2);
+        tvBuyerName = findViewById(R.id.tvAccName);
+        tvEmail = findViewById(R.id.tvAccEmail);
+        tvAddressLine1 = findViewById(R.id.tvAccAddressLine1);
+        tvAddressLine2 = findViewById(R.id.tvAccAddressLine2);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //read user's name from database
         //change side menu name depending on user
@@ -61,7 +61,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid());
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -177,5 +177,4 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
         }
     }
-
 }

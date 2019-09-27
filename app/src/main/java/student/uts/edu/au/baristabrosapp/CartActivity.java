@@ -97,7 +97,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(CartActivity.this, "No items added", Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
 
@@ -123,7 +122,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                 totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", calculateTotalPrice(listCart)));
 
                 listView.setAdapter(itemsList);
-
             }
 
             @Override
@@ -211,7 +209,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
-
     }
 
     //Phone back button closes menu rather than app
@@ -229,10 +226,9 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
 
     private double calculateTotalPrice(List<ImageUpload> listCart) {
         double total = 0.0;
-        for (ImageUpload item: listCart) {
+        for (ImageUpload item : listCart) {
             total += item.price;
         }
         return total;
     }
-
 }

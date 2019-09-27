@@ -64,17 +64,17 @@ public class AdminItemActivity extends AppCompatActivity {
         sellerId = intent.getStringExtra("sellerId");
         sellTime = intent.getStringExtra("sellTime");
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
-        textViewCategory = (TextView) findViewById(R.id.textViewCategory);
-        textViewDescription = (TextView) findViewById(R.id.textViewDescription);
-        textViewSeller = (TextView) findViewById(R.id.textViewSeller);
-        textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
-        btnRemove = (Button) findViewById(R.id.btnRemove);
+        imageView = findViewById(R.id.imageView);
+        textViewTitle = findViewById(R.id.textViewTitle);
+        textViewPrice = findViewById(R.id.textViewPrice);
+        textViewCategory = findViewById(R.id.textViewCategory);
+        textViewDescription = findViewById(R.id.textViewDescription);
+        textViewSeller = findViewById(R.id.textViewSeller);
+        textViewSellTime = findViewById(R.id.textViewSellTime);
+        btnRemove = findViewById(R.id.btnRemove);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
@@ -92,12 +92,10 @@ public class AdminItemActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 textViewSeller.setText("Seller: " + dataSnapshot.getValue(String.class));
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 

@@ -29,13 +29,13 @@ public class AdminHomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home_page);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
-        viewAll = (Button) findViewById(R.id.btnAllListings);
-        viewByCategory = (Button) findViewById(R.id.btnByCategory);
-        signOut = (Button) findViewById(R.id.btnSignOut);
+        viewAll = findViewById(R.id.btnAllListings);
+        viewByCategory = findViewById(R.id.btnByCategory);
+        signOut = findViewById(R.id.btnSignOut);
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override

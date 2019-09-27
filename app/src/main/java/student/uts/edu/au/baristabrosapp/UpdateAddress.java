@@ -31,7 +31,6 @@ public class UpdateAddress extends AppCompatActivity {
     private FirebaseUser user;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +68,13 @@ public class UpdateAddress extends AppCompatActivity {
         updateAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isValid())
-                {
+                if (isValid()) {
                     updateDeliveryAddress();
                     Toast.makeText(UpdateAddress.this, "Delivery Address Updated", Toast.LENGTH_SHORT).show();
                     finish();
-                    startActivity(new Intent(UpdateAddress.this, LoginActivity.class));
+                    startActivity(new Intent(UpdateAddress.this, PaymentActivity.class));
 
-                }else{
+                } else {
                     Toast.makeText(UpdateAddress.this, "Address Format Invalid", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -98,7 +96,7 @@ public class UpdateAddress extends AppCompatActivity {
                 && !postcode.getText().toString().trim().isEmpty());
     }
 
-    private void updateDeliveryAddress(){
+    private void updateDeliveryAddress() {
         String AddressLine = addressLine.getText().toString().trim();
         String Suburb = suburb.getText().toString().trim();
         String Country = country.getText().toString().trim();

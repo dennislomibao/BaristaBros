@@ -38,17 +38,17 @@ public class Registration2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration2);
 
-        addressLine = (EditText) findViewById(R.id.etAddress);
-        suburb = (EditText) findViewById(R.id.etSuburb);
-        country = (EditText) findViewById(R.id.etCountry);
-        state = (EditText) findViewById(R.id.etState);
-        postcode = (EditText) findViewById(R.id.etPostcode);
-        createAccount = (Button) findViewById(R.id.btnCreate);
-        loginActivity = (Button) findViewById(R.id.btnLogin);
+        addressLine = findViewById(R.id.etAddress);
+        suburb = findViewById(R.id.etSuburb);
+        country = findViewById(R.id.etCountry);
+        state = findViewById(R.id.etState);
+        postcode = findViewById(R.id.etPostcode);
+        createAccount = findViewById(R.id.btnCreate);
+        loginActivity = findViewById(R.id.btnLogin);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-        progressDialog =  new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
@@ -59,7 +59,7 @@ public class Registration2Activity extends AppCompatActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()){
+                if (validate()) {
                     //upload to database
                     String user_email = email;
                     String user_password = password;
@@ -70,7 +70,7 @@ public class Registration2Activity extends AppCompatActivity {
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 sendEmailVerification();
                                 //Store user's details in firebase database
                                 user = task.getResult().getUser();
@@ -85,10 +85,9 @@ public class Registration2Activity extends AppCompatActivity {
                                 firebaseDatabase.child("users").child(user.getUid()).child("accountType").setValue("standard");
 
 
-                            }else{
+                            } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(Registration2Activity.this, "Account Already Exists",Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText(Registration2Activity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -104,7 +103,6 @@ public class Registration2Activity extends AppCompatActivity {
                 startActivity(new Intent(Registration2Activity.this, LoginActivity.class));
             }
         });
-
     }
 
     private Boolean validate() {
@@ -116,25 +114,25 @@ public class Registration2Activity extends AppCompatActivity {
         String Postcode = postcode.getText().toString();
 
         if (Address.isEmpty() || Suburb.isEmpty() || Country.isEmpty() || State.isEmpty() || Postcode.isEmpty()) {
-            Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
         } else {
             return true;
         }
         return false;
     }
 
-    private void sendEmailVerification(){
+    private void sendEmailVerification() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser !=null){
+        if (firebaseUser != null) {
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Toast.makeText(Registration2Activity.this, "Successfully registered, please verify your email", Toast.LENGTH_LONG).show();
                         firebaseAuth.signOut();
                         finish();
                         startActivity(new Intent(Registration2Activity.this, LoginActivity.class));
-                    }else{
+                    } else {
                         Toast.makeText(Registration2Activity.this, "Error sending email", Toast.LENGTH_LONG).show();
                     }
 
@@ -143,5 +141,4 @@ public class Registration2Activity extends AppCompatActivity {
 
         }
     }
-
 }

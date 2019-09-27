@@ -48,18 +48,18 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_sell_history);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        listView = (ListView) findViewById(R.id.lvSellHistory);
+        listView = findViewById(R.id.lvSellHistory);
 
-        btnSellCurrent = (Button) findViewById(R.id.btnSellCurrent);
-        btnSellAll = (Button) findViewById(R.id.btnSellAll);
+        btnSellCurrent = findViewById(R.id.btnSellCurrent);
+        btnSellAll = findViewById(R.id.btnSellAll);
 
         //Display category list
         listSellHistory = new ArrayList<>();
@@ -153,7 +153,7 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -207,7 +207,6 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
 
             }
         });
-
     }
 
     //Slide out menu options
@@ -255,7 +254,6 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
         }
 
         return false;
-
     }
 
     //Phone back button closes menu rather than app
@@ -270,5 +268,4 @@ public class SellHistoryActivity extends AppCompatActivity implements Navigation
             startActivity(intent);
         }
     }
-
 }

@@ -103,14 +103,12 @@ public class ImageUpload {
         this.sellTime = sellTime;
     }
 
-    public static void search(final searchable act, String category, String title)
-    {
+    public static void search(final searchable act, String category, String title) {
         DatabaseReference ref;
         Query query;
         final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
         boolean viewAll = false;
-        if(category == null)
-        {
+        if (category == null) {
             ref = FirebaseDatabase.getInstance().getReference();
         } else if (category.equals("View All Listings")) {
 
@@ -148,9 +146,7 @@ public class ImageUpload {
                 }
             });
 
-        }
-        else
-        {
+        } else {
             ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
 
         }

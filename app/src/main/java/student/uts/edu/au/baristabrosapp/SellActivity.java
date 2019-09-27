@@ -83,14 +83,14 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_sell);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         btnChoose = findViewById(R.id.btnChoose);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -177,9 +177,9 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -195,12 +195,12 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
-
     }
 
     private void openFileChooser() {
@@ -217,11 +217,10 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
 
         //load phone image library
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             Picasso.with(this).load(imageUri).into(image);
         }
-
     }
 
     //get image extension
@@ -287,8 +286,6 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
 
                         }
                     });
-
-
                 }
 
             }).addOnFailureListener(new OnFailureListener() {
@@ -377,7 +374,6 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
-
     }
 
 
@@ -393,5 +389,4 @@ public class SellActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
     }
-
 }

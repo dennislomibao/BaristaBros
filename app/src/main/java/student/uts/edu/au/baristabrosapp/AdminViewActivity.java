@@ -48,16 +48,16 @@ public class AdminViewActivity extends AppCompatActivity implements searchable {
         categorySelected = intent.getStringExtra("category");
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
-        listView = (ListView) findViewById(R.id.lvCat);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        searchBtn =(Button) findViewById(R.id.btnSearch);
-        etSearch = (EditText) findViewById((R.id.etSearch));
-        tvNoContent = (TextView) findViewById(R.id.tvNotFound);
+        listView = findViewById(R.id.lvCat);
+        tvTitle = findViewById(R.id.tvTitle);
+        searchBtn = findViewById(R.id.btnSearch);
+        etSearch = findViewById((R.id.etSearch));
+        tvNoContent = findViewById(R.id.tvNotFound);
         tvTitle.setText("Admin - " + categorySelected);
 
         //Display category list
@@ -82,28 +82,23 @@ public class AdminViewActivity extends AppCompatActivity implements searchable {
             }
         });
 
-        ImageUpload.search(this, categorySelected,"");
+        ImageUpload.search(this, categorySelected, "");
         listView.setAdapter(itemsList);
-
     }
 
     @Override
     public void updateList(ArrayList<ImageUpload> imageUploads) {
-        if(imageUploads.size()<1)
-        {
+        if (imageUploads.size() < 1) {
             tvNoContent.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             tvNoContent.setVisibility(View.GONE);
         }
         itemsList.clear();
         itemsList.setData(imageUploads);
 
     }
-    public void searchOnClick(View v)
-    {
+
+    public void searchOnClick(View v) {
         ImageUpload.search(this, categorySelected, etSearch.getText().toString());
     }
-
 }

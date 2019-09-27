@@ -73,24 +73,24 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         sellerId = intent.getStringExtra("sellerId");
         sellTime = intent.getStringExtra("sellTime");
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
-        textViewCategory = (TextView) findViewById(R.id.textViewCategory);
-        textViewDescription = (TextView) findViewById(R.id.textViewDescription);
-        textViewSeller = (TextView) findViewById(R.id.textViewSeller);
-        textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
-        btnWishlist = (Button) findViewById(R.id.btnWishlist);
-        btnCart = (Button) findViewById(R.id.btnCart);
+        imageView = findViewById(R.id.imageView);
+        textViewTitle = findViewById(R.id.textViewTitle);
+        textViewPrice = findViewById(R.id.textViewPrice);
+        textViewCategory = findViewById(R.id.textViewCategory);
+        textViewDescription = findViewById(R.id.textViewDescription);
+        textViewSeller = findViewById(R.id.textViewSeller);
+        textViewSellTime = findViewById(R.id.textViewSellTime);
+        btnWishlist = findViewById(R.id.btnWishlist);
+        btnCart = findViewById(R.id.btnCart);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //set objects
         Picasso.with(this).load(Uri.parse(imageUrl)).into(imageView);
@@ -257,9 +257,9 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -275,6 +275,7 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -347,5 +348,4 @@ public class ItemActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 }

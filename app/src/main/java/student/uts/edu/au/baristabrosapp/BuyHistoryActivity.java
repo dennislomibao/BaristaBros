@@ -43,15 +43,15 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_buy_history);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        listView = (ListView) findViewById(R.id.lvBuyHistory);
+        listView = findViewById(R.id.lvBuyHistory);
 
         //Display category list
         listBuyHistory = new ArrayList<>();
@@ -96,7 +96,6 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
                 itemsList = new ItemsList(BuyHistoryActivity.this, R.layout.listview_layout, listBuyHistory);
 
                 listView.setAdapter(itemsList);
-
             }
 
             @Override
@@ -112,7 +111,7 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,7 +125,6 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
                     } else {
                         tvName.setText(dataSnapshot.getValue(String.class));
                     }
-
                 }
 
                 @Override
@@ -196,5 +194,4 @@ public class BuyHistoryActivity extends AppCompatActivity implements NavigationV
             startActivity(intent);
         }
     }
-
 }

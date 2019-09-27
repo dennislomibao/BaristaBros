@@ -43,15 +43,15 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_wishlist);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        listView = (ListView) findViewById(R.id.lvWishlist);
+        listView = findViewById(R.id.lvWishlist);
 
         //Display category list
         listWishlist = new ArrayList<>();
@@ -109,9 +109,9 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -127,12 +127,12 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
-
     }
 
 
@@ -200,6 +200,4 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
 
         }
     }
-
-
 }

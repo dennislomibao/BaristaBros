@@ -39,7 +39,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_category);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
@@ -59,8 +59,6 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
 
         Intent intent = new Intent();
-
-
         //category button functions
         catComputersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,5 +175,4 @@ public class AdminCategoryActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
 }

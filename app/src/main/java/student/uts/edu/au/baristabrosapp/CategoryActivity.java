@@ -51,7 +51,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private TextView tvNoContent;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +62,20 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        listView = (ListView) findViewById(R.id.lvCat);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        searchBtn =(Button) findViewById(R.id.btnSearch);
-        etSearch = (EditText) findViewById((R.id.etSearch));
-        tvNoContent = (TextView) findViewById(R.id.tvNotFound);
+        listView = findViewById(R.id.lvCat);
+        tvTitle = findViewById(R.id.tvTitle);
+        searchBtn = findViewById(R.id.btnSearch);
+        etSearch = findViewById((R.id.etSearch));
+        tvNoContent = findViewById(R.id.tvNotFound);
         tvTitle.setText(categorySelected);
 
         //Display category list
@@ -113,8 +112,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        ImageUpload.search(this, categorySelected,"");
-
+        ImageUpload.search(this, categorySelected, "");
 
 
         //Just test for search
@@ -125,9 +123,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -143,15 +141,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
         listView.setAdapter(itemsList);
-
-
-
     }
 
     //Slide out menu options
@@ -221,12 +217,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void updateList(ArrayList<ImageUpload> imageUploads) {
-        if(imageUploads.size()<1)
-        {
+        if (imageUploads.size() < 1) {
             tvNoContent.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             tvNoContent.setVisibility(View.GONE);
         }
         itemsList.clear();
@@ -238,8 +231,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         itemsList.setData(imageUploads);
 
     }
-    public void searchOnClick(View v)
-    {
+
+    public void searchOnClick(View v) {
         ImageUpload.search(this, categorySelected, etSearch.getText().toString());
     }
 }

@@ -38,13 +38,13 @@ public class AdminLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        Email = (EditText) findViewById(R.id.etEmail);
-        Password = (EditText) findViewById(R.id.etPassword);
-        Login = (Button) findViewById(R.id.btnSubmit);
-        Back = (Button) findViewById(R.id.btnBack);
+        Email = findViewById(R.id.etEmail);
+        Password = findViewById(R.id.etPassword);
+        Login = findViewById(R.id.btnSubmit);
+        Back = findViewById(R.id.btnBack);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         progressDialog = new ProgressDialog(this);
@@ -60,22 +60,18 @@ public class AdminLoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
-                {
+                if (Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty()) {
                     Toast.makeText(AdminLoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     validate(Email.getText().toString(), Password.getText().toString());
 
                 }
 
             }
         });
-
     }
 
-    private void validate (String userName, String userPassword) {
+    private void validate(String userName, String userPassword) {
 
         progressDialog.setMessage("Please Wait Patiently");
         progressDialog.show();
@@ -85,10 +81,10 @@ public class AdminLoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (task.isSuccessful()) {
 
-                    FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Boolean emailFlag = user.isEmailVerified();
 
-                    if(emailFlag){
+                    if (emailFlag) {
 
                         DatabaseReference checkAdmin = firebaseDatabase.child("users").child(user.getUid()).child("accountType");
                         checkAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,7 +113,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                             }
                         });
 
-                    }else{
+                    } else {
 
                         Toast.makeText(AdminLoginActivity.this, "Please verify you email", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
@@ -129,10 +125,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                     Toast.makeText(AdminLoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
-
     }
-
 }
