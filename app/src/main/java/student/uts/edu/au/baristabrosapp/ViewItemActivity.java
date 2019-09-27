@@ -56,6 +56,7 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
     private String uploadId;
     private String sellerId;
     private String sellTime;
+    private String buyerId;
     private String audience;
 
     @Override
@@ -118,20 +119,52 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        DatabaseReference DrBuyerName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-        DrBuyerName.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (audience.equals("buyer")) {
+            DatabaseReference DrBuyerName = firebaseDatabase.child("users").child(user.getUid()).child("name");
+            DrBuyerName.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
+                    textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } else {
+
+            DatabaseReference dr = firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).child("buyerId");
+            dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    DatabaseReference buyerName = firebaseDatabase.child("users").child(dataSnapshot.getValue(String.class)).child("name");
+                    buyerName.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
 
         if (audience.equals("buyer")) {
 
