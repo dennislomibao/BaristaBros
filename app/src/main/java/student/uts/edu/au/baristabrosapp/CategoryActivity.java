@@ -80,18 +80,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         //Display category list
         catList = new ArrayList<>();
-        /*catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 2", "$20", "Item description 2", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 3", "$20", "Item description 3", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 4", "$20", "Item description 4", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 5", "$20", "Item description 5", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 6", "$20", "Item description 6", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 7", "$20", "Item description 7", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 8", "$20", "Item description 8", R.drawable.barista, "Category"));
 
-        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
-
-        listView.setAdapter(itemsList);*/
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -223,11 +212,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             tvNoContent.setVisibility(View.GONE);
         }
         itemsList.clear();
-/*
-        for(ImageUpload o: imageUploads)
-        {
-            itemsList.insert(o,itemsList.getCount());
-        }*/
+
         itemsList.setData(imageUploads);
 
     }
