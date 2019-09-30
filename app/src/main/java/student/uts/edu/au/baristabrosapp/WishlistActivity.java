@@ -147,6 +147,13 @@ public class WishlistActivity extends AppCompatActivity implements NavigationVie
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
+        } else if (id == R.id.nav_recommend) {
+            intent = new Intent();
+            intent.putExtra("category", "Recommended");
+            intent.setClass(this, CategoryActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_wishlist) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_cart) {

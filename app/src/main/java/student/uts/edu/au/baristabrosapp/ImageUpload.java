@@ -110,7 +110,7 @@ public class ImageUpload {
         boolean viewAll = false;
         if (category == null) {
             ref = FirebaseDatabase.getInstance().getReference();
-        } else if (category.equals("View All Listings")) {
+        } else if (category.equals("View All Listings") || category.equals("Recommended")) {
 
             viewAll = true;
             ref = FirebaseDatabase.getInstance().getReference().child("category");

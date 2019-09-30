@@ -150,6 +150,17 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
+        } else if (id == R.id.nav_recommend) {
+            if (categorySelected.equals("Recommended")) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                intent = new Intent();
+                intent.putExtra("category", "Recommended");
+                intent.setClass(this, CategoryActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intent);
+                return true;
+            }
         } else if (id == R.id.nav_wishlist) {
             intent = new Intent(this, WishlistActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -200,7 +211,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
         }
     }
 
