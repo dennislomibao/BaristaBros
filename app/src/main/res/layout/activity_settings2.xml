@@ -118,7 +118,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/roundedbutton"
-                android:text="Change Address" />
+                android:text="Change Delivery Address" />
 
 
             <Button

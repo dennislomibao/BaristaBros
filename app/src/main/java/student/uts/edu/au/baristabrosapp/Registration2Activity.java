@@ -84,7 +84,6 @@ public class Registration2Activity extends AppCompatActivity {
                                 firebaseDatabase.child("users").child(user.getUid()).child("postcode").setValue(postcode.getText().toString().trim());
                                 firebaseDatabase.child("users").child(user.getUid()).child("accountType").setValue("standard");
 
-
                             } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(Registration2Activity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
