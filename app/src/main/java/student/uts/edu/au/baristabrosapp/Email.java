@@ -71,7 +71,6 @@ public class Email extends AppCompatActivity {
                     Toast.makeText(Email.this, "Email Changed", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(Email.this, HomePageActivity.class));
-
                 } else {
                     Toast.makeText(Email.this, "Email Format Invalid", Toast.LENGTH_SHORT).show();
                 }

@@ -103,13 +103,23 @@
 
             <Button
                 android:id="@+id/btnChName"
-
                 android:layout_width="224dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/roundedbutton"
                 android:text="Change Name"
                 android:layout_gravity="center"/>
+
+            <Button
+
+                android:id="@+id/btnChangeAddress"
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Change Address" />
+
 
             <Button
                 android:id="@+id/btnChEmail"

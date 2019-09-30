@@ -28,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
+    private Button changeAddress;
     private TextView tvBuyerName;
     private TextView tvEmail;
     private TextView tvAddressLine1;
@@ -55,6 +56,14 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SettingsActivity.this, Email.class));
+            }
+        });
+
+        changeAddress = findViewById(R.id.btnChangeAddress);
+        changeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, UpdateAddress.class));
             }
         });
 

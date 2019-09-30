@@ -25,6 +25,7 @@ public class UpdateAddress extends AppCompatActivity {
 
     private EditText addressLine, suburb, country, state, postcode;
     private Button updateAddress;
+    private Button settings;
     private Button goBackToPaymentPage;
     private DatabaseReference firebaseDatabase;
     private FirebaseAuth firebaseAuth;
@@ -37,6 +38,13 @@ public class UpdateAddress extends AppCompatActivity {
         setContentView(R.layout.activity_update_address);
 
         addressLine = findViewById(R.id.etAddress);
+        settings = findViewById(R.id.btnYea);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UpdateAddress.this, SettingsActivity.class));
+            }
+        });
         suburb = findViewById(R.id.etSuburb);
         country = findViewById(R.id.etCountry);
         goBackToPaymentPage = findViewById(R.id.btnGoBackToCheckout);
