@@ -32,6 +32,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private Button catMbBtn;
     private Button catMemoryBtn;
     private Button catStorageBtn;
+
     private Button catVcBtn;
     private Button catCaseBtn;
     private Button catPsBtn;

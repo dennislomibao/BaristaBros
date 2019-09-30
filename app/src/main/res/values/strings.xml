@@ -9,6 +9,9 @@
     <string name="pay_now">Pay Now</string>
     <string name="suburb">Suburb</string>
     <string name="address_line_1">Address Line 1</string>
+    <string name="name">Name</string>
+    <string name="click_to_change_your_name">Click to change your name</string>
+    <string name="go_back_to_settings">Go back to settings ?</string>
 
     <string-array name="categoryNames">
 

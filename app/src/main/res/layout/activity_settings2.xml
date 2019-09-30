@@ -121,37 +121,6 @@
                 android:text="Change Email"
                 android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/btnChAddress"
-
-                android:layout_width="224dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/roundedbutton"
-                android:text="Change Address"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:id="@+id/btnChPassword"
-
-                android:layout_width="224dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/roundedbutton"
-                android:text="Change Password"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:id="@+id/btnSignOut2"
-
-                android:layout_width="119dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/roundedbutton"
-                android:text="Signout" />
-
-
 
         </LinearLayout>
     </ScrollView>

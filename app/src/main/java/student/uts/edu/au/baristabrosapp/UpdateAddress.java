@@ -24,10 +24,10 @@ import java.util.Map;
 public class UpdateAddress extends AppCompatActivity {
 
     private EditText addressLine, suburb, country, state, postcode;
-    private FirebaseAuth firebaseAuth;
     private Button updateAddress;
     private Button goBackToPaymentPage;
     private DatabaseReference firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,20 +28,38 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
-
     private TextView tvBuyerName;
     private TextView tvEmail;
     private TextView tvAddressLine1;
     private TextView tvAddressLine2;
     private String addressLine1;
     private String addressLine2;
-
+    private Button changeName;
+    private Button email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         tvBuyerName = findViewById(R.id.tvAccName);
+        changeName = findViewById(R.id.btnChName);
+        changeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, NewName.class));
+            }
+        });
+
+        email = findViewById(R.id.btnChEmail);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, Email.class));
+            }
+        });
+
+
+
         tvEmail = findViewById(R.id.tvAccEmail);
         tvAddressLine1 = findViewById(R.id.tvAccAddressLine1);
         tvAddressLine2 = findViewById(R.id.tvAccAddressLine2);

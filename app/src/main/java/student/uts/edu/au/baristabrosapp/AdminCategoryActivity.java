@@ -164,7 +164,6 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void startCategoryActivity(String category) {
