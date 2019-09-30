@@ -7,10 +7,10 @@
     tools:context=".Email">
 
     <TextView
-        android:id="@+id/tvNewEmail"
+        android:id="@+id/Enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change my current email "
+        android:text="Enter a new email"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,8 +33,8 @@
 
     <Button
         android:id="@+id/btnEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="161dp"
+        android:layout_height="74dp"
         android:text="Click to change your email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,14 +44,14 @@
 
     <Button
         android:id="@+id/btnGobackToSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="161dp"
+        android:layout_height="74dp"
         android:layout_marginStart="76dp"
         android:text="Go back to settings ? Click Here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.281"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
+        app:layout_constraintVertical_bias="0.529" />
 </androidx.constraintlayout.widget.ConstraintLayout>

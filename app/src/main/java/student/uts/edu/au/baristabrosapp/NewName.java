@@ -69,7 +69,7 @@ public class NewName extends AppCompatActivity {
                     newchangedName();
                     Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
                     finish();
-                    startActivity(new Intent(NewName.this, HomePageActivity.class));
+                    startActivity(new Intent(NewName.this, SettingsActivity.class));
 
                 } else {
                     Toast.makeText(NewName.this, "Name Format Invalid", Toast.LENGTH_SHORT).show();

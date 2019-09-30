@@ -70,7 +70,7 @@ public class Email extends AppCompatActivity {
                     newchangedEmail();
                     Toast.makeText(Email.this, "Email Changed", Toast.LENGTH_SHORT).show();
                     finish();
-                    startActivity(new Intent(Email.this, HomePageActivity.class));
+                    startActivity(new Intent(Email.this, SettingsActivity.class));
                 } else {
                     Toast.makeText(Email.this, "Email Format Invalid", Toast.LENGTH_SHORT).show();
                 }
