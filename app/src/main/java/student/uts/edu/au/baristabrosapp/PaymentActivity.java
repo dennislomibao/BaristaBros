@@ -43,6 +43,7 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
     private FirebaseUser user;
 
     TextView tvBuyerName;
+    private Button updateAddress;
     TextView tvEmail;
     TextView tvAddressLine1;
     TextView tvAddressLine2;
@@ -69,14 +70,23 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
 
-        tvBuyerName = (TextView) findViewById(R.id.tvBuyerName);
-        tvEmail = (TextView) findViewById(R.id.tvBuyerEmail);
-        tvAddressLine1 = (TextView) findViewById(R.id.tvAddressLine1);
-        tvAddressLine2 = (TextView) findViewById(R.id.tvAddressLine2);
-        tvItemsList = (TextView) findViewById(R.id.tvItemsList);
+        tvBuyerName = findViewById(R.id.tvBuyerName);
+        updateAddress = findViewById(R.id.btnUpdate);
+        updateAddress = findViewById(R.id.btnUpdate);
+        updateAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(PaymentActivity.this, UpdateAddress.class));
+            }
+        });
+        tvEmail = findViewById(R.id.tvBuyerEmail);
+        tvAddressLine1 = findViewById(R.id.tvAddressLine1);
+        tvAddressLine2 = findViewById(R.id.tvAddressLine2);
+        tvItemsList = findViewById(R.id.tvItemsList);
         cardForm = findViewById(R.id.credit_card);
         totalPrice = findViewById(R.id.tvTotal);
         totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", price));
@@ -170,8 +180,8 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                     //TODO add error message
                     Toast.makeText(PaymentActivity.this, "Please fill all sections", Toast.LENGTH_LONG).show();
 
-                    if (cardForm.getCardNumber().isEmpty() || cardForm.getExpirationDateEditText().toString().isEmpty() || cardForm.getCvv().isEmpty()){
-                        Toast.makeText(PaymentActivity.this,"Input required", Toast.LENGTH_SHORT).show();
+                    if (cardForm.getCardNumber().isEmpty() || cardForm.getExpirationDateEditText().toString().isEmpty() || cardForm.getCvv().isEmpty()) {
+                        Toast.makeText(PaymentActivity.this, "Input required", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -182,9 +192,9 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid());
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -205,7 +215,7 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
                     setAddressLine1(dataSnapshot.child("address").getValue(String.class) + ",");
                     setAddressLine2(dataSnapshot.child("suburb").getValue(String.class) + " " +
-                                    dataSnapshot.child("state").getValue(String.class) + " " +
+                            dataSnapshot.child("state").getValue(String.class) + " " +
                             dataSnapshot.child("postcode").getValue(String.class) + ", " +
                             dataSnapshot.child("country").getValue(String.class));
 
@@ -229,12 +239,12 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
                     tvItemsList.setText(items);
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
-
     }
 
     //Slide out menu options
@@ -245,6 +255,13 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
 
         if (id == R.id.nav_search) {
             intent = new Intent(this, HomePageActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_recommend) {
+            intent = new Intent();
+            intent.putExtra("category", "Recommended");
+            intent.setClass(this, CategoryActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
@@ -288,7 +305,6 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
         }
 
         return false;
-
     }
 
     private void setAddressLine1(String addressLine1) {
@@ -317,5 +333,4 @@ public class PaymentActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
-
 }

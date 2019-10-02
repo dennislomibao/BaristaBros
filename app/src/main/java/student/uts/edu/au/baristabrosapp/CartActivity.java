@@ -97,7 +97,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(CartActivity.this, "No items added", Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
 
@@ -123,7 +122,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
                 totalPrice.setText(String.format(Locale.getDefault(), "Total: $%.2f", calculateTotalPrice(listCart)));
 
                 listView.setAdapter(itemsList);
-
             }
 
             @Override
@@ -174,6 +172,13 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
+        } else if (id == R.id.nav_recommend) {
+            intent = new Intent();
+            intent.putExtra("category", "Recommended");
+            intent.setClass(this, CategoryActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_wishlist) {
             intent = new Intent(this, WishlistActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -211,7 +216,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
-
     }
 
     //Phone back button closes menu rather than app
@@ -220,16 +224,18 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            //back button goes to homepage
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
         }
     }
 
     private double calculateTotalPrice(List<ImageUpload> listCart) {
         double total = 0.0;
-        for (ImageUpload item: listCart) {
+        for (ImageUpload item : listCart) {
             total += item.price;
         }
         return total;
     }
-
 }

@@ -19,7 +19,7 @@
         android:id="@+id/textViewCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/tvAdmin"
         android:layout_marginTop="10dp"
         android:text="2/2"
         android:textSize="18sp"

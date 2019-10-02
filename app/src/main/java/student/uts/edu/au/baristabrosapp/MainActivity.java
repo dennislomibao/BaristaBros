@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        logout = (Button) findViewById(R.id.btnLogout);
+        logout = findViewById(R.id.btnLogout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,15 +33,12 @@ public class MainActivity extends AppCompatActivity {
                 Logout();
             }
         });
-
-
     }
 
-    private void Logout (){
+    private void Logout() {
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
     }
 
     @Override
@@ -52,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.logoutMenu:{
+        switch (item.getItemId()) {
+            case R.id.logoutMenu: {
                 Logout();
 
             }

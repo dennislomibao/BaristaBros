@@ -20,6 +20,17 @@
             android:paddingBottom="70dp"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="Update Delviery Address? Click Here"
+                android:textAlignment="center" />
+
             <TextView
                 android:id="@+id/tvTitle"
                 style="@style/TitleStyle"
@@ -160,6 +171,8 @@
                     android:layout_height="wrap_content"
                     android:text="Total: $0.00"
                     android:textAlignment="center"/>
+
+
 
             </com.braintreepayments.cardform.view.CardForm>
         </LinearLayout>

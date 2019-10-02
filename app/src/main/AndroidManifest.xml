@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
+        <activity android:name=".Email"></activity>
+        <activity android:name=".NewName" />
+        <activity android:name=".UpdateAddress" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".CategoryActivity" />
@@ -26,6 +29,11 @@
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".Registration2Activity" />
+        <activity android:name=".AdminLoginActivity" />
+        <activity android:name=".AdminHomePageActivity" />
+        <activity android:name=".AdminViewActivity" />
+        <activity android:name=".AdminItemActivity" />
+        <activity android:name=".AdminCategoryActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

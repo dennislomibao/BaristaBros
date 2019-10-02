@@ -28,7 +28,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpassword_activty);
 
-        goBack = (Button) findViewById(R.id.btnGoBackToLoginPage);
+        goBack = findViewById(R.id.btnGoBackToLoginPage);
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,8 +36,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             }
         });
 
-        forgetPasswordEmail = (EditText) findViewById(R.id.etFEmail);
-        resetPassword= (Button) findViewById(R.id.btnSubmit);
+        forgetPasswordEmail = findViewById(R.id.etFEmail);
+        resetPassword = findViewById(R.id.btnSubmit);
         firebaseAuth = FirebaseAuth.getInstance();
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
@@ -46,20 +46,17 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
                 String userEmail = forgetPasswordEmail.getText().toString();
 
-                if(userEmail.isEmpty())
-                {
+                if (userEmail.isEmpty()) {
                     Toast.makeText(ForgetPasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     firebaseAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Toast.makeText(ForgetPasswordActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
-                            }else{
+                            } else {
                                 Toast.makeText(ForgetPasswordActivity.this, "Error Sending Email", Toast.LENGTH_SHORT).show();
                             }
 
@@ -72,5 +69,4 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         });
 
     }
-
 }

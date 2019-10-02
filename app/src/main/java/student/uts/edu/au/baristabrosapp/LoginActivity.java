@@ -24,9 +24,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText Password;
     private Button resetPassword;
     private Button Login;
+    private Button admin;
     private EditText validate;
     private ProgressDialog progressDialog;
-
 
 
     @Override
@@ -35,9 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setupUIViews();
 
-        Email = (EditText)findViewById(R.id.etEmail);
-        Password = (EditText)findViewById(R.id.etPassword);
-        resetPassword = (Button)findViewById(R.id.btnResetPassword);
+        Email = findViewById(R.id.etEmail);
+        Password = findViewById(R.id.etPassword);
+        resetPassword = findViewById(R.id.btnResetPassword);
+        admin = findViewById(R.id.btnAdmin);
+
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Login = (Button) findViewById(R.id.btnSubmit);
+        Login = findViewById(R.id.btnSubmit);
         /*Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
 
-        singUp = (Button) findViewById(R.id.btnSignUp);
+        singUp = findViewById(R.id.btnSignUp);
         singUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,42 +66,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        firebaseAuth = firebaseAuth.getInstance();
+        admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        if(user != null){
+        if (user != null) {
             finish();
             startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-
         }
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
-                {
+                if (Email.getText().toString().isEmpty() || Password.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     validate(Email.getText().toString(), Password.getText().toString());
 
                 }
-
             }
         });
-
     }
 
-    public void openRegistrationActivity(){
+    public void openRegistrationActivity() {
         Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
 
     }
 
-    private void validate (String userName, String userPassword){
+    private void validate(String userName, String userPassword) {
 
         progressDialog.setMessage("Please Wait Patiently");
         progressDialog.show();
@@ -107,11 +111,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
                     checkEmailVerification();
 
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
 
@@ -120,11 +124,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void setupUIViews() {
 
-    private void setupUIViews(){
-
-        Email = (EditText)findViewById(R.id.etEmail);
-        Password = (EditText) findViewById(R.id.etPassword);
+        Email = findViewById(R.id.etEmail);
+        Password = findViewById(R.id.etPassword);
 
     }
 
@@ -140,17 +143,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void checkEmailVerification(){
-        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+    private void checkEmailVerification() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Boolean emailFlag = firebaseUser.isEmailVerified();
 
-        if(emailFlag){
+        if (emailFlag) {
 
             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
 
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "Please verify you email", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();
         }

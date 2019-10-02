@@ -51,7 +51,6 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private TextView tvNoContent;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,36 +62,25 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        listView = (ListView) findViewById(R.id.lvCat);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        searchBtn =(Button) findViewById(R.id.btnSearch);
-        etSearch = (EditText) findViewById((R.id.etSearch));
-        tvNoContent = (TextView) findViewById(R.id.tvNotFound);
+        listView = findViewById(R.id.lvCat);
+        tvTitle = findViewById(R.id.tvTitle);
+        searchBtn = findViewById(R.id.btnSearch);
+        etSearch = findViewById((R.id.etSearch));
+        tvNoContent = findViewById(R.id.tvNotFound);
         tvTitle.setText(categorySelected);
 
         //Display category list
         catList = new ArrayList<>();
-        /*catList.add(new ItemData("Item title 1", "$20", "Item description 1", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 2", "$20", "Item description 2", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 3", "$20", "Item description 3", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 4", "$20", "Item description 4", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 5", "$20", "Item description 5", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 6", "$20", "Item description 6", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 7", "$20", "Item description 7", R.drawable.barista, "Category"));
-        catList.add(new ItemData("Item title 8", "$20", "Item description 8", R.drawable.barista, "Category"));
 
-        itemsList = new ItemsList(this, R.layout.listview_layout, catList);
-
-        listView.setAdapter(itemsList);*/
         itemsList = new ItemsList(this, R.layout.listview_layout, catList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,8 +101,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        ImageUpload.search(this, categorySelected,"");
-
+        ImageUpload.search(this, categorySelected, "");
 
 
         //Just test for search
@@ -125,9 +112,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -143,15 +130,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
         listView.setAdapter(itemsList);
-
-
-
     }
 
     //Slide out menu options
@@ -165,6 +150,17 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
+        } else if (id == R.id.nav_recommend) {
+            if (categorySelected.equals("Recommended")) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                intent = new Intent();
+                intent.putExtra("category", "Recommended");
+                intent.setClass(this, CategoryActivity.class);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(intent);
+                return true;
+            }
         } else if (id == R.id.nav_wishlist) {
             intent = new Intent(this, WishlistActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -215,31 +211,26 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
         }
     }
 
     @Override
     public void updateList(ArrayList<ImageUpload> imageUploads) {
-        if(imageUploads.size()<1)
-        {
+        if (imageUploads.size() < 1) {
             tvNoContent.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             tvNoContent.setVisibility(View.GONE);
         }
         itemsList.clear();
-/*
-        for(ImageUpload o: imageUploads)
-        {
-            itemsList.insert(o,itemsList.getCount());
-        }*/
+
         itemsList.setData(imageUploads);
 
     }
-    public void searchOnClick(View v)
-    {
+
+    public void searchOnClick(View v) {
         ImageUpload.search(this, categorySelected, etSearch.getText().toString());
     }
 }

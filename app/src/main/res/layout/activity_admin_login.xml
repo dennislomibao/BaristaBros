@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style = "@style/CustomTheme"
     android:windowSoftInputMode="adjustResize"
-    tools:context=".LoginActivity" >
+    tools:context=".AdminLoginActivity" >
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,47 +23,47 @@
 
             <TextView
                 style = "@style/TitleStyle"
-                android:id="@+id/tvAdmin"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forget Password"
-                android:textStyle="" />
-
-            <TextView
-                style = "@style/textStyle"
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To recover your password, please enter your email or username"
+                android:text="Admin Mode"
                 android:textStyle="" />
 
 
             <EditText
-                android:id="@+id/etFEmail"
+                android:id="@+id/etEmail"
                 style="@style/defaultEditText"
-                android:hint="Enter Email"
                 android:maxLines="1"
                 android:inputType="textEmailAddress"
+                android:hint="Email"
                 android:textAlignment="center" />
 
+            <EditText
+                style="@style/defaultEditText"
+                android:id="@+id/etPassword"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:hint="Password"
+                android:inputType="textPassword"/>
 
 
             <Button
                 android:id="@+id/btnSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/roundedbutton"
-                android:text="Submit"
-                />
 
-            <Button
-                android:id="@+id/btnGoBackToLoginPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/roundedbutton"
-                android:text="Back to Login Page"
+                android:text="Login"
+                />
+            <Button
+                android:id="@+id/btnBack"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundedbutton"
+                android:text="Back"
                 />
 
         </LinearLayout>

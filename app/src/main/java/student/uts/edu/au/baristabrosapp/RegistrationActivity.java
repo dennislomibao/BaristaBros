@@ -31,7 +31,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +39,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-        progressDialog =  new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()){
+                if (validate()) {
 
                     Intent intent = new Intent();
                     intent.putExtra("name", userName.getText().toString().trim());
@@ -57,18 +56,16 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    private void setupUIViews(){
-        userName = (EditText)findViewById(R.id.etName);
-        email = (EditText)findViewById(R.id.etEmail);
-        password = (EditText) findViewById(R.id.etPassword);
-        confirmPassword = (EditText) findViewById(R.id.etConfPassword);
-        createAccount = (Button) findViewById(R.id.btnCreate);
-        loginActivity = (Button) findViewById(R.id.btnCreates);
-        nextPage = (Button) findViewById(R.id.btnNext);
+    private void setupUIViews() {
+        userName = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        password = findViewById(R.id.etPassword);
+        confirmPassword = findViewById(R.id.etConfPassword);
+        createAccount = findViewById(R.id.btnCreate);
+        loginActivity = findViewById(R.id.btnCreates);
+        nextPage = findViewById(R.id.btnNext);
 
         loginActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    private Boolean validate () {
+    private Boolean validate() {
         Boolean result = false;
 
         String name = userName.getText().toString();
@@ -88,20 +85,17 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         //sign up criteria
-        if(name.isEmpty() || Email.isEmpty() || Password.isEmpty() || cPassword.isEmpty()){
-            Toast.makeText(this,"Please enter all the details",Toast.LENGTH_SHORT).show();
-        }else if (!Email.contains("@")){
-            Toast.makeText(this,"Invalid email",Toast.LENGTH_SHORT).show();
-        } else if (!Password.equals(cPassword)){
-            Toast.makeText(this,"Passwords do not match",Toast.LENGTH_SHORT).show();
+        if (name.isEmpty() || Email.isEmpty() || Password.isEmpty() || cPassword.isEmpty()) {
+            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+        } else if (!Email.contains("@")) {
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
+        } else if (!Password.equals(cPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
         } else if (Password.length() < 8 || cPassword.length() < 8) {
-            Toast.makeText(this,"Password must contain a minimum of 8 characters",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password must contain a minimum of 8 characters", Toast.LENGTH_SHORT).show();
         } else {
             result = true;
         }
         return result;
     }
-
-
-
 }

@@ -56,6 +56,7 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
     private String uploadId;
     private String sellerId;
     private String sellTime;
+    private String buyerId;
     private String audience;
 
     @Override
@@ -74,26 +75,26 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
         sellTime = intent.getStringExtra("sellTime");
         audience = intent.getStringExtra("audience");
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
-        textViewCategory = (TextView) findViewById(R.id.textViewCategory);
-        textViewDescription = (TextView) findViewById(R.id.textViewDescription);
-        textViewSeller = (TextView) findViewById(R.id.textViewSeller);
-        textViewSellTime = (TextView) findViewById(R.id.textViewSellTime);
-        textViewBuyer = (TextView) findViewById(R.id.textViewBuyer);
-        textViewBuyTime = (TextView) findViewById(R.id.textViewBuyTime);
-        textViewAddress1 = (TextView) findViewById(R.id.tvAddressLine1);
-        textViewAddress2 = (TextView) findViewById(R.id.tvAddressLine2);
+        imageView = findViewById(R.id.imageView);
+        textViewTitle = findViewById(R.id.textViewTitle);
+        textViewPrice = findViewById(R.id.textViewPrice);
+        textViewCategory = findViewById(R.id.textViewCategory);
+        textViewDescription = findViewById(R.id.textViewDescription);
+        textViewSeller = findViewById(R.id.textViewSeller);
+        textViewSellTime = findViewById(R.id.textViewSellTime);
+        textViewBuyer = findViewById(R.id.textViewBuyer);
+        textViewBuyTime = findViewById(R.id.textViewBuyTime);
+        textViewAddress1 = findViewById(R.id.tvAddressLine1);
+        textViewAddress2 = findViewById(R.id.tvAddressLine2);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //set objects
         Picasso.with(this).load(Uri.parse(imageUrl)).into(imageView);
@@ -118,20 +119,51 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        DatabaseReference DrBuyerName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-        DrBuyerName.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (audience.equals("buyer")) {
+            DatabaseReference DrBuyerName = firebaseDatabase.child("users").child(user.getUid()).child("name");
+            DrBuyerName.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
+                    textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } else {
+
+            DatabaseReference dr = firebaseDatabase.child("users").child(user.getUid()).child("Sell History").child(uploadId).child("buyerId");
+            dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    DatabaseReference buyerName = firebaseDatabase.child("users").child(dataSnapshot.getValue(String.class)).child("name");
+                    buyerName.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            textViewBuyer.setText("Buyer: " + dataSnapshot.getValue(String.class));
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         if (audience.equals("buyer")) {
 
@@ -178,9 +210,9 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
         if (firebaseDatabase.child("users").child(user.getUid()).child("name") != null) {
 
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid()).child("name");
-            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page,null);
+            View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -196,6 +228,7 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
                     }
 
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -212,6 +245,13 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
 
         if (id == R.id.nav_search) {
             intent = new Intent(this, HomePageActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_recommend) {
+            intent = new Intent();
+            intent.putExtra("category", "Recommended");
+            intent.setClass(this, CategoryActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
@@ -267,5 +307,4 @@ public class ViewItemActivity extends AppCompatActivity implements NavigationVie
             super.onBackPressed();
         }
     }
-
 }

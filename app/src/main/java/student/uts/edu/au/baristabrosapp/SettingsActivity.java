@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,32 +28,59 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
-
+    private Button changeAddress;
     private TextView tvBuyerName;
     private TextView tvEmail;
     private TextView tvAddressLine1;
     private TextView tvAddressLine2;
     private String addressLine1;
     private String addressLine2;
-
+    private Button changeName;
+    private Button email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        tvBuyerName = (TextView) findViewById(R.id.tvAccName);
-        tvEmail = (TextView) findViewById(R.id.tvAccEmail);
-        tvAddressLine1 = (TextView) findViewById(R.id.tvAccAddressLine1);
-        tvAddressLine2 = (TextView) findViewById(R.id.tvAccAddressLine2);
+        tvBuyerName = findViewById(R.id.tvAccName);
+        changeName = findViewById(R.id.btnChName);
+        changeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, NewName.class));
+            }
+        });
+
+        email = findViewById(R.id.btnChEmail);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, Email.class));
+            }
+        });
+
+        changeAddress = findViewById(R.id.btnChangeAddress);
+        changeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, UpdateAddress.class));
+            }
+        });
+
+
+
+        tvEmail = findViewById(R.id.tvAccEmail);
+        tvAddressLine1 = findViewById(R.id.tvAccAddressLine1);
+        tvAddressLine2 = findViewById(R.id.tvAccAddressLine2);
 
         //firebase initialise
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         user = firebaseAuth.getCurrentUser();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //read user's name from database
         //change side menu name depending on user
@@ -61,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             DatabaseReference DrUserName = firebaseDatabase.child("users").child(user.getUid());
             View v = LayoutInflater.from(this).inflate(R.layout.navbar_header_home_page, null);
             navView.addHeaderView(v);
-            final TextView tvName = (TextView) v.findViewById(R.id.nav_header_textView);
+            final TextView tvName = v.findViewById(R.id.nav_header_textView);
 
 
             DrUserName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,6 +134,13 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         if (id == R.id.nav_search) {
             intent = new Intent(this, HomePageActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.nav_recommend) {
+            intent = new Intent();
+            intent.putExtra("category", "Recommended");
+            intent.setClass(this, CategoryActivity.class);
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(intent);
             return true;
@@ -171,8 +206,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            //back button goes to homepage
+            Intent intent = new Intent(this, HomePageActivity.class);
+            startActivity(intent);
         }
     }
-
 }
