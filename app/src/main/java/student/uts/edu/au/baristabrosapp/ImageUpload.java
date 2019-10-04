@@ -115,7 +115,13 @@ public class ImageUpload {
             viewAll = true;
             ref = FirebaseDatabase.getInstance().getReference().child("category");
 
-            ref.addValueEventListener(new ValueEventListener() {
+            if (title.equals("")) {
+                query = ref.orderByChild("title");
+            } else {
+                query = ref.orderByChild("title").startAt(title).endAt(title + "\uf8ff");
+            }
+
+            query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -152,6 +158,7 @@ public class ImageUpload {
         }
 
         if (!viewAll) {
+
             if (title.equals("")) {
                 query = ref.orderByChild("title");
             } else {
@@ -186,4 +193,5 @@ public class ImageUpload {
         }
 
     }
+
 }
