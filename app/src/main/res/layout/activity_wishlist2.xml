@@ -36,6 +36,8 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="80dp"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:hint=" What would you like to search for?"
                     android:textSize="16dp" />
 
@@ -46,6 +48,9 @@
                     android:layout_height="36dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:background="@drawable/ic_search_white_24dp" />
 
             </RelativeLayout>

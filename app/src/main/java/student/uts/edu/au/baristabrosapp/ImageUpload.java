@@ -6,7 +6,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -105,10 +104,6 @@ public class ImageUpload {
 
     public static void search(final searchable act, final String category, final String title) {
         DatabaseReference ref;
-        if(category.equals("Recommended") || category.equals("View All Listings"))
-        {
-            category.equals("");
-        }
         final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
             ref = FirebaseDatabase.getInstance().getReference().child("category");
             ref.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -128,7 +123,7 @@ public class ImageUpload {
                             i.setSellerId(listing.getValue(ImageUpload.class).getSellerId());
                             i.setSellTime(listing.getValue(ImageUpload.class).getSellTime());
                             if (i.category.toLowerCase().equals(category.toLowerCase()) && ((i.getTitle().toLowerCase().contains(title.toLowerCase()))|| title.toLowerCase().equals(""))||
-                                    (i.getTitle().toLowerCase().contains(title.toLowerCase()) && category.equals(""))) {
+                                    (i.getTitle().toLowerCase().contains(title.toLowerCase()) && (category.equals("Recommended") || category.equals("View All Listings")))) {
                                 matches.add(i);
                             }
                         }
@@ -143,8 +138,5 @@ public class ImageUpload {
 
                 }
             });
-
-
-
     }
 }
