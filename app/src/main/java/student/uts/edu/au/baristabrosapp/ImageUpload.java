@@ -103,30 +103,20 @@ public class ImageUpload {
         this.sellTime = sellTime;
     }
 
-    public static void search(final searchable act, String category, String title) {
+    public static void search(final searchable act, final String category, final String title) {
         DatabaseReference ref;
-        Query query;
+        if(category.equals("Recommended") || category.equals("View All Listings"))
+        {
+            category.equals("");
+        }
         final ArrayList<ImageUpload> matches = new ArrayList<ImageUpload>();
-        boolean viewAll = false;
-        if (category == null) {
-            ref = FirebaseDatabase.getInstance().getReference();
-        } else if (category.equals("View All Listings") || category.equals("Recommended")) {
-
-            viewAll = true;
             ref = FirebaseDatabase.getInstance().getReference().child("category");
-
-            if (title.equals("")) {
-                query = ref.orderByChild("title");
-            } else {
-                query = ref.orderByChild("title").startAt(title).endAt(title + "\uf8ff");
-            }
-
-            query.addValueEventListener(new ValueEventListener() {
+            ref.addListenerForSingleValueEvent(new ValueEventListener(){
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    for (DataSnapshot category : dataSnapshot.getChildren()) {
-                        for (DataSnapshot listing : category.getChildren()) {
+                    for (DataSnapshot c : dataSnapshot.getChildren()) {
+                        for (DataSnapshot listing : c.getChildren()) {
 
                             ImageUpload i = new ImageUpload();
                             i.setTitle(listing.getValue(ImageUpload.class).getTitle());
@@ -137,61 +127,24 @@ public class ImageUpload {
                             i.setUploadId(listing.getValue(ImageUpload.class).getUploadId());
                             i.setSellerId(listing.getValue(ImageUpload.class).getSellerId());
                             i.setSellTime(listing.getValue(ImageUpload.class).getSellTime());
-                            matches.add(i);
-
+                            if (i.category.toLowerCase().equals(category.toLowerCase()) && ((i.getTitle().toLowerCase().contains(title.toLowerCase()))|| title.toLowerCase().equals(""))||
+                                    (i.getTitle().toLowerCase().contains(title.toLowerCase()) && category.equals(""))) {
+                                matches.add(i);
+                            }
                         }
-                    }
 
+
+                    }
                     act.updateList(matches);
 
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
 
-        } else {
-            ref = FirebaseDatabase.getInstance().getReference().child("category").child(category);
 
-        }
-
-        if (!viewAll) {
-
-            if (title.equals("")) {
-                query = ref.orderByChild("title");
-            } else {
-                query = ref.orderByChild("title").startAt(title).endAt(title + "\uf8ff");
-            }
-
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ImageUpload i = new ImageUpload();
-                        i.setTitle(ds.getValue(ImageUpload.class).getTitle());
-                        i.setDesc(ds.getValue(ImageUpload.class).getDesc());
-                        i.setImageUrl(ds.getValue(ImageUpload.class).getImageUrl());
-                        i.setCategory(ds.getValue(ImageUpload.class).getCategory());
-                        i.setPrice(ds.getValue(ImageUpload.class).getPrice());
-                        i.setUploadId(ds.getValue(ImageUpload.class).getUploadId());
-                        i.setSellerId(ds.getValue(ImageUpload.class).getSellerId());
-                        i.setSellTime(ds.getValue(ImageUpload.class).getSellTime());
-                        matches.add(i);
-                    }
-                    act.updateList(matches);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-
-            });
-
-        }
 
     }
-
 }
