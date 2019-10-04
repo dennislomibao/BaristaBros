@@ -40,6 +40,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private Button catPeriBtn;
     private Button catOsBtn;
     private Button payment;
+    private TextView tvGreeting;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
@@ -71,6 +72,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         catMonitorsBtn = findViewById(R.id.btnCatMonitors);
         catPeriBtn = findViewById(R.id.btnCatPeri);
         catOsBtn = findViewById(R.id.btnCatOs);
+        tvGreeting = findViewById(R.id.textViewGreeting);
 
 
         Intent intent = new Intent();
@@ -203,6 +205,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         tvName.setText("Chris P. Bacon");
                     } else {
                         tvName.setText(dataSnapshot.getValue(String.class));
+                        tvGreeting.setText("Good Afternoon " + dataSnapshot.getValue(String.class) + "!");
                     }
 
                 }
