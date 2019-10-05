@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,8 +40,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private Button catMonitorsBtn;
     private Button catPeriBtn;
     private Button catOsBtn;
+    private Button searchBtn;
     private Button payment;
     private TextView tvGreeting;
+    private EditText etSearch;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference firebaseDatabase;
     private FirebaseUser user;
@@ -58,6 +61,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
+        searchBtn = findViewById(R.id.btnSearch);
         drawerLayout = findViewById(R.id.drawer_layout);
         catComputersBtn = findViewById(R.id.btnCatComputers);
         catLaptopsBtn = findViewById(R.id.btnCatLaptops);
@@ -73,6 +77,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         catPeriBtn = findViewById(R.id.btnCatPeri);
         catOsBtn = findViewById(R.id.btnCatOs);
         tvGreeting = findViewById(R.id.textViewGreeting);
+        etSearch = findViewById(R.id.etSearch);
 
 
         Intent intent = new Intent();
@@ -83,7 +88,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Computers");
+                startCategoryActivity("Computers","");
 
             }
         });
@@ -91,7 +96,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Laptops");
+                startCategoryActivity("Laptops","");
 
             }
         });
@@ -99,7 +104,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("CPU");
+                startCategoryActivity("CPU","");
 
             }
         });
@@ -107,7 +112,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Fans and Coolers");
+                startCategoryActivity("Fans and Coolers","");
 
             }
         });
@@ -115,7 +120,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Motherboards");
+                startCategoryActivity("Motherboards","");
 
             }
         });
@@ -123,7 +128,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Memory");
+                startCategoryActivity("Memory","");
 
             }
         });
@@ -131,7 +136,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Storage");
+                startCategoryActivity("Storage","");
 
             }
         });
@@ -139,7 +144,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Video Cards");
+                startCategoryActivity("Video Cards","");
 
             }
         });
@@ -147,7 +152,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Case");
+                startCategoryActivity("Case","");
 
             }
         });
@@ -155,7 +160,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Power Supply");
+                startCategoryActivity("Power Supply","");
 
             }
         });
@@ -163,7 +168,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Monitors");
+                startCategoryActivity("Monitors","");
 
             }
         });
@@ -171,7 +176,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Peripherals");
+                startCategoryActivity("Peripherals","");
 
             }
         });
@@ -179,7 +184,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
 
-                startCategoryActivity("Operating Systems");
+                startCategoryActivity("Operating Systems","");
+
+            }
+        });
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startCategoryActivity("Search", etSearch.getText().toString());
 
             }
         });
@@ -217,11 +230,13 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
-    private void startCategoryActivity(String category) {
+    private void startCategoryActivity(String category, String search) {
 
         Intent intent = new Intent();
         intent.putExtra("category", category);
+        intent.putExtra("search", search);
         intent.setClass(HomePageActivity.this, CategoryActivity.class);
+
         startActivity(intent);
     }
 

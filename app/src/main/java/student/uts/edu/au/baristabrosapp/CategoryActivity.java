@@ -1,10 +1,12 @@
 package student.uts.edu.au.baristabrosapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +48,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private TextView tvTitle;
     private ItemsList itemsList;
     private String categorySelected;
+    private String searchTerm;
     private Button searchBtn;
     private EditText etSearch;
     private TextView tvNoContent;
@@ -59,8 +62,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         Intent intent = getIntent();
         categorySelected = intent.getStringExtra("category");
-
-
+        searchTerm = intent.getStringExtra("search");
         //firebase initialise
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
@@ -100,8 +102,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent);
             }
         });
-
-        ImageUpload.search(this, categorySelected, "");
+        if(categorySelected.toLowerCase().equals( "search"))
+        {
+            ImageUpload.search(this, "", searchTerm);
+        }
+        else
+        {
+            ImageUpload.search(this, categorySelected, "");
+        }
 
 
         //Just test for search
@@ -231,6 +239,18 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     }
 
     public void searchOnClick(View v) {
-        ImageUpload.search(this, categorySelected, etSearch.getText().toString());
+        if(categorySelected.toLowerCase().equals( "search"))
+        {
+            ImageUpload.search(this, "", etSearch.getText().toString());
+        }
+        else
+        {
+            ImageUpload.search(this, categorySelected, etSearch.getText().toString());
+        }
+        etSearch.setText("");
+        View view = this.getCurrentFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+
     }
 }

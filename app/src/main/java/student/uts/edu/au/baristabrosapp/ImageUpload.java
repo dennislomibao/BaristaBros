@@ -122,9 +122,12 @@ public class ImageUpload {
                             i.setUploadId(listing.getValue(ImageUpload.class).getUploadId());
                             i.setSellerId(listing.getValue(ImageUpload.class).getSellerId());
                             i.setSellTime(listing.getValue(ImageUpload.class).getSellTime());
-                            if (i.category.toLowerCase().equals(category.toLowerCase()) && ((i.getTitle().toLowerCase().contains(title.toLowerCase()))|| title.toLowerCase().equals(""))||
-                                    (i.getTitle().toLowerCase().contains(title.toLowerCase()) && (category.equals("Recommended") || category.equals("View All Listings")))) {
-                                matches.add(i);
+                            if(i.category.toLowerCase().equals(category.toLowerCase()) || category.toLowerCase().equals(""))
+                            {
+                                if(i.getTitle().toLowerCase().contains(title.toLowerCase()) || title.toLowerCase().equals(""))
+                                {
+                                    matches.add(i);
+                                }
                             }
                         }
 
