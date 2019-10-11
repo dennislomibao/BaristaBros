@@ -5,12 +5,15 @@
     <color name="colorAccent">#D81B60</color>
     <color name = "background">#2e2e2e</color>
     <color name = "defaultText">#e6e6e6</color>
-    <color name = "defaultButton">#008577</color>
-    <color name = "pressedButton">#03AF9C</color>
+    <color name = "defaultButton">#03A9F4</color>
+    <!-- catergory button colour -->
+    <color name = "pressedButton">#2196F3</color>
+    <!-- catergory when the button is pressed -->
     <color name = "editText">#1DFFFFFF</color>
     <color name = "clear">#00FFFFFF</color>
     <color name = "hintText">#80E6E6E6</color>
     <color name = "searchBar">#2e2e2e</color>
     <color name = "userBackground">#333a45</color>
-    <color name = "itemBackground">#008577</color>
+    <color name = "itemBackground">#00BCD4</color>
+    <!-- catergory activity colour -->
 </resources>
