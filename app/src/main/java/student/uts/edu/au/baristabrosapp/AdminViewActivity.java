@@ -82,7 +82,7 @@ public class AdminViewActivity extends AppCompatActivity implements searchable {
             }
         });
 
-        ImageUpload.search(this, categorySelected, "");
+        ImageUpload.search(this, "", "");
         listView.setAdapter(itemsList);
     }
 
@@ -99,6 +99,6 @@ public class AdminViewActivity extends AppCompatActivity implements searchable {
     }
 
     public void searchOnClick(View v) {
-        ImageUpload.search(this, categorySelected, etSearch.getText().toString());
+        ImageUpload.search(this, "", etSearch.getText().toString());
     }
 }

@@ -102,9 +102,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent);
             }
         });
-        if(categorySelected.toLowerCase().equals( "search"))
+        if(categorySelected.toLowerCase().equals("search"))
         {
             ImageUpload.search(this, "", searchTerm);
+        }
+        else if(categorySelected.toLowerCase().equals( "recommended"))
+        {
+            ImageUpload.search(this, "", "");
         }
         else
         {
