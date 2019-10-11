@@ -13,7 +13,7 @@
     <color name = "clear">#00FFFFFF</color>
     <color name = "hintText">#80E6E6E6</color>
     <color name = "searchBar">#2e2e2e</color>
-    <color name = "userBackground">#333a45</color>
+    <color name = "userBackground">#00BCD4</color>
     <color name = "itemBackground">#00BCD4</color>
     <!-- catergory activity colour -->
 </resources>
