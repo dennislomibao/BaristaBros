@@ -66,11 +66,33 @@ public class Email extends AppCompatActivity {
         newChangedEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (isValid()) {
-                    newchangedEmail();
-                    Toast.makeText(Email.this, "Email Changed", Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(Email.this, SettingsActivity.class));
+                    DatabaseReference db = firebaseDatabase.child("users");
+                    db.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Boolean check = false;
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                if (user.child("email").getValue().equals(newEmail.getText().toString().trim()) && !check) {
+                                    check = true;
+                                }
+                            }
+                            if (!check) {
+                                newchangedEmail();
+                                Toast.makeText(Email.this, "Email Changed", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(Email.this, SettingsActivity.class));
+                            } else {
+                                Toast.makeText(Email.this, "Email Already Exists", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     Toast.makeText(Email.this, "Email Format Invalid", Toast.LENGTH_SHORT).show();
                 }
