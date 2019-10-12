@@ -84,7 +84,7 @@ public class Email extends AppCompatActivity {
                                 finish();
                                 startActivity(new Intent(Email.this, SettingsActivity.class));
                             } else {
-                                Toast.makeText(Email.this, "Email Already Exists", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Email.this, "No Changes Detected, Please Enter A Different Email then One Already Existing", Toast.LENGTH_LONG).show();
                             }
                         }
 

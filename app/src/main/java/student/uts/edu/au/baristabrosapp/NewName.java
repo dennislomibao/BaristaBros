@@ -17,10 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class NewName extends AppCompatActivity {
     private EditText newName;
@@ -61,7 +59,6 @@ public class NewName extends AppCompatActivity {
                 Toast.makeText(NewName.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-
         newChangedName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +79,7 @@ public class NewName extends AppCompatActivity {
                                 startActivity(new Intent(NewName.this, SettingsActivity.class));
                             } else{
                                  Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
+
                             }
                         }
 
@@ -90,11 +88,6 @@ public class NewName extends AppCompatActivity {
 
                         }
                     });
-                    /*newchangedName();
-                    Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(NewName.this, SettingsActivity.class));*/
-
                 } else {
                     Toast.makeText(NewName.this, "Name Format Invalid", Toast.LENGTH_SHORT).show();
                 }
@@ -105,8 +98,6 @@ public class NewName extends AppCompatActivity {
     private Boolean isValid() {
         return (!newName.getText().toString().trim().isEmpty());
     }
-
-
     private void newchangedName() {
         String Name = newName.getText().toString().trim();
         Map<String, Object> data = new HashMap<>();
