@@ -63,24 +63,32 @@ public class NewName extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isValid()) {
+
+
                     DatabaseReference db = firebaseDatabase.child("users").child(user.getUid()).child("name");
                     db.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Boolean check = false;
+//                            Boolean check = false;
 
                             if (dataSnapshot.getValue().equals(newName.getText().toString())) {
-                                check = true;
-                            }
-                            if(!check){
-                                newchangedName();
                                 Toast.makeText(NewName.this, "Name Is Same", Toast.LENGTH_SHORT).show();
+//                                check = true;
+                            } else {
+                                newchangedName();
+                                Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(new Intent(NewName.this, SettingsActivity.class));
-                            } else{
-                                 Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
-
                             }
+//                            if(!check){
+//                                newchangedName();
+//                                Toast.makeText(NewName.this, "Name Is Same", Toast.LENGTH_SHORT).show();
+//                                finish();
+//                                startActivity(new Intent(NewName.this, SettingsActivity.class));
+//                            } else{
+//                                 Toast.makeText(NewName.this, "Name Changed", Toast.LENGTH_SHORT).show();
+//
+//                            }
                         }
 
                         @Override
