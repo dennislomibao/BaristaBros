@@ -72,7 +72,7 @@ public class NewName extends AppCompatActivity {
 //                            Boolean check = false;
 
                             if (dataSnapshot.getValue().equals(newName.getText().toString())) {
-                                Toast.makeText(NewName.this, "Name Is Same", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NewName.this, "No Changes Detected, Please Enter A Different Name then One Already Existing", Toast.LENGTH_LONG).show();
 //                                check = true;
                             } else {
                                 newchangedName();

@@ -34,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private TextView tvAddressLine1;
     private TextView tvAddressLine2;
     private String addressLine1;
+
     private String addressLine2;
     private Button changeName;
     private Button email;
@@ -66,6 +67,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 startActivity(new Intent(SettingsActivity.this, UpdateAddress.class));
             }
         });
+
+
 
 
 
